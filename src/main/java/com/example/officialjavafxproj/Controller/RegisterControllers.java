@@ -139,7 +139,7 @@ public class RegisterControllers {
 
     public void onToLoginButton(ActionEvent event) throws IOException {
         SceneSwitcher sceneSwitcher = new SceneSwitcher();
-        sceneSwitcher.switchScene(event, "../Pages/login.fxml");
+        sceneSwitcher.switchScene(event, "../Pages/userProfile.fxml");
     }
 
     public void onImageUploadButton(){

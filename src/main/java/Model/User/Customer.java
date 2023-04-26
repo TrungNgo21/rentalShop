@@ -7,5 +7,4 @@ public class Customer extends User {
         super(userId, userName, password, fullName, address, phoneNum, balance, account, imageLocation);
     }
 
-
 }

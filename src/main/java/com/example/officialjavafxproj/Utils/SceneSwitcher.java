@@ -49,6 +49,13 @@ public class SceneSwitcher {
         stage.show();
     }
 
+    public Parent getComponentScene(Parent container, String pathToComponent) throws IOException {
+        FXMLLoader componentLoader = new FXMLLoader();
+        componentLoader.setLocation(getClass().getResource(pathToComponent));
+        container = componentLoader.load();
+        return container;
+    }
+
     public void setCurrentScene(Stage stage, String pathToView) throws IOException{
         root = FXMLLoader.load(getClass().getResource(pathToView));
         draggable(root, stage);
