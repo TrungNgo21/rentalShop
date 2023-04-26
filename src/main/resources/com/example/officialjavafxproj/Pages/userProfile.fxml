@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="648.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.ProfileControllers">
    <children>
       <AnchorPane fx:id="navbarPane" prefHeight="80.0" prefWidth="1280.0" />
@@ -18,7 +17,7 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="338.0" fitWidth="400.0" layoutX="5.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profileImage" fitHeight="338.0" fitWidth="400.0" layoutX="5.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Image/Users/C004.png" />
                      </image>
@@ -102,6 +101,20 @@
                            </font>
                         </Label>
                         <Label fx:id="balanceDisplay" text="Label">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Status: ">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="statusDisplay" text="Label">
                            <font>
                               <Font size="16.0" />
                            </font>

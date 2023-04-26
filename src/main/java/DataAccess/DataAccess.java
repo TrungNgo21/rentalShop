@@ -274,7 +274,7 @@ public class DataAccess {
 
     public static void loadAllData() {
         loadAllUsersNoAccounts();
-//        loadAllAccounts();
+        loadAllAccounts();
 //        loadAllProducts();
 //        loadAllOrderDetails();
 //        loadAllOrdersNoDetail();
@@ -285,6 +285,7 @@ public class DataAccess {
 
     public static void transferAllData() {
         transferAllUsers();
+        transferAllAccounts();
     }
 
 

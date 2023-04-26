@@ -108,6 +108,8 @@ public abstract class Account {
         this.owner = owner;
     }
 
+
+
     abstract void addPoint(int addedPoints);
 
     abstract boolean isFreeToBorrowOne();

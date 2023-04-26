@@ -38,10 +38,11 @@ public class LoginControllers {
     private Label loginMessage;
 
 
-    public void loginButtonOnAction(ActionEvent event) {
+    public void loginButtonOnAction(ActionEvent event) throws IOException {
         UserServices service = new UserServices();
+        SceneSwitcher sceneController = new SceneSwitcher();
         if(service.login(usernameTextField.getText(), passwordField.getText())){
-            loginMessage.setText("Login Successfully!");
+            sceneController.switchScene(event, "../Pages/userProfile.fxml");
         }else{
             loginMessage.setText("Sai r dan vl!");
         }

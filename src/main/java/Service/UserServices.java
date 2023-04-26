@@ -58,6 +58,10 @@ public class UserServices implements Services<User> {
         }
     }
 
+    public User getCurrentUser(){
+        return DataAccess.getCurrentUser();
+    }
+
     public void register(User user){
         this.add(user);
         db.setCurrentUser(user);
