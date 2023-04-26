@@ -101,7 +101,6 @@ public class ProfileControllers implements Initializable {
                 accountPointsDisplay.setText(String.valueOf(currentUserAccount.getPoints()));
                 noFreeToBorrowDisplay.setText(currentUserAccount.getPoints() >= 100 ? "1" : "Points must be over 100 to borrow free");
             }
-
         }
     }
 

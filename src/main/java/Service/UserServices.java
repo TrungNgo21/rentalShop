@@ -2,6 +2,7 @@ package Service;
 
 import DataAccess.DataAccess;
 import Middleware.UserMiddleware;
+import Model.Account.GuestAccount;
 import Model.User.User;
 
 import java.util.ArrayList;
@@ -65,6 +66,8 @@ public class UserServices implements Services<User> {
     public void register(User user){
         this.add(user);
         db.setCurrentUser(user);
+        user.getAccount().setOwner(user);
+        db.addAccountToList(user.getAccount());
     }
 
 }

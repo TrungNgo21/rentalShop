@@ -19,7 +19,7 @@ public abstract class Account {
 
     private String createAccountId(){
         DataAccess db = new DataAccess();
-        int numOfAccount = db.getAllAccounts().size();
+        int numOfAccount = DataAccess.getAllAccounts().size();
         return "Acc00" + numOfAccount;
     }
 

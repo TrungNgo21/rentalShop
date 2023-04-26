@@ -297,6 +297,10 @@ public class DataAccess {
         DataAccess.currentUser = currentUser;
     }
 
+    public void addAccountToList(Account account){
+        accounts.put(account.getAccountId(), account);
+    }
+
     public static HashMap<String, User> getAllUsers() {
         return users;
     }

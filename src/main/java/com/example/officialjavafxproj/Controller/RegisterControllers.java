@@ -139,7 +139,7 @@ public class RegisterControllers {
 
     public void onToLoginButton(ActionEvent event) throws IOException {
         SceneSwitcher sceneSwitcher = new SceneSwitcher();
-        sceneSwitcher.switchScene(event, "../Pages/userProfile.fxml");
+        sceneSwitcher.switchScene(event, "../Pages/register.fxml");
     }
 
     public void onImageUploadButton(){
@@ -187,6 +187,7 @@ public class RegisterControllers {
                 imageThread.start();
                 UserServices userServices = new UserServices();
                 userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 0, new GuestAccount(), targetFileDir));
+
 
                 for(Map.Entry<String, User> user : userServices.getAll().entrySet()){
                     System.out.println(user);
