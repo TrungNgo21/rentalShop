@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.RegisterControllers">
+    <top>
+        <AnchorPane prefHeight="57.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="30.0" layoutY="16.0" prefHeight="29.0" prefWidth="540.0" text="Register and become our beloved customer">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+            <Button fx:id="exitButton" layoutX="531.0" layoutY="16.0" mnemonicParsing="false" onAction="#onExitButton" prefHeight="25.0" prefWidth="37.0" text="X" />
+            </children>
+        </AnchorPane>
+    </top>
+   <right>
+        <AnchorPane prefHeight="529.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+            <VBox layoutX="124.0" layoutY="27.0" prefHeight="69.0" prefWidth="377.0">
+               <children>
+                  <HBox prefHeight="33.0" prefWidth="377.0">
+                     <children>
+                            <Label prefHeight="31.0" prefWidth="70.0" text="Fullname">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Label>
+                            <TextField fx:id="fullnameTextField" onKeyReleased="#FieldOnReleased" prefHeight="34.0" prefWidth="306.0" promptText="Enter your fullname..." />
+                     </children>
+                  </HBox>
+                  <Label fx:id="fullNameErrorMessage" alignment="CENTER" prefHeight="30.0" prefWidth="396.0" />
+               </children>
+            </VBox>
+            <VBox layoutX="125.0" layoutY="96.0" prefHeight="66.0" prefWidth="377.0">
+               <children>
+                  <HBox prefHeight="35.0" prefWidth="377.0">
+                     <children>
+                        <Label prefHeight="31.0" prefWidth="70.0" text="Address">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="addressTextField" onKeyReleased="#FieldOnReleased" prefHeight="34.0" prefWidth="306.0" promptText="Enter your username..." />
+                     </children>
+                  </HBox>
+                  <Label fx:id="addressErrorMessage" alignment="CENTER" prefHeight="30.0" prefWidth="396.0" />
+               </children>
+            </VBox>
+            <VBox layoutX="99.0" layoutY="162.0" prefHeight="67.0" prefWidth="404.0">
+               <children>
+                  <HBox prefHeight="34.0" prefWidth="403.0">
+                     <children>
+                        <Label prefHeight="31.0" prefWidth="97.0" text="Phone Number">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="phoneNumTextField" onKeyReleased="#FieldOnReleased" prefHeight="34.0" prefWidth="306.0" promptText="Enter your username..." />
+                     </children>
+                  </HBox>
+                  <Label fx:id="phoneNumErrorMessage" alignment="CENTER" prefHeight="30.0" prefWidth="403.0" />
+               </children>
+            </VBox>
+            <VBox layoutX="125.0" layoutY="229.0" prefHeight="67.0" prefWidth="376.0">
+               <children>
+                  <HBox prefHeight="34.0" prefWidth="377.0">
+                     <children>
+                            <Label prefHeight="31.0" prefWidth="70.0" text="Username">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Label>
+                            <TextField fx:id="usernameTextField" onKeyReleased="#FieldOnReleased" prefHeight="34.0" prefWidth="306.0" promptText="Enter your username..." />
+                     </children>
+                  </HBox>
+                  <Label fx:id="userNameErrorMessage" alignment="CENTER" prefHeight="30.0" prefWidth="396.0" />
+               </children>
+            </VBox>
+            <VBox layoutX="124.0" layoutY="296.0" prefHeight="68.0" prefWidth="377.0">
+               <children>
+                  <HBox prefHeight="34.0" prefWidth="377.0">
+                     <children>
+                            <Label prefHeight="31.0" prefWidth="70.0" text="Password">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Label>
+                            <PasswordField fx:id="passwordTextField" onKeyReleased="#FieldOnReleased" prefHeight="34.0" prefWidth="306.0" promptText="Enter your password..." />
+                     </children>
+                  </HBox>
+                  <Label fx:id="passwordErrorMessage" alignment="CENTER" prefHeight="30.0" prefWidth="377.0" />
+               </children>
+            </VBox>
+            <VBox layoutX="73.0" layoutY="364.0" prefHeight="67.0" prefWidth="430.0">
+               <children>
+                  <HBox prefHeight="35.0" prefWidth="430.0">
+                     <children>
+                            <Label prefHeight="31.0" prefWidth="123.0" text="Confirm Password">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Label>
+                            <PasswordField fx:id="confirmPassTextField" onKeyReleased="#FieldOnReleased" prefHeight="34.0" prefWidth="306.0" promptText="Confirm your password..." />
+                     </children>
+                  </HBox>
+                  <Label fx:id="rePasswordErrorMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="429.0" />
+               </children>
+            </VBox>
+            <VBox layoutX="98.0" layoutY="439.0" prefHeight="66.0" prefWidth="405.0">
+               <children>
+                  <HBox prefHeight="35.0" prefWidth="406.0">
+                     <children>
+                        <Label prefHeight="31.0" prefWidth="99.0" text="Upload Profile">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="imageUploadButton" mnemonicParsing="false" onAction="#onImageUploadButton" prefHeight="28.0" prefWidth="306.0" text="Upload Image" />
+                     </children>
+                  </HBox>
+                  <Label fx:id="imageMessage" alignment="CENTER" prefHeight="30.0" prefWidth="404.0" />
+               </children>
+            </VBox>
+                <Label fx:id="registerMessage" layoutX="102.0" layoutY="6.0" prefHeight="17.0" prefWidth="414.0" />
+                <Button fx:id="registerButton" disable="true" layoutX="128.0" layoutY="505.0" mnemonicParsing="false" onAction="#onRegisterButton" prefHeight="34.0" prefWidth="345.0" text="Register">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="toLoginButton" layoutX="128.0" layoutY="549.0" mnemonicParsing="false" onAction="#onToLoginButton" prefHeight="34.0" prefWidth="345.0" text="Back to Login">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+            </children>
+        </AnchorPane>
+   </right>
+</BorderPane>

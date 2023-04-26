@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="80.0" prefWidth="1280.0" style="-fx-background-color: #212326;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.NavbarComponent">
+   <children>
+      <HBox layoutY="3.0" prefHeight="80.0" prefWidth="615.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="76.0" prefWidth="128.0" style="-fx-background-color: #212326; -fx-border-radius: 20;">
+               <graphic>
+                  <ImageView fitHeight="70.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/Public/logoFinal.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Home">
+               <HBox.margin>
+                  <Insets left="30.0" top="26.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Games">
+               <HBox.margin>
+                  <Insets left="20.0" top="26.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="DVD">
+               <HBox.margin>
+                  <Insets left="20.0" top="26.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Old Movies Records">
+               <HBox.margin>
+                  <Insets left="20.0" top="26.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <HBox layoutX="621.0" layoutY="3.0" prefHeight="80.0" prefWidth="317.0">
+         <children>
+            <TextField prefHeight="25.0" prefWidth="249.0">
+               <HBox.margin>
+                  <Insets top="26.0" />
+               </HBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Search">
+               <HBox.margin>
+                  <Insets top="26.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <Button layoutX="1185.0" layoutY="29.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Logout" />
+      <Button layoutX="949.0" layoutY="25.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="231.0" style="-fx-background-color: transparent;">
+         <graphic>
+            <Label prefHeight="25.0" prefWidth="168.0" text="fdfdfdf" textFill="WHITE">
+               <graphic>
+                  <Label prefHeight="23.0" prefWidth="76.0" text="Welcome," textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
