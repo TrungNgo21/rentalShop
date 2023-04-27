@@ -5,6 +5,7 @@ import Model.Product.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ProductService implements Services<Product>{
     @Override
@@ -31,11 +32,16 @@ public class ProductService implements Services<Product>{
 
     @Override
     public Product getOne(String productId) {
-        return null;
+        return DataAccess.getAllProducts().get(productId);
     }
 
     @Override
     public HashMap<String,Product> getAll() {
-        return null;
+        HashMap<String, Product> products = new HashMap<String, Product>();
+        for(Map.Entry<String, Product> entry : DataAccess.getAllProducts().entrySet()) {
+            products.put(entry.getKey(), entry.getValue());
+        }
+        return products;
     }
+
 }

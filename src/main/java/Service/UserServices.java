@@ -21,31 +21,31 @@ public class UserServices implements Services<User> {
 
     @Override
     public void add(User user) {
-        if(!checker.isDuplicatedUsername(user.getUserName(), DataAccess.getAllUsers())) {
-            DataAccess.getAllUsers().put(idCreation(), user);
-        }else{
-            throw new Error("Duplicate username!");
-        }
+//        if(!checker.isDuplicatedUsername(user.getUserName(), DataAccess.getAllUsers())) {
+//            DataAccess.getAllUsers().put(idCreation(), user);
+//        }else{
+//            throw new Error("Duplicate username!");
+//        }
     }
 
     @Override
     public void edit(User user) {
-        DataAccess.getAllUsers().put(user.getUserId(), user);
+//        DataAccess.getAllUsers().put(user.getUserId(), user);
     }
 
     @Override
     public void delete(User user) {
-        DataAccess.getAllUsers().remove(user.getUserId());
+//        DataAccess.getAllUsers().remove(user.getUserId());
     }
 
     @Override
     public User getOne(String userId) {
-        return DataAccess.getAllUsers().get(userId);
+        return null;
     }
 
     @Override
     public HashMap<String, User> getAll() {
-        return DataAccess.getAllUsers();
+        return null;
     }
 
     public boolean login(String username, String password){
