@@ -73,7 +73,7 @@ public class ProfileControllers implements Initializable {
             String profileImgUrl = imageDir.getImageDir() + currentCustomer.getImageLocation();
             Image currentUserProfileImg = null;
             try {
-                currentUserProfileImg = new Image(new FileInputStream(profileImgUrl));
+                currentUserProfileImg = new Image(new FileInputStream(profileImgUrl), 400, 400, false, false);
             } catch (FileNotFoundException e) {
                 System.out.println(e.getMessage());
             }

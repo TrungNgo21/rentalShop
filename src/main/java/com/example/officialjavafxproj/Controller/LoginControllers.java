@@ -1,5 +1,6 @@
 package com.example.officialjavafxproj.Controller;
 
+import DataAccess.DataAccess;
 import Service.UserServices;
 import com.example.officialjavafxproj.Utils.SceneSwitcher;
 import javafx.event.ActionEvent;
@@ -54,6 +55,7 @@ public class LoginControllers {
     }
 
     public void onExitButton(ActionEvent event) throws IOException{
+        DataAccess.transferAllData();
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.close();
     }

@@ -32,12 +32,12 @@ public class InputMiddleware {
             System.out.println("hehe");
             return false;
         }else {
-            return username.length() == 12;
+            return username.length() >= 12;
         }
     }
 
     public boolean isValidIString(int length, String inputI4){
-        return inputI4.length() == length;
+        return inputI4.length() >= length;
     }
 
 }

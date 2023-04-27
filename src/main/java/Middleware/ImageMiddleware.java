@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 
 public class ImageMiddleware {
     public BufferedImage rescaleImage(int width, int height, BufferedImage image){
-        Image rescaleImage = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
-        return toBufferedImage(rescaleImage);
+        image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        return toBufferedImage(image);
     }
 
     public BufferedImage toBufferedImage(Image img)

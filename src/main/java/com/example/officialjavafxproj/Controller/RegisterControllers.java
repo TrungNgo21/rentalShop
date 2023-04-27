@@ -139,7 +139,7 @@ public class RegisterControllers {
 
     public void onToLoginButton(ActionEvent event) throws IOException {
         SceneSwitcher sceneSwitcher = new SceneSwitcher();
-        sceneSwitcher.switchScene(event, "../Pages/register.fxml");
+        sceneSwitcher.switchScene(event, "../Pages/login.fxml");
     }
 
     public void onImageUploadButton(){
@@ -177,18 +177,27 @@ public class RegisterControllers {
         }else{
             targetFileDir = "Users/" + new UserServices().idCreation() + "." + ext;
         }
-        UploadImageThread uploadThread = new UploadImageThread(targetFile, new File(imageMessage.getText()), 400, 400);
-        Thread imageThread = new Thread(uploadThread);
+        UserServices userServices = new UserServices();
+        //        UploadImageThread uploadThread = new UploadImageThread(targetFile, new File(imageMessage.getText()), 400, 400);
+        UploadImageThread uploadThread = UploadImageThread
+                .builder()
+                .targetFile(targetFile)
+                .uploadedFile(new File(imageMessage.getText()))
+                .finalHeight(400)
+                .finalWidth(400)
+                .build();
 
+
+        Thread imageThread = new Thread(uploadThread);
+// AasdfasdfasA123@
         if(!rePass.equals(password)){
             registerMessage.setText("Not the same password!!!");
         }else{
             try{
                 imageThread.start();
-                UserServices userServices = new UserServices();
                 userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 0, new GuestAccount(), targetFileDir));
-                new SceneSwitcher().switchScene(event, "../Pages/userProfile");
-
+                imageThread.join();
+                new SceneSwitcher().switchScene(event, "../Pages/userProfile.fxml");
                 for(Map.Entry<String, User> user : userServices.getAll().entrySet()){
                     System.out.println(user);
                 }
