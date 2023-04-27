@@ -160,7 +160,7 @@ public class RegisterControllers {
         stage.close();
     }
 
-    public void onRegisterButton() throws InterruptedException {
+    public void onRegisterButton(ActionEvent event) throws InterruptedException {
         String userName = usernameTextField.getText();
         String fullName = fullnameTextField.getText();
         String password = passwordTextField.getText();
@@ -187,7 +187,7 @@ public class RegisterControllers {
                 imageThread.start();
                 UserServices userServices = new UserServices();
                 userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 0, new GuestAccount(), targetFileDir));
-
+                new SceneSwitcher().switchScene(event, "../Pages/userProfile");
 
                 for(Map.Entry<String, User> user : userServices.getAll().entrySet()){
                     System.out.println(user);
@@ -196,6 +196,8 @@ public class RegisterControllers {
                 registerMessage.setText(err.getMessage());
                 imageThread.join();
                 FileController.deleteFile(targetFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

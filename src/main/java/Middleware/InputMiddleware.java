@@ -28,7 +28,8 @@ public class InputMiddleware {
 
     public boolean isValidUsername(String username){
         Matcher matcher = whiteSpacePattern.matcher(username);
-        if(matcher.matches()){
+        if(matcher.find()){
+            System.out.println("hehe");
             return false;
         }else {
             return username.length() == 12;
