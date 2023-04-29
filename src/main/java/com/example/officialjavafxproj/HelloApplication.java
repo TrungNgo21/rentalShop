@@ -1,7 +1,7 @@
 package com.example.officialjavafxproj;
 
 import DataAccess.DataAccess;
-import com.example.officialjavafxproj.Utils.SceneSwitcher;
+import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -9,7 +9,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
-    private SceneSwitcher sceneSwitcher = new SceneSwitcher();
+    private SceneController sceneSwitcher = new SceneController();
 
     @Override
     public void start(Stage stage) throws IOException {

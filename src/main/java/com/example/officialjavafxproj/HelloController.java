@@ -1,7 +1,7 @@
 package com.example.officialjavafxproj;
 
 import DataAccess.DataAccess;
-import com.example.officialjavafxproj.Utils.SceneSwitcher;
+import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 
 public class HelloController {
@@ -30,12 +29,12 @@ public class HelloController {
 
     @FXML
     public void onLoginButton(ActionEvent event) throws IOException {
-        SceneSwitcher sceneController = new SceneSwitcher();
+        SceneController sceneController = new SceneController();
         sceneController.switchScene(event, "../Pages/login.fxml");
     }
 
     public void onRegisterButton(ActionEvent event) throws IOException{
-        SceneSwitcher sceneSwitcher = new SceneSwitcher();
+        SceneController sceneSwitcher = new SceneController();
         sceneSwitcher.switchScene(event, "../Pages/register.fxml");
     }
 

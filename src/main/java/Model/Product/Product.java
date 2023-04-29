@@ -9,24 +9,25 @@ public abstract class Product {
     private String title;
     private String rentalType;
     private String genre;
-    private int stock;
     private String publishedYear;
     private int numOfCopies;
     private double rentalFee;
     private String loanType;
     private String status;
 
-    public Product(String id, String title, String rentalType, String genre, int stock, String publishedYear, int numOfCopies, double rentalFee, String loanType, String status) {
+    private String imageLocation;
+
+    public Product(String id, String title, String rentalType, String genre, String publishedYear, int numOfCopies, double rentalFee, String loanType, String status, String imageLocation) {
         this.id = id;
         this.title = title;
         this.rentalType = rentalType;
         this.genre = genre;
-        this.stock = stock;
         this.publishedYear = publishedYear;
         this.numOfCopies = numOfCopies;
         this.rentalFee = rentalFee;
         this.loanType = loanType;
         this.status = status;
+        this.imageLocation = imageLocation;
     }
 
     public String getPublishedYear() {
@@ -49,10 +50,6 @@ public abstract class Product {
         return genre;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
     public int getNumOfCopies() {
         return numOfCopies;
     }
@@ -67,5 +64,9 @@ public abstract class Product {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getImageLocation() {
+        return imageLocation;
     }
 }

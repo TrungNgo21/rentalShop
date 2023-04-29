@@ -3,18 +3,15 @@ package com.example.officialjavafxproj.Controller;
 import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Middleware.InputMiddleware;
-import Middleware.UserMiddleware;
-import Model.Account.Account;
 import Model.Account.GuestAccount;
 import Model.User.Customer;
 import Model.User.User;
 import Service.UserServices;
 import com.example.officialjavafxproj.Threads.UploadImageThread;
 import com.example.officialjavafxproj.Utils.FileController;
-import com.example.officialjavafxproj.Utils.SceneSwitcher;
+import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -138,7 +135,7 @@ public class RegisterControllers {
     }
 
     public void onToLoginButton(ActionEvent event) throws IOException {
-        SceneSwitcher sceneSwitcher = new SceneSwitcher();
+        SceneController sceneSwitcher = new SceneController();
         sceneSwitcher.switchScene(event, "../Pages/login.fxml");
     }
 
@@ -189,15 +186,14 @@ public class RegisterControllers {
 
 
         Thread imageThread = new Thread(uploadThread);
-// AasdfasdfasA123@
         if(!rePass.equals(password)){
             registerMessage.setText("Not the same password!!!");
         }else{
             try{
                 imageThread.start();
-                userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 0, new GuestAccount(), targetFileDir));
+                userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 100, new GuestAccount(), targetFileDir));
                 imageThread.join();
-                new SceneSwitcher().switchScene(event, "../Pages/userProfile.fxml");
+                new SceneController().switchScene(event, "../Pages/userProfile.fxml");
                 for(Map.Entry<String, User> user : userServices.getAll().entrySet()){
                     System.out.println(user);
                 }

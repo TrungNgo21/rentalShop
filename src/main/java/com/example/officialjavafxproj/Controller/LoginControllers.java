@@ -2,7 +2,7 @@ package com.example.officialjavafxproj.Controller;
 
 import DataAccess.DataAccess;
 import Service.UserServices;
-import com.example.officialjavafxproj.Utils.SceneSwitcher;
+import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -41,7 +41,7 @@ public class LoginControllers {
 
     public void loginButtonOnAction(ActionEvent event) throws IOException {
         UserServices service = new UserServices();
-        SceneSwitcher sceneController = new SceneSwitcher();
+        SceneController sceneController = new SceneController();
         if(service.login(usernameTextField.getText(), passwordField.getText())){
             sceneController.switchScene(event, "../Pages/userProfile.fxml");
         }else{
@@ -50,7 +50,7 @@ public class LoginControllers {
     }
 
     public void registerButtonOnAction(ActionEvent event) throws IOException {
-        SceneSwitcher sceneController = new SceneSwitcher();
+        SceneController sceneController = new SceneController();
         sceneController.switchScene(event, "../Pages/register.fxml");
     }
 

@@ -6,7 +6,7 @@ import Model.Account.RegularAccount;
 import Model.Account.VIPAccount;
 import Model.User.Customer;
 import Service.UserServices;
-import com.example.officialjavafxproj.Utils.SceneSwitcher;
+import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
@@ -105,7 +105,7 @@ public class ProfileControllers implements Initializable {
     }
 
     public void addNavigationBar(){
-        SceneSwitcher sceneSwitcher = new SceneSwitcher();
+        SceneController sceneSwitcher = new SceneController();
         try {
             navbarPane.getChildren().add(sceneSwitcher.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {
