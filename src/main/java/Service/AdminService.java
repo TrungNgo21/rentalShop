@@ -2,6 +2,7 @@ package Service;
 
 import DataAccess.DataAccess;
 import Middleware.UserMiddleware;
+import Model.Account.Account;
 import Model.Order.Order;
 import Model.Product.Product;
 import Model.User.User;
@@ -49,6 +50,16 @@ public class AdminService implements Services<User> {
 //            user.put(tmp.getKey(), tmp.getValue());
 //        }
         return DataAccess.getAllUsers();
+    }
+    // Filter the type of account users
+    public HashMap<String, Account> filterAccountType(String accountType) { // Display this hashmap to UI
+        HashMap<String, Account> container = new HashMap<String, Account>();
+        for(Map.Entry<String, Account> entry : DataAccess.getAllAccounts().entrySet()) {
+            if(entry.getKey().equals(accountType)) {
+                container.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return container;
     }
 
 }
