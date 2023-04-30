@@ -43,6 +43,8 @@ public class DataAccess {
 
     private static User currentUser;
 
+    private static Product chosenProduct;
+
     private static ArrayList<String[]> getDataFromFile(String fileLocation) {
         try {
             ArrayList<String[]> dataFile = new ArrayList<>();
@@ -100,13 +102,13 @@ public class DataAccess {
         ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getProductFileDir());
         for (String[] productData : Objects.requireNonNull(dataFile)) {
             if (productData[2].equals("DVD")) {
-                DVD dvd = new DVD(productData[0], productData[1], productData[2], productData[3], Integer.parseInt(productData[4]), productData[5], Integer.parseInt(productData[6]), Double.parseDouble(productData[7]), productData[8], productData[9]);
+                DVD dvd = new DVD(productData[0], productData[1], productData[2], productData[3], productData[4], Integer.parseInt(productData[5]), Double.parseDouble(productData[6]), productData[7], productData[8], productData[9]);
                 products.put(productData[0], dvd);
             } else if (productData[2].equals("RECORD")) {
-                MRecords record = new MRecords(productData[0], productData[1], productData[2], productData[3], Integer.parseInt(productData[4]), productData[5], Integer.parseInt(productData[6]), Double.parseDouble(productData[7]), productData[8], productData[9]);
+                MRecords record = new MRecords(productData[0], productData[1], productData[2], productData[3], productData[4], Integer.parseInt(productData[5]), Double.parseDouble(productData[6]), productData[7], productData[8], productData[9]);
                 products.put(productData[0], record);
             } else {
-                Game game = new Game(productData[0], productData[1], productData[2], productData[3], Integer.parseInt(productData[4]), productData[5], Integer.parseInt(productData[6]), Double.parseDouble(productData[7]), productData[8], productData[9]);
+                Game game = new Game(productData[0], productData[1], productData[2], productData[3], productData[4], Integer.parseInt(productData[5]), Double.parseDouble(productData[6]), productData[7], productData[8], productData[9]);
                 products.put(productData[0], game);
             }
         }
@@ -204,12 +206,12 @@ public class DataAccess {
                         + product.getValue().getTitle() + ";"
                         + product.getValue().getRentalType() + ";"
                         + product.getValue().getGenre() + ";"
-                        + product.getValue().getStock() + ";"
                         + product.getValue().getPublishedYear() + ";"
                         + product.getValue().getNumOfCopies() + ";"
                         + product.getValue().getRentalFee() + ";"
                         + product.getValue().getLoanType() + ";"
-                        + product.getValue().getStatus() + ";" + "\n");
+                        + product.getValue().getStatus() + ";"
+                        + product.getValue().getImageLocation() + "\n");
             }
             writer.close();
         } catch (IOException err) {
@@ -274,8 +276,8 @@ public class DataAccess {
 
     public static void loadAllData() {
         loadAllUsersNoAccounts();
-//        loadAllAccounts();
-//        loadAllProducts();
+        loadAllAccounts();
+        loadAllProducts();
 //        loadAllOrderDetails();
 //        loadAllOrdersNoDetail();
 //        loadAllCartsNoDetail();
@@ -285,6 +287,7 @@ public class DataAccess {
 
     public static void transferAllData() {
         transferAllUsers();
+        transferAllAccounts();
     }
 
 
@@ -294,6 +297,10 @@ public class DataAccess {
 
     public void setCurrentUser(User currentUser) {
         DataAccess.currentUser = currentUser;
+    }
+
+    public void addAccountToList(Account account){
+        accounts.put(account.getAccountId(), account);
     }
 
     public static HashMap<String, User> getAllUsers() {
@@ -310,6 +317,14 @@ public class DataAccess {
 
     public static ArrayList<Order> getAllOrders() {
         return orders;
+    }
+
+    public static void setChosenProduct(Product product){
+        DataAccess.chosenProduct = product;
+    }
+
+    public static Product getChosenProduct(){
+        return chosenProduct;
     }
 
 

@@ -28,15 +28,16 @@ public class InputMiddleware {
 
     public boolean isValidUsername(String username){
         Matcher matcher = whiteSpacePattern.matcher(username);
-        if(matcher.matches()){
+        if(matcher.find()){
+            System.out.println("hehe");
             return false;
         }else {
-            return username.length() == 12;
+            return username.length() >= 12;
         }
     }
 
     public boolean isValidIString(int length, String inputI4){
-        return inputI4.length() == length;
+        return inputI4.length() >= length;
     }
 
 }

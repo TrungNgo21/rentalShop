@@ -1,14 +1,22 @@
 package com.example.officialjavafxproj.Threads;
 
+import Service.UserServices;
 import com.example.officialjavafxproj.Utils.FileController;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.File;
 
+@Builder
+@Data
+@NoArgsConstructor
 public class UploadImageThread implements Runnable {
-    private final File targetFile;
-    private final File uploadedFile;
-    private final int finalWidth;
-    private final int finalHeight;
+    private File targetFile;
+    private File uploadedFile;
+    private int finalWidth;
+    private int finalHeight;
 
 
     public UploadImageThread(File targetFile, File uploadedFile, int finalWidth, int finalHeight) {
