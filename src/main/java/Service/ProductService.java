@@ -3,8 +3,7 @@ package Service;
 import DataAccess.DataAccess;
 import Model.Product.Product;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class ProductService implements Services<Product>{
     @Override
@@ -30,12 +29,46 @@ public class ProductService implements Services<Product>{
     }
 
     @Override
-    public Product getOne(String productId) {
+    public Product getOne(String productIdentifier) {
+        for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
+            if(productIdentifier.equals(product.getValue().getId()) || productIdentifier.equals(product.getValue().getTitle())){
+                return product.getValue();
+            }
+        }
         return null;
     }
+    public Product getStock(){
+        for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
+            if(product.getValue().getStock() == 0){
+                return product.getValue();
+            }
+        }
+        return null;
+    }
+    public TreeMap<String,Product> sortById(){
+        TreeMap<String,Product> sortedList = new TreeMap<>(DataAccess.getAllProducts());
+        return sortedList;
+    }
+    public HashMap<String,Product> sortByTitle(){
+        List<Map.Entry<String,Product> > list = new LinkedList<Map.Entry<String,Product> >(DataAccess.getAllProducts().entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, Product>>() {
+            @Override
+            public int compare(Map.Entry<String, Product> o1, Map.Entry<String, Product> o2) {
+                return (o1.getValue().getTitle().compareTo(o2.getValue().getTitle()));
+            }
+        });
+        HashMap<String,Product> temp = new LinkedHashMap<String,Product>();
+        for (Map.Entry<String,Product> product : list){
+            temp.put(product.getKey(),product.getValue());
+        }
+        return temp;
+    }
+
 
     @Override
     public HashMap<String,Product> getAll() {
-        return null;
+        return DataAccess.getAllProducts();
     }
+
+
 }
