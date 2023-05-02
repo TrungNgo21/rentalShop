@@ -1,14 +1,11 @@
 package Model.Order;
-
-import Model.Product.Product;
-
 import java.util.ArrayList;
 
 public class Cart {
 
     private String cartId;
     private String userId;
-    private ArrayList<OrderDetail> shoppingItems;
+    private ArrayList<OrderDetail> shoppingItems = new ArrayList<>();
 
     public Cart(String cartId, String userId) {
         this.cartId = cartId;

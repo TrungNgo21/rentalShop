@@ -14,7 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TopProductComponent {
+public class TopProductComponentControllers {
 
     @FXML
     private AnchorPane topProductPane;
