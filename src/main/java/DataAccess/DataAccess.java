@@ -273,9 +273,9 @@ public class DataAccess {
     }
 
     public static void loadAllData() {
-        loadAllUsersNoAccounts();
+//        loadAllUsersNoAccounts();
 //        loadAllAccounts();
-//        loadAllProducts();
+        loadAllProducts();
 //        loadAllOrderDetails();
 //        loadAllOrdersNoDetail();
 //        loadAllCartsNoDetail();
