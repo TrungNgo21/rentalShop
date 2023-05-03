@@ -19,7 +19,7 @@ public abstract class Account {
 
     private String createAccountId(){
         DataAccess db = new DataAccess();
-        int numOfAccount = db.getAllAccounts().size();
+        int numOfAccount = DataAccess.getAllAccounts().size();
         return "Acc00" + numOfAccount;
     }
 
@@ -107,6 +107,8 @@ public abstract class Account {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
+
 
     abstract void addPoint(int addedPoints);
 

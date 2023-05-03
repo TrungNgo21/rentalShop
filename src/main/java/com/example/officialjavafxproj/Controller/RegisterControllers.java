@@ -3,18 +3,15 @@ package com.example.officialjavafxproj.Controller;
 import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Middleware.InputMiddleware;
-import Middleware.UserMiddleware;
-import Model.Account.Account;
 import Model.Account.GuestAccount;
 import Model.User.Customer;
 import Model.User.User;
 import Service.UserServices;
 import com.example.officialjavafxproj.Threads.UploadImageThread;
 import com.example.officialjavafxproj.Utils.FileController;
-import com.example.officialjavafxproj.Utils.SceneSwitcher;
+import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -138,7 +135,7 @@ public class RegisterControllers {
     }
 
     public void onToLoginButton(ActionEvent event) throws IOException {
-        SceneSwitcher sceneSwitcher = new SceneSwitcher();
+        SceneController sceneSwitcher = new SceneController();
         sceneSwitcher.switchScene(event, "../Pages/login.fxml");
     }
 
@@ -160,7 +157,7 @@ public class RegisterControllers {
         stage.close();
     }
 
-    public void onRegisterButton() throws InterruptedException {
+    public void onRegisterButton(ActionEvent event) throws InterruptedException {
         String userName = usernameTextField.getText();
         String fullName = fullnameTextField.getText();
         String password = passwordTextField.getText();
@@ -177,17 +174,26 @@ public class RegisterControllers {
         }else{
             targetFileDir = "Users/" + new UserServices().idCreation() + "." + ext;
         }
-        UploadImageThread uploadThread = new UploadImageThread(targetFile, new File(imageMessage.getText()), 400, 400);
-        Thread imageThread = new Thread(uploadThread);
+        UserServices userServices = new UserServices();
+        //        UploadImageThread uploadThread = new UploadImageThread(targetFile, new File(imageMessage.getText()), 400, 400);
+        UploadImageThread uploadThread = UploadImageThread
+                .builder()
+                .targetFile(targetFile)
+                .uploadedFile(new File(imageMessage.getText()))
+                .finalHeight(400)
+                .finalWidth(400)
+                .build();
 
+
+        Thread imageThread = new Thread(uploadThread);
         if(!rePass.equals(password)){
             registerMessage.setText("Not the same password!!!");
         }else{
             try{
                 imageThread.start();
-                UserServices userServices = new UserServices();
-                userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 0, new GuestAccount(), targetFileDir));
-
+                userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 100, new GuestAccount(), targetFileDir));
+                imageThread.join();
+                new SceneController().switchScene(event, "../Pages/userProfile.fxml");
                 for(Map.Entry<String, User> user : userServices.getAll().entrySet()){
                     System.out.println(user);
                 }
@@ -195,6 +201,8 @@ public class RegisterControllers {
                 registerMessage.setText(err.getMessage());
                 imageThread.join();
                 FileController.deleteFile(targetFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

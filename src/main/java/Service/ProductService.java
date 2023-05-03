@@ -4,8 +4,14 @@ import DataAccess.DataAccess;
 import Model.Product.Product;
 
 import java.util.*;
+import javax.xml.crypto.Data;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class ProductService implements Services<Product>{
+
+    private final DataAccess db = new DataAccess();
     @Override
     public String idCreation() {
         int numOfProduct = DataAccess.getAllProducts().size();
@@ -29,6 +35,7 @@ public class ProductService implements Services<Product>{
     }
 
     @Override
+
     public Product getOne(String productIdentifier) {
         for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
             if(productIdentifier.equals(product.getValue().getId()) || productIdentifier.equals(product.getValue().getTitle())){
@@ -36,10 +43,11 @@ public class ProductService implements Services<Product>{
             }
         }
         return null;
+
     }
     public Product getStock(){
         for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
-            if(product.getValue().getStock() == 0){
+            if(product.getValue().getNumOfCopies() == 0){
                 return product.getValue();
             }
         }
@@ -68,6 +76,16 @@ public class ProductService implements Services<Product>{
     @Override
     public HashMap<String,Product> getAll() {
         return DataAccess.getAllProducts();
+
+    }
+
+    public void setTargetProduct(Product currentProduct){
+        DataAccess.setChosenProduct(currentProduct);
+    }
+
+    public Product getTargetProduct(){
+        return DataAccess.getChosenProduct();
+
     }
 
 

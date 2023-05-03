@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="320.0" maxWidth="200.0" onMouseClicked="#onProductClicked" prefHeight="320.0" prefWidth="200.0" style="-fx-border-color: #ccc; -fx-border-width: 2px; -x-border-radius: 5px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.ProductComponentControllers">
+   <children>
+      <VBox layoutX="-1.0" prefHeight="320.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="productImageView" fitHeight="220.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Image/Public/1.jpg" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <VBox.margin>
+                  <Insets left="4.0" />
+               </VBox.margin>
+            </ImageView>
+            <VBox prefHeight="218.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="productTitleDisplay" prefHeight="78.0" prefWidth="251.0" style="-fx-wrap-text: true;" text="Seikiro: Shadow twighlight ">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                     <graphic>
+                        <Label />
+                     </graphic>
+                  </Label>
+                  <Label fx:id="productPriceDisplay" prefHeight="65.0" prefWidth="207.0" text="\$fddsfsdf">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <graphic>
+                        <Label text="Price:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </graphic>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="12.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+   <cursor>
+      <Cursor fx:constant="OPEN_HAND" />
+   </cursor>
+</AnchorPane>
