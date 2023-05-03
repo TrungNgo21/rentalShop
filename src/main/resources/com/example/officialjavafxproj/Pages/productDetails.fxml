@@ -119,7 +119,7 @@
                            <children>
                               <Button mnemonicParsing="false" onAction="#onIncreaseButton" text="Up" />
                               <TextField fx:id="productDetailQuantityTextField" prefHeight="25.0" prefWidth="32.0" text="1" />
-                              <Button mnemonicParsing="false" onAction="#onDecreaseButton" text="Down" />
+                              <Button fx:id="decreaseButton" mnemonicParsing="false" onAction="#onDecreaseButton" text="Down" />
                            </children>
                         </HBox>
                      </children>

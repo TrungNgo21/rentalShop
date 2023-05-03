@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="165.0" maxWidth="370.0" onMouseClicked="#onProductClicked" prefHeight="165.0" prefWidth="370.0" style="-fx-border-color: #ccc; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.TopProductComponent">
+<AnchorPane maxHeight="165.0" maxWidth="370.0" onMouseClicked="#onProductClicked" prefHeight="165.0" prefWidth="370.0" style="-fx-border-color: #ccc; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.TopProductComponentControllers">
    <children>
       <HBox prefHeight="165.0" prefWidth="370.0">
          <children>

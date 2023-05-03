@@ -3,7 +3,7 @@ package com.example.officialjavafxproj.Controller;
 import DataAccess.DataAccess;
 import Model.Product.Product;
 import com.example.officialjavafxproj.Controller.Component.ProductComponentControllers;
-import com.example.officialjavafxproj.Controller.Component.TopProductComponent;
+import com.example.officialjavafxproj.Controller.Component.TopProductComponentControllers;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,7 +48,7 @@ public class HomePageControllers implements Initializable {
                 FXMLLoader fxmlLoader1 = new FXMLLoader();
                 fxmlLoader1.setLocation(getClass().getResource("../Component/topProductComponent.fxml"));
                 AnchorPane productCard = fxmlLoader1.load();
-                TopProductComponent productCardController = fxmlLoader1.getController();
+                TopProductComponentControllers productCardController = fxmlLoader1.getController();
                 productCardController.loadTopProductData(product.getValue());
                 topProductsContainer.getChildren().add(productCard);
 

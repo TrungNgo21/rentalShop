@@ -117,7 +117,7 @@ public class DataAccess {
     private static void loadAllOrderDetails() {
         ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getOrderDetailFileDir());
         for (String[] orderDetailData : Objects.requireNonNull(dataFile)) {
-            OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], products.get(orderDetailData[2]), Integer.parseInt(orderDetailData[3]));
+            OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2], products.get(orderDetailData[3]), Integer.parseInt(orderDetailData[4]));
             orderDetails.add(details);
         }
     }
@@ -198,7 +198,7 @@ public class DataAccess {
         }
     }
 
-    private static void transferAllProduct(){
+    private static void transferAllProduct() {
         try {
             FileWriter writer = new FileWriter(new FileLocation().getProductFileDir(), false);
             for (Map.Entry<String, Product> product : products.entrySet()) {
@@ -219,25 +219,30 @@ public class DataAccess {
         }
     }
 
-    private static void transferAllOrderDetails(){
+    private static void transferAllOrderDetails() {
         try {
             FileWriter writer = new FileWriter(new FileLocation().getOrderDetailFileDir(), false);
             for (Map.Entry<String, User> user : users.entrySet()) {
-                for(Order order : user.getValue().getRentalList()){
-                    for(OrderDetail detail : order.getOrders()){
-                        writer.write( order.getOrderId() + ";"
-                                        + "NaN" + ";"
-                                        + detail.getBoughtItem().getId() + ";"
-                                        + detail.getQuantity() + "\n");
+                if(user.getValue().getRentalList() != null){
+                    for (Order order : user.getValue().getRentalList()) {
+                        for (OrderDetail detail : order.getOrders()) {
+                            writer.write(detail.getOrderDetailId() + ";"
+                                    + order.getOrderId() + ";"
+                                    + "NaN" + ";"
+                                    + detail.getBoughtItem().getId() + ";"
+                                    + detail.getQuantity() + "\n");
+                        }
                     }
-                    for(OrderDetail detail : user.getValue().getCart().getShoppingItems()){
-                        writer.write( "NaN" + ";"
+                }
+                if(user.getValue().getCart() != null){
+                    for (OrderDetail detail : user.getValue().getCart().getShoppingItems()) {
+                        writer.write(detail.getOrderDetailId() + ";"
+                                + "NaN" + ";"
                                 + user.getValue().getCart().getCartId() + ";"
                                 + detail.getBoughtItem().getId() + ";"
                                 + detail.getQuantity() + "\n");
                     }
                 }
-
             }
             writer.close();
         } catch (IOException err) {
@@ -245,13 +250,15 @@ public class DataAccess {
         }
     }
 
-    private static void transferAllCarts(){
+    private static void transferAllCarts() {
         try {
             FileWriter writer = new FileWriter(new FileLocation().getCartFileDir(), false);
             for (Map.Entry<String, User> user : users.entrySet()) {
-
-                    writer.write( user.getValue().getCart().getCartId() + ";"
-                            + user.getValue().getUserId() + "\n");
+                if (user.getValue().getCart() == null) {
+                    continue;
+                }
+                writer.write(user.getValue().getCart().getCartId() + ";"
+                        + user.getValue().getUserId() + "\n");
             }
             writer.close();
         } catch (IOException err) {
@@ -259,12 +266,12 @@ public class DataAccess {
         }
     }
 
-    private static void transferAllOrders(){
+    private static void transferAllOrders() {
         try {
             FileWriter writer = new FileWriter(new FileLocation().getCartFileDir(), false);
             for (Map.Entry<String, User> user : users.entrySet()) {
-                for(Order order : user.getValue().getRentalList()){
-                    writer.write( order.getOrderId() + ";"
+                for (Order order : user.getValue().getRentalList()) {
+                    writer.write(order.getOrderId() + ";"
                             + user.getValue().getUserId() + "\n");
                 }
             }
@@ -278,16 +285,19 @@ public class DataAccess {
         loadAllUsersNoAccounts();
         loadAllAccounts();
         loadAllProducts();
-//        loadAllOrderDetails();
+        loadAllOrderDetails();
 //        loadAllOrdersNoDetail();
-//        loadAllCartsNoDetail();
+        loadAllCartsNoDetail();
 //        loadAllOrders();
-//        loadAllCarts();
+        loadAllCarts();
     }
 
     public static void transferAllData() {
         transferAllUsers();
         transferAllAccounts();
+        transferAllOrderDetails();
+        transferAllCarts();
+
     }
 
 
@@ -299,7 +309,7 @@ public class DataAccess {
         DataAccess.currentUser = currentUser;
     }
 
-    public void addAccountToList(Account account){
+    public void addAccountToList(Account account) {
         accounts.put(account.getAccountId(), account);
     }
 
@@ -315,15 +325,19 @@ public class DataAccess {
         return products;
     }
 
+    public static ArrayList<Cart> getAllCarts() {
+        return carts;
+    }
+
     public static ArrayList<Order> getAllOrders() {
         return orders;
     }
 
-    public static void setChosenProduct(Product product){
+    public static void setChosenProduct(Product product) {
         DataAccess.chosenProduct = product;
     }
 
-    public static Product getChosenProduct(){
+    public static Product getChosenProduct() {
         return chosenProduct;
     }
 
