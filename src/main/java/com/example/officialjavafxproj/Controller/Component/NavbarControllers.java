@@ -1,10 +1,9 @@
 package com.example.officialjavafxproj.Controller.Component;
 
-import Service.OrderDetailService;
+import Service.OrderDetailCartService;
 import Service.UserServices;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
@@ -37,12 +36,16 @@ public class NavbarControllers implements Initializable {
         new SceneController().switchScene(event, "../Pages/userCart.fxml");
     }
 
+    public void onGoToOrders(ActionEvent event) throws IOException {
+        new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+    }
+
     public void loadUserName(){
         userNameDisplay.setText(new UserServices().getCurrentUser().getUserName());
     }
 
     public void loadNoCartItem(){
-        noCartItem.setText(String.valueOf(new OrderDetailService().getAll().size()));
+        noCartItem.setText(String.valueOf(new OrderDetailCartService().getAll().size()));
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

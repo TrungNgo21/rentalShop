@@ -2,6 +2,7 @@ package com.example.officialjavafxproj.Controller.Component;
 
 import FileLocation.FileLocation;
 import Model.Product.Product;
+import Service.ProductService;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -25,6 +26,8 @@ public class TopProductComponentControllers {
     @FXML
     private ImageView productViewDisplay;
 
+    private String productId;
+
     public void loadTopProductData(Product product){
         String imageDir = new FileLocation().getImageDir() + product.getImageLocation();
         try {
@@ -35,11 +38,15 @@ public class TopProductComponentControllers {
         }
         productTitleDisplay.setText(product.getTitle());
         productPriceDisplay.setText(String.valueOf(product.getRentalFee()));
+        productId = product.getId();
 
     }
 
     public void onProductClicked(MouseEvent mouseEvent) throws IOException {
-        new SceneController().switchScene(mouseEvent, "../Pages/userProfile.fxml");
+        ProductService productService = new ProductService();
+        Product currentProduct = productService.getOne(productId);
+        productService.setTargetProduct(currentProduct);
+        new SceneController().switchScene(mouseEvent, "../Pages/productDetails.fxml");
     }
 
 }

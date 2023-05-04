@@ -18,7 +18,7 @@ public abstract class User {
     private double balance;
     private Account account;
 
-    private ArrayList<Order> rentalList;
+    private ArrayList<Order> rentalList = new ArrayList<>();
 
     private Cart cart;
 

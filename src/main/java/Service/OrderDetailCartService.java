@@ -2,11 +2,9 @@ package Service;
 
 import DataAccess.DataAccess;
 import Model.Order.OrderDetail;
-
 import java.util.HashMap;
-import java.util.Hashtable;
 
-public class OrderDetailService implements Services<OrderDetail>{
+public class OrderDetailCartService implements Services<OrderDetail>{
     private final DataAccess db = new DataAccess();
 
     @Override

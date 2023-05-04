@@ -1,5 +1,6 @@
 package DataAccess;
 
+import Middleware.DateMiddleware;
 import Model.Account.Account;
 import Model.Account.GuestAccount;
 import Model.Account.RegularAccount;
@@ -21,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +46,8 @@ public class DataAccess {
     private static User currentUser;
 
     private static Product chosenProduct;
+
+    private static Order currentOrder;
 
     private static ArrayList<String[]> getDataFromFile(String fileLocation) {
         try {
@@ -125,7 +129,7 @@ public class DataAccess {
     private static void loadAllOrdersNoDetail() {
         ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getOrderFileDir());
         for (String[] orderData : Objects.requireNonNull(dataFile)) {
-            Order order = new Order(orderData[0], orderData[1]);
+            Order order = new Order(orderData[0], orderData[1], LocalDate.parse(orderData[2], new DateMiddleware().dateParser()), Double.parseDouble(orderData[3]));
             orders.add(order);
         }
     }
@@ -272,7 +276,9 @@ public class DataAccess {
             for (Map.Entry<String, User> user : users.entrySet()) {
                 for (Order order : user.getValue().getRentalList()) {
                     writer.write(order.getOrderId() + ";"
-                            + user.getValue().getUserId() + "\n");
+                            + user.getValue().getUserId() + ";"
+                            + new DateMiddleware().dateAfterFormat(order.getOrderDate()) + ";"
+                            + order.getTotalPrice() + "\n");
                 }
             }
             writer.close();
@@ -341,5 +347,11 @@ public class DataAccess {
         return chosenProduct;
     }
 
+    public static Order getCurrentOrder() {
+        return currentOrder;
+    }
 
+    public static void setCurrentOrder(Order currentOrder) {
+        DataAccess.currentOrder = currentOrder;
+    }
 }

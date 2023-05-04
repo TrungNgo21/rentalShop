@@ -15,12 +15,12 @@ public class OrderCustomerService extends OrderService {
 
     @Override
     public String idCreation() {
-        return null;
+        return "O00" + DataAccess.getAllOrders().size();
     }
 
     @Override
-    public void add(Order template) {
-
+    public void add(Order order) {
+        DataAccess.getCurrentUser().getRentalList().add(order);
     }
 
     @Override
@@ -35,24 +35,38 @@ public class OrderCustomerService extends OrderService {
 
     @Override
     public Order getOne(String orderId) {
-        if (checker.isBelongedToCurrentUser(orderId, db.getCurrentUser())) {
-            for (Order order : db.getAllOrders()) {
-                if (order.getOrderId().equals(orderId)) {
-                    return order;
-                }
+        for(Order order : DataAccess.getCurrentUser().getRentalList()){
+            if(order.getOrderId().equals(orderId)){
+                return order;
             }
         }
         return null;
+//        if (checker.isBelongedToCurrentUser(orderId, DataAccess.getCurrentUser())) {
+//            for (Order order : DataAccess.getAllOrders()) {
+//                if (order.getOrderId().equals(orderId)) {
+//                    return order;
+//                }
+//            }
+//        }
+//        return null;
 
     }
 
     @Override
     public HashMap<String, Order> getAll() {
         HashMap<String, Order> orders = new HashMap<>();
-        for(Order order : db.getCurrentUser().getRentalList()){
+        for(Order order : DataAccess.getCurrentUser().getRentalList()){
             orders.put(order.getOrderId(), order);
         }
         return orders;
+    }
+
+    public Order getCurrentOrder(){
+        return DataAccess.getCurrentOrder();
+    }
+
+    public void setCurrentOrder(Order currentOrder){
+        DataAccess.setCurrentOrder(currentOrder);
     }
 
 }
