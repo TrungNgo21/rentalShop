@@ -52,7 +52,7 @@ public class UserCartControllers implements Initializable {
 
     }
     public void onCheckoutButton(ActionEvent event) throws IOException {
-
+        UserServices userServices = new UserServices();
         OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
         Order madeOrder = new Order(new OrderCustomerService(new DataAccess(), new OrderMiddleware()).idCreation(), new UserServices().getCurrentUser().getUserId(), LocalDate.now(), Double.parseDouble(totalPriceDisplay.getText()));
         for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
@@ -65,6 +65,7 @@ public class UserCartControllers implements Initializable {
         for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
             orderDetailCartService.delete(details.getValue());
         }
+        userServices.getCurrentUser().setBalance(userServices.getCurrentUser().getBalance() - Double.parseDouble(totalPriceDisplay.getText()));
         new SceneController().switchScene(event, "../Pages/userOrders.fxml");
     }
 

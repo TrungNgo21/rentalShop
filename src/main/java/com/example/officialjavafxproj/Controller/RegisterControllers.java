@@ -4,8 +4,10 @@ import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Middleware.InputMiddleware;
 import Model.Account.GuestAccount;
+import Model.Order.Cart;
 import Model.User.Customer;
 import Model.User.User;
+import Service.UserCartServices;
 import Service.UserServices;
 import com.example.officialjavafxproj.Threads.UploadImageThread;
 import com.example.officialjavafxproj.Utils.FileController;
@@ -191,7 +193,7 @@ public class RegisterControllers {
         }else{
             try{
                 imageThread.start();
-                userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 100, new GuestAccount(), targetFileDir));
+                userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 1000, new GuestAccount(), new Cart(new UserCartServices().idCreation(), userServices.idCreation()),targetFileDir));
                 imageThread.join();
                 new SceneController().switchScene(event, "../Pages/userProfile.fxml");
                 for(Map.Entry<String, User> user : userServices.getAll().entrySet()){

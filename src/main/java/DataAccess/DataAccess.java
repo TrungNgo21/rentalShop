@@ -76,7 +76,7 @@ public class DataAccess {
                 users.put(userData[0],
                         new Admin(userData[0], userData[1], userData[2], userData[3], userData[4], userData[5], userData[6]));
             }
-            users.put(userData[0], new Customer(userData[0], userData[1], userData[2], userData[3], userData[4], userData[5], Double.parseDouble(userData[6]), new GuestAccount(), userData[7]));
+            users.put(userData[0], new Customer(userData[0], userData[1], userData[2], userData[3], userData[4], userData[5], Double.parseDouble(userData[6]), new GuestAccount(), new Cart(), userData[7]));
         }
     }
 
@@ -272,7 +272,7 @@ public class DataAccess {
 
     private static void transferAllOrders() {
         try {
-            FileWriter writer = new FileWriter(new FileLocation().getCartFileDir(), false);
+            FileWriter writer = new FileWriter(new FileLocation().getOrderFileDir(), false);
             for (Map.Entry<String, User> user : users.entrySet()) {
                 for (Order order : user.getValue().getRentalList()) {
                     writer.write(order.getOrderId() + ";"
@@ -288,13 +288,13 @@ public class DataAccess {
     }
 
     public static void loadAllData() {
+        loadAllCartsNoDetail();
         loadAllUsersNoAccounts();
         loadAllAccounts();
         loadAllProducts();
         loadAllOrderDetails();
-//        loadAllOrdersNoDetail();
-        loadAllCartsNoDetail();
-//        loadAllOrders();
+        loadAllOrdersNoDetail();
+        loadAllOrders();
         loadAllCarts();
     }
 
@@ -303,7 +303,7 @@ public class DataAccess {
         transferAllAccounts();
         transferAllOrderDetails();
         transferAllCarts();
-
+        transferAllOrders();
     }
 
 
