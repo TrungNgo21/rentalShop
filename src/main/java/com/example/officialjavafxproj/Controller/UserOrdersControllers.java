@@ -77,6 +77,7 @@ public class UserOrdersControllers implements Initializable {
     public void onBackToShopping(ActionEvent event) throws IOException{
         new SceneController().switchScene(event, "../Pages/homepage.fxml");
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();

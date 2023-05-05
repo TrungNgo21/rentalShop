@@ -7,6 +7,7 @@ import Model.Account.VIPAccount;
 import Model.User.Customer;
 import Service.UserServices;
 import com.example.officialjavafxproj.Utils.SceneController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
@@ -70,8 +71,8 @@ public class ProfileControllers implements Initializable {
 
         if(userServices.getCurrentUser() instanceof Customer){
             Customer currentCustomer = (Customer) userServices.getCurrentUser();
-            String profileImgUrl = imageDir.getImageDir() + currentCustomer.getImageLocation();
             Image currentUserProfileImg = null;
+            String profileImgUrl = imageDir.getImageDir() + currentCustomer.getImageLocation();
             try {
                 currentUserProfileImg = new Image(new FileInputStream(profileImgUrl), 400, 400, false, false);
             } catch (FileNotFoundException e) {
@@ -105,6 +106,14 @@ public class ProfileControllers implements Initializable {
                 noFreeToBorrowDisplay.setText(currentUserAccount.getPoints() >= 100 ? "1" : "Points must be over 100 to borrow free");
             }
         }
+    }
+
+    public void onEditProfile(ActionEvent event) throws IOException{
+        new SceneController().switchScene(event, "../Pages/editUserProfile.fxml");
+    }
+
+    public void onBackToShop(ActionEvent event) throws IOException{
+        new SceneController().switchScene(event, "../Pages/homepage.fxml");
     }
 
     public void addNavigationBar(){

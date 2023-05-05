@@ -31,4 +31,9 @@ public class FileController{
     public static void deleteFile(File deleteFile){
         deleteFile.delete();
     }
+
+    public static void renameFile(File file, File renameFile){
+        file.renameTo(renameFile);
+    }
+
 }

@@ -109,7 +109,17 @@ public abstract class User {
         this.balance = balance;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
 
     @Override
     public String toString() {

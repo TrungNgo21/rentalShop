@@ -83,10 +83,10 @@ public class RegisterControllers {
         InputMiddleware middleware = new InputMiddleware();
         String userName = usernameTextField.getText();
         String fullName = fullnameTextField.getText();
-        String password = passwordTextField.getText();
-        String rePass = confirmPassTextField.getText();
         String phoneNum = phoneNumTextField.getText();
         String address = addressTextField.getText();
+        String password = passwordTextField.getText();
+        String rePass = confirmPassTextField.getText();
         boolean isDisabled = (userName.isEmpty() || userName.trim().isEmpty() ||
                 fullName.isEmpty() || fullName.trim().isEmpty() ||
                 password.isEmpty() || rePass.isEmpty() ||
