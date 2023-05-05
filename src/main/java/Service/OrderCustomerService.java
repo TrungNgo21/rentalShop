@@ -7,6 +7,7 @@ import Model.Order.Order;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class OrderCustomerService extends OrderService {
     public OrderCustomerService(DataAccess db, OrderMiddleware checker) {
@@ -15,7 +16,8 @@ public class OrderCustomerService extends OrderService {
 
     @Override
     public String idCreation() {
-        return "O00" + DataAccess.getAllOrders().size();
+        UUID uuid = UUID.randomUUID();
+        return "O00" + uuid;
     }
 
     @Override
@@ -29,8 +31,8 @@ public class OrderCustomerService extends OrderService {
     }
 
     @Override
-    public void delete(Order template) {
-
+    public void delete(Order order) {
+        DataAccess.getCurrentUser().getRentalList().remove(order);
     }
 
     @Override

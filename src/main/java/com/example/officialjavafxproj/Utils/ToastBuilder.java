@@ -19,7 +19,6 @@ public class ToastBuilder {
 
         public ToastBuilder withTitle(String title){
             notification.setTitle(title);
-
             return this;
         }
 

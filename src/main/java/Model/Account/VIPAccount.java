@@ -6,17 +6,17 @@ public class VIPAccount extends Account{
     }
 
     @Override
-    void addPoint(int addedPoints) {
+    public void addPoint(int addedPoints) {
         setPoints(getPoints() + addedPoints);
     }
 
     @Override
-    boolean isFreeToBorrowOne() {
+    public boolean isFreeToBorrowOne() {
         return getPoints() > 100;
     }
 
     @Override
-    boolean isAllowedToPromoted() {
+    public boolean isAllowedToPromoted() {
         return false;
     }
 }

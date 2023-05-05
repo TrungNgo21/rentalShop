@@ -2,10 +2,13 @@ package com.example.officialjavafxproj.Controller;
 
 import DataAccess.DataAccess;
 import Middleware.OrderMiddleware;
+import Model.Account.GuestAccount;
+import Model.Account.VIPAccount;
 import Model.Order.Order;
 import Model.Order.OrderDetail;
 import Service.OrderCustomerService;
 import Service.OrderDetailCartService;
+import Service.ProductService;
 import Service.UserServices;
 import com.example.officialjavafxproj.Controller.Component.CartComponentControllers;
 import com.example.officialjavafxproj.Utils.SceneController;
@@ -46,6 +49,9 @@ public class UserCartControllers implements Initializable {
     @FXML
     private Button checkoutButton;
 
+    @FXML
+    private Label vipBenefitDisplay;
+
 
 
     public void setCheckoutButton(){
@@ -55,28 +61,69 @@ public class UserCartControllers implements Initializable {
     }
     public void onCheckoutButton(ActionEvent event) throws IOException {
         UserServices userServices = new UserServices();
+        boolean isOutOfStock = false;
         OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
         Order madeOrder = new Order(new OrderCustomerService(new DataAccess(), new OrderMiddleware()).idCreation(), new UserServices().getCurrentUser().getUserId(), LocalDate.now(), Double.parseDouble(totalPriceDisplay.getText()));
         for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
-            details.getValue().setCartId("NaN");
-            details.getValue().setOrderId(madeOrder.getOrderId());
-            madeOrder.addOrderDetailsToOrder(details.getValue());
-        }
-        new OrderCustomerService(new DataAccess(), new OrderMiddleware()).add(madeOrder);
-
-        if(userServices.getCurrentUser().getBalance() < Double.parseDouble(totalPriceDisplay.getText())){
-            ToastBuilder.builder()
-                    .withTitle("Insufficient Money")
-                    .withMode(Notifications.ERROR)
-                    .withMessage("You cannot make this purchase!")
-                    .show();
-        }else{
-            userServices.getCurrentUser().setBalance(userServices.getCurrentUser().getBalance() - Double.parseDouble(totalPriceDisplay.getText()));
-            new SceneController().switchScene(event, "../Pages/userOrders.fxml");
-            for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
-                orderDetailCartService.delete(details.getValue());
+            if(details.getValue().getQuantity() > details.getValue().getBoughtItem().getNumOfCopies()){
+                isOutOfStock = true;
+                break;
             }
         }
+
+        if(userServices.getCurrentUser().getAccount() instanceof GuestAccount){
+            if(userServices.getCurrentUser().getAccount().getRentalThreshold() < orderDetailCartService.getAll().size()){
+                ToastBuilder.builder()
+                        .withTitle("Exceeded Number of Items!")
+                        .withMessage("Your account can only order up to 2 items")
+                        .withMode(Notifications.ERROR)
+                        .show();
+                return;
+            }
+        }
+
+        if(isOutOfStock){
+            ToastBuilder.builder()
+                    .withTitle("Out Of Stock")
+                    .withMessage("Your order quantity is too many!!!")
+                    .withMode(Notifications.ERROR)
+                    .show();
+        }else{
+            if(userServices.getCurrentUser().getBalance() < Double.parseDouble(totalPriceDisplay.getText())){
+                ToastBuilder.builder()
+                        .withTitle("Insufficient Money")
+                        .withMode(Notifications.ERROR)
+                        .withMessage("You cannot make this purchase!")
+                        .show();
+            }else{
+                ToastBuilder.builder()
+                        .withTitle("Order Successfully")
+                        .withMode(Notifications.SUCCESS)
+                        .withMessage("Your purchase is proceeded")
+                        .show();
+                for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
+                    details.getValue().setCartId("NaN");
+                    details.getValue().setOrderDetailId(new OrderDetailCartService().idCreation());
+                    details.getValue().setOrderId(madeOrder.getOrderId());
+                    madeOrder.addOrderDetailsToOrder(details.getValue());
+                }
+                new OrderCustomerService(new DataAccess(), new OrderMiddleware()).add(madeOrder);
+                for(OrderDetail detail : madeOrder.getOrders()){
+                    detail.getBoughtItem().setNumOfCopies(detail.getBoughtItem().getNumOfCopies() - detail.getQuantity());
+                }
+                userServices.getCurrentUser().setBalance(userServices.getCurrentUser().getBalance() - Double.parseDouble(totalPriceDisplay.getText()));
+                userServices.getCurrentUser().getAccount().setRentalThreshold(userServices.getCurrentUser().getAccount().getRentalThreshold() - orderDetailCartService.getAll().size());
+                new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+                for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
+                    orderDetailCartService.delete(details.getValue());
+                }
+            }
+        }
+
+
+
+
+
 
     }
 
@@ -112,8 +159,28 @@ public class UserCartControllers implements Initializable {
                     throw new RuntimeException(e);
                 }
             }
-            subTotalDisplay.setText(String.valueOf(subTotal));
-            totalPriceDisplay.setText(subTotalDisplay.getText());
+            if(new UserServices().getCurrentUser().getAccount() instanceof VIPAccount){
+                if (new UserServices().getCurrentUser().getAccount().isFreeToBorrowOne()){
+                    double price = 0;
+                    for (Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
+                        if(details.getValue().getBoughtItem().getRentalFee() * details.getValue().getQuantity() > price){
+                            price = details.getValue().getBoughtItem().getRentalFee() * details.getValue().getQuantity();
+                        }
+                    }
+                    vipBenefitDisplay.setText("- " + "$ " + price);
+                    subTotalDisplay.setText(String.valueOf(subTotal));
+                    totalPriceDisplay.setText(String.valueOf(Double.parseDouble(subTotalDisplay.getText()) - price));
+                }else{
+                    vipBenefitDisplay.setText("None");
+                    subTotalDisplay.setText(String.valueOf(subTotal));
+                    totalPriceDisplay.setText(subTotalDisplay.getText());
+                }
+            }else{
+                vipBenefitDisplay.setText("None");
+                subTotalDisplay.setText(String.valueOf(subTotal));
+                totalPriceDisplay.setText(subTotalDisplay.getText());
+            }
+
         }
     }
 

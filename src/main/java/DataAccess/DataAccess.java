@@ -186,15 +186,15 @@ public class DataAccess {
     private static void transferAllAccounts() {
         try {
             FileWriter writer = new FileWriter(new FileLocation().getAccountFileDir(), false);
-            for (Map.Entry<String, Account> account : accounts.entrySet()) {
-                writer.write(account.getValue().getAccountId() + ";"
-                        + account.getValue().getAccountType() + ";"
-                        + account.getValue().getPoints() + ";"
-                        + account.getValue().getNumReturnedItems() + ";"
-                        + account.getValue().getIsAllowed2DaysItems() + ";"
-                        + account.getValue().getRentalThreshold() + ";"
-                        + account.getValue().getIsCurrentlyBorrowed() + ";"
-                        + account.getValue().getOwner().getUserId() + "\n");
+            for (Map.Entry<String, User> user : users.entrySet()) {
+                writer.write(user.getValue().getAccount().getAccountId() + ";"
+                        + user.getValue().getAccount().getAccountType() + ";"
+                        + user.getValue().getAccount().getPoints() + ";"
+                        + user.getValue().getAccount().getNumReturnedItems() + ";"
+                        + user.getValue().getAccount().getIsAllowed2DaysItems() + ";"
+                        + user.getValue().getAccount().getRentalThreshold() + ";"
+                        + user.getValue().getAccount().getIsCurrentlyBorrowed() + ";"
+                        + user.getValue().getAccount().getOwner().getUserId() + "\n");
             }
             writer.close();
         } catch (IOException err) {
@@ -300,6 +300,7 @@ public class DataAccess {
 
     public static void transferAllData() {
         transferAllUsers();
+        transferAllProduct();
         transferAllAccounts();
         transferAllOrderDetails();
         transferAllCarts();

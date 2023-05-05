@@ -3,17 +3,15 @@ package Service;
 import DataAccess.DataAccess;
 import Model.Order.OrderDetail;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class OrderDetailCartService implements Services<OrderDetail>{
     private final DataAccess db = new DataAccess();
 
     @Override
     public String idCreation() {
-        String uniqueId = "OD00" + (DataAccess.getCurrentUser().getCart().getShoppingItems().size() + DataAccess.getOrderDetails().size());
-        if(getAll().containsKey(uniqueId)){
-            uniqueId += 1;
-        }
-        return uniqueId;
+        UUID uuid = UUID.randomUUID();
+        return "OD00" + uuid;
     }
 
     @Override

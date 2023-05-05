@@ -83,19 +83,22 @@ public class ProfileControllers implements Initializable {
             addressDisplay.setText(currentCustomer.getAddress());
             phoneNumDisplay.setText(currentCustomer.getPhoneNum());
             balanceDisplay.setText(String.valueOf(currentCustomer.getBalance()));
+            if(currentCustomer.getRentalList().size() > 0){
+                currentCustomer.getAccount().setCurrentlyBorrowed(true);
+            }else{
+                currentCustomer.getAccount().setCurrentlyBorrowed(false);
+            }
             statusDisplay.setText(String.valueOf(currentCustomer.getAccount().getIsCurrentlyBorrowed()));
             accountIdDisplay.setText(currentCustomer.getAccount().getAccountId());
             noReturnedItemsDisplay.setText(String.valueOf(currentCustomer.getAccount().getNumReturnedItems()));
             noMaximumItemsDisplay.setText(String.valueOf(currentCustomer.getAccount().getRentalThreshold()));
             accountTypeDisplay.setText(currentCustomer.getAccount().getAccountType());
             if(currentCustomer.getAccount() instanceof GuestAccount ){
-                GuestAccount currentUserAccount = (GuestAccount) currentCustomer.getAccount();
-                accountPointsDisplay.setText("Cannot accumulate points yet");
-                noFreeToBorrowDisplay.setText("Cannot borrow anything free now");
+                accountPointsDisplay.setText("None");
+                noFreeToBorrowDisplay.setText("Not Now");
             }else if(currentCustomer.getAccount() instanceof RegularAccount){
-                RegularAccount currentUserAccount = (RegularAccount) currentCustomer.getAccount();
-                accountPointsDisplay.setText("Cannot accumulate points yet");
-                noFreeToBorrowDisplay.setText("Cannot borrow anything free now");
+                accountPointsDisplay.setText("None");
+                noFreeToBorrowDisplay.setText("Not Now");
             }else{
                 VIPAccount currentUserAccount = (VIPAccount) currentCustomer.getAccount();
                 accountPointsDisplay.setText(String.valueOf(currentUserAccount.getPoints()));

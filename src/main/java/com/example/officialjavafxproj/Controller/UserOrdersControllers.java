@@ -6,9 +6,11 @@ import Model.Order.Order;
 import Model.Order.OrderDetail;
 import Service.OrderCustomerService;
 import Service.OrderDetailCartService;
+import Service.UserServices;
 import com.example.officialjavafxproj.Controller.Component.CartComponentControllers;
 import com.example.officialjavafxproj.Controller.Component.OrderComponentControllers;
 import com.example.officialjavafxproj.Utils.SceneController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -47,6 +49,12 @@ public class UserOrdersControllers implements Initializable {
         OrderCustomerService orderCustomerService = new OrderCustomerService(new DataAccess(), new OrderMiddleware());
         ordersQuantityDisplay.setText(String.valueOf(orderCustomerService.getAll().size()));
         if(orderCustomerService.getAll().size() == 0){
+            new UserServices().getCurrentUser().getAccount().setCurrentlyBorrowed(false);
+        }else{
+            new UserServices().getCurrentUser().getAccount().setCurrentlyBorrowed(true);
+
+        }
+        if(orderCustomerService.getAll().size() == 0){
             Label messageLabel = new Label();
             messageLabel.setText("You have not order anything yet");
             ordersDisplay.getChildren().add(messageLabel);
@@ -64,6 +72,10 @@ public class UserOrdersControllers implements Initializable {
                 }
             }
         }
+    }
+
+    public void onBackToShopping(ActionEvent event) throws IOException{
+        new SceneController().switchScene(event, "../Pages/homepage.fxml");
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

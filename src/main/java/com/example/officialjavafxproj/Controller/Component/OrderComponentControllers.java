@@ -42,7 +42,11 @@ public class OrderComponentControllers {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        orderStatus.setText("New");
+        if(order.getOrders().size() == 0){
+            orderStatus.setText("Returned");
+        }else{
+            orderStatus.setText("New");
+        }
         orderDate.setText(new DateMiddleware().dateAfterFormat(order.getOrderDate()));
         orderId.setText(order.getOrderId());
         orderTotalPrice.setText(String.valueOf(order.getTotalPrice()));
