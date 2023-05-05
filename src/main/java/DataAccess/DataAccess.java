@@ -354,4 +354,8 @@ public class DataAccess {
     public static void setCurrentOrder(Order currentOrder) {
         DataAccess.currentOrder = currentOrder;
     }
+
+    public static ArrayList<OrderDetail> getOrderDetails(){
+        return orderDetails;
+    }
 }

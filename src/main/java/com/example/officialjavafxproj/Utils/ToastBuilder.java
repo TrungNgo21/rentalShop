@@ -3,6 +3,7 @@ package com.example.officialjavafxproj.Utils;
 import com.github.plushaze.traynotification.animations.Animations;
 import com.github.plushaze.traynotification.notification.Notification;
 import com.github.plushaze.traynotification.notification.TrayNotification;
+import javafx.util.Duration;
 
 
 public class ToastBuilder {
@@ -34,6 +35,6 @@ public class ToastBuilder {
 
         public void show(){
             notification.setAnimation(Animations.POPUP);
-            notification.showAndWait();
+            notification.showAndDismiss(Duration.millis(1000));
         }
 }

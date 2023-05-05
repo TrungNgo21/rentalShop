@@ -17,7 +17,13 @@ public class UserServices implements Services<User> {
     @Override
     public String idCreation() {
         int numOfUsers = DataAccess.getAllUsers().size();
-        return "C00" + numOfUsers;
+        if(numOfUsers < 10){
+            return "C00" + numOfUsers;
+        }else if(numOfUsers <= 99){
+            return "C0" + numOfUsers;
+        }else{
+            return "C" + numOfUsers;
+        }
     }
 
     @Override

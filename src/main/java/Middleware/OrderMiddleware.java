@@ -1,6 +1,7 @@
 package Middleware;
 
 import Model.Order.Order;
+import Model.Product.Product;
 import Model.User.User;
 
 public class OrderMiddleware {
@@ -11,5 +12,9 @@ public class OrderMiddleware {
             }
         }
         return false;
+    }
+
+    public boolean isOutOfStock(Product product, int orderQ){
+        return orderQ <= product.getNumOfCopies();
     }
 }

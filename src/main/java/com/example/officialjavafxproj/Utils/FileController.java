@@ -15,7 +15,6 @@ public class FileController{
             ImageIO.write(bufferedImage, extension, targetFile);
             System.out.println("File uploaded and saved successfully.");
         }catch (IOException err){
-            err.printStackTrace();
         }
     }
 

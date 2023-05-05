@@ -9,7 +9,7 @@ public class OrderDetailCartService implements Services<OrderDetail>{
 
     @Override
     public String idCreation() {
-        String uniqueId = "OD00" + DataAccess.getCurrentUser().getCart().getShoppingItems().size();
+        String uniqueId = "OD00" + (DataAccess.getCurrentUser().getCart().getShoppingItems().size() + DataAccess.getOrderDetails().size());
         if(getAll().containsKey(uniqueId)){
             uniqueId += 1;
         }

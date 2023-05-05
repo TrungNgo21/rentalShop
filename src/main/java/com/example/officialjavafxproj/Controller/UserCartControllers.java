@@ -9,6 +9,8 @@ import Service.OrderDetailCartService;
 import Service.UserServices;
 import com.example.officialjavafxproj.Controller.Component.CartComponentControllers;
 import com.example.officialjavafxproj.Utils.SceneController;
+import com.example.officialjavafxproj.Utils.ToastBuilder;
+import com.github.plushaze.traynotification.notification.Notifications;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,11 +64,20 @@ public class UserCartControllers implements Initializable {
         }
         new OrderCustomerService(new DataAccess(), new OrderMiddleware()).add(madeOrder);
 
-        for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
-            orderDetailCartService.delete(details.getValue());
+        if(userServices.getCurrentUser().getBalance() < Double.parseDouble(totalPriceDisplay.getText())){
+            ToastBuilder.builder()
+                    .withTitle("Insufficient Money")
+                    .withMode(Notifications.ERROR)
+                    .withMessage("You cannot make this purchase!")
+                    .show();
+        }else{
+            userServices.getCurrentUser().setBalance(userServices.getCurrentUser().getBalance() - Double.parseDouble(totalPriceDisplay.getText()));
+            new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+            for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
+                orderDetailCartService.delete(details.getValue());
+            }
         }
-        userServices.getCurrentUser().setBalance(userServices.getCurrentUser().getBalance() - Double.parseDouble(totalPriceDisplay.getText()));
-        new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+
     }
 
     public void addNavigationBar() {
