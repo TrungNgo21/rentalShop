@@ -12,7 +12,13 @@ public class ProductService implements Services<Product>{
     @Override
     public String idCreation() {
         int numOfProduct = DataAccess.getAllProducts().size();
-        return "I00" + numOfProduct + " - ";
+        if(numOfProduct < 10){
+            return "C00" + numOfProduct + " - ";
+        }else if(numOfProduct <= 99){
+            return "C0" + numOfProduct + " - ";
+        }else{
+            return "C" + numOfProduct + " - ";
+        }
     }
 
     @Override

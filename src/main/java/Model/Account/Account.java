@@ -110,11 +110,11 @@ public abstract class Account {
 
 
 
-    abstract void addPoint(int addedPoints);
+    abstract public void addPoint(int addedPoints);
 
-    abstract boolean isFreeToBorrowOne();
+    abstract public boolean isFreeToBorrowOne();
 
-    abstract boolean isAllowedToPromoted();
+    abstract public boolean isAllowedToPromoted();
 
 
 }

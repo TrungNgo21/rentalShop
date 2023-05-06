@@ -16,17 +16,17 @@ public class GuestAccount extends Account {
 
 
     @Override
-    void addPoint(int addedPoints) {
+    public void addPoint(int addedPoints) {
         throw new Error("You are not qualified to add point");
     }
 
     @Override
-    boolean isFreeToBorrowOne() {
+    public boolean isFreeToBorrowOne() {
         throw new Error("You are not qualified to borrow anything free");
     }
 
     @Override
-    boolean isAllowedToPromoted() {
+    public boolean isAllowedToPromoted() {
         return getNumReturnedItems() > 3;
     }
 }

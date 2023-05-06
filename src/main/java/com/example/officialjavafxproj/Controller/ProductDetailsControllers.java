@@ -4,13 +4,12 @@ import FileLocation.FileLocation;
 import Model.Order.OrderDetail;
 import Model.Product.Product;
 import Service.*;
-import com.example.officialjavafxproj.Controller.Component.ProductComponentControllers;
 import com.example.officialjavafxproj.Utils.SceneController;
+import com.example.officialjavafxproj.Utils.ToastBuilder;
+import com.github.plushaze.traynotification.notification.Notifications;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.AccessibleAction;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -51,10 +50,19 @@ public class ProductDetailsControllers implements Initializable {
     private Label productDetailLoanTypeDisplay;
 
     @FXML
-    private TextField productDetailQuantityTextField;
+    private Label productDetailStockDisplay;
+
+    @FXML
+    private Label productDetailQuantityDisplay;
 
     @FXML
     private Button decreaseButton;
+
+    @FXML
+    private Button increaseButton;
+
+    @FXML
+    private Button addToCartButton;
 
     public void addNavigationBar(){
         try {
@@ -79,21 +87,48 @@ public class ProductDetailsControllers implements Initializable {
         productDetailTypeDisplay.setText(currentProduct.getRentalType());
         productDetailGenreDisplay.setText(currentProduct.getGenre());
         productDetailLoanTypeDisplay.setText(currentProduct.getLoanType());
-        productDetailQuantityTextField.setText("1");
-
+        productDetailStockDisplay.setText(String.valueOf(currentProduct.getNumOfCopies()));
+        productDetailQuantityDisplay.setText("2");
+        productDetailQuantityDisplay.textProperty().addListener((observable, oldValue, newValue) ->{
+            if(newValue.equals(productDetailStockDisplay.getText())){
+                increaseButton.setDisable(true);
+            }else{
+                increaseButton.setDisable(false);
+            }
+            if(newValue.equals("1")){
+                decreaseButton.setDisable(true);
+            }else{
+                decreaseButton.setDisable(false);
+            }
+        });
     }
 
     public void onAddToCartButton(ActionEvent event) throws IOException{
-        OrderDetailService orderDetailService = new OrderDetailService();
+        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
         UserCartServices userCartServices = new UserCartServices();
         Product currentProduct = new ProductService().getTargetProduct();
+        boolean isExisted = false;
 
-        if(orderDetailService.getOne(currentProduct.getId()) != null){
-            OrderDetail details = orderDetailService.getOne(currentProduct.getId());
-            details.setQuantity(details.getQuantity() + Integer.parseInt(productDetailQuantityTextField.getText()));
-        }else{
-            OrderDetail detail = new OrderDetail(orderDetailService.idCreation(), "NaN", userCartServices.idCreation(), currentProduct, Integer.parseInt(productDetailQuantityTextField.getText()));
-            orderDetailService.add(detail);
+        for(Map.Entry<String, OrderDetail> detail : orderDetailCartService.getAll().entrySet()){
+            if(detail.getValue().getBoughtItem().getId().equals(currentProduct.getId())){
+                detail.getValue().setQuantity(detail.getValue().getQuantity() + Integer.parseInt(productDetailQuantityDisplay.getText()));
+                ToastBuilder.builder()
+                        .withTitle("Cart Message")
+                        .withMessage("Added To Cart Successfully")
+                        .withMode(Notifications.SUCCESS)
+                        .show();
+                isExisted = true;
+                break;
+            }
+        }
+        if(!isExisted){
+            OrderDetail detail = new OrderDetail(new OrderDetailCartService().idCreation(), "NaN", userCartServices.getOne("dummy").getCartId(), currentProduct, Integer.parseInt(productDetailQuantityDisplay.getText()));
+            orderDetailCartService.add(detail);
+            ToastBuilder.builder()
+                    .withTitle("Cart Message")
+                    .withMessage("Added To Cart Successfully")
+                    .withMode(Notifications.SUCCESS)
+                    .show();
         }
         new SceneController().switchScene(event, "../Pages/userCart.fxml");
 
@@ -103,21 +138,29 @@ public class ProductDetailsControllers implements Initializable {
         new SceneController().switchScene(event, "../Pages/userCart.fxml");
     }
 
+    public void setIncreaseButton(){
+        increaseButton.setDisable(Integer.parseInt(productDetailQuantityDisplay.getText()) == Integer.parseInt(productDetailStockDisplay.getText()));
+    }
     public void onIncreaseButton(ActionEvent event){
-        productDetailQuantityTextField.setText(String.valueOf(Integer.parseInt(productDetailQuantityTextField.getText()) + 1));
+        productDetailQuantityDisplay.setText(String.valueOf(Integer.parseInt(productDetailQuantityDisplay.getText()) + 1));
+//        decreaseButton.setDisable(false);
     }
-    public void onDecreaseButton(ActionEvent event){
-        if(Integer.parseInt(productDetailQuantityTextField.getText()) == 1){
-            decreaseButton.setDisable(true);
-        }else{
-            decreaseButton.setDisable(false);
-            productDetailQuantityTextField.setText(String.valueOf(Integer.parseInt(productDetailQuantityTextField.getText()) - 1));
-        }
+
+
+    public void onDecreaseButton(ActionEvent event) {
+        productDetailQuantityDisplay.setText(String.valueOf(Integer.parseInt(productDetailQuantityDisplay.getText()) - 1));
     }
+
+    public void setAddToCartButton() {
+        addToCartButton.setDisable(productDetailStatusDisplay.getText().equals("BORROWED"));
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
         loadProductDetailData();
+        setIncreaseButton();
+        setAddToCartButton();
     }
 }

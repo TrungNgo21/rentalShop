@@ -43,4 +43,16 @@ public class OrderDetail {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setOrderDetailId(String orderDetailId) {
+        OrderDetailId = orderDetailId;
+    }
+
+    public void setCartId(String cartId) {
+        this.cartId = cartId;
+    }
 }

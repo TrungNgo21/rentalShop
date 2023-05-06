@@ -12,6 +12,9 @@ public class Cart {
         this.userId = userId;
     }
 
+    public Cart() {
+    }
+
     public String getCartId() {
         return cartId;
     }

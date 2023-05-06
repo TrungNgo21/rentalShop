@@ -71,7 +71,11 @@ public abstract class Product {
         return imageLocation;
     }
 
+
     public int getStock() {
         return stock;
+    }
+    public void setNumOfCopies(int numOfCopies) {
+        this.numOfCopies = numOfCopies;
     }
 }

@@ -89,7 +89,7 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label prefHeight="21.0" prefWidth="260.0" text="None">
+                              <Label fx:id="vipBenefitDisplay" prefHeight="21.0" prefWidth="260.0" text="None">
                                  <font>
                                     <Font name="Arial Bold" size="18.0" />
                                  </font>
@@ -136,6 +136,8 @@
                                  </VBox.margin>
                               </Label>
                               <Button fx:id="checkoutButton" mnemonicParsing="false" onAction="#onCheckoutButton" prefHeight="36.0" prefWidth="201.0" text="Checkout" />
+                              <Label prefHeight="52.0" prefWidth="258.0" text="Your account can only borrow up to 2 items" />
+                              <Label prefHeight="52.0" prefWidth="258.0" text="Your account can only borrow up to 2 items" />
                            </children>
                         </VBox>
                      </children>

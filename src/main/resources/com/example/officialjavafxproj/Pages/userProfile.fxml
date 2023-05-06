@@ -235,15 +235,11 @@
       </HBox>
       <HBox layoutX="96.0" layoutY="547.0" prefHeight="64.0" prefWidth="1089.0">
          <children>
-            <AnchorPane prefHeight="80.0" prefWidth="338.0">
-               <children>
-                  <Button alignment="CENTER" layoutX="102.0" layoutY="27.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" text="Upload New Image" />
-               </children>
-            </AnchorPane>
+            <AnchorPane prefHeight="80.0" prefWidth="338.0" />
             <AnchorPane prefHeight="64.0" prefWidth="764.0">
                <children>
-                  <Button alignment="CENTER" layoutX="626.0" layoutY="19.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" text="Back To Shopping" />
-                  <Button alignment="CENTER" layoutX="469.0" layoutY="20.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" text="Edit Profile" />
+                  <Button alignment="CENTER" layoutX="626.0" layoutY="19.0" mnemonicParsing="false" onAction="#onBackToShop" prefHeight="26.0" prefWidth="134.0" text="Back To Shopping" />
+                  <Button alignment="CENTER" layoutX="469.0" layoutY="20.0" mnemonicParsing="false" onAction="#onEditProfile" prefHeight="26.0" prefWidth="134.0" text="Edit Profile" />
                </children>
             </AnchorPane>
          </children>

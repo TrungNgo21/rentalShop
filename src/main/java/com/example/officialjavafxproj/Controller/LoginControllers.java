@@ -3,6 +3,8 @@ package com.example.officialjavafxproj.Controller;
 import DataAccess.DataAccess;
 import Service.UserServices;
 import com.example.officialjavafxproj.Utils.SceneController;
+import com.example.officialjavafxproj.Utils.ToastBuilder;
+import com.github.plushaze.traynotification.notification.Notifications;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -43,8 +45,17 @@ public class LoginControllers {
         SceneController sceneController = new SceneController();
         if(service.login(usernameTextField.getText(), passwordField.getText())){
             sceneController.switchScene(event, "../Pages/userProfile.fxml");
+            ToastBuilder.builder()
+                    .withTitle("Login Message")
+                    .withMessage("Login Successful!")
+                    .withMode(Notifications.SUCCESS)
+                    .show();
         }else{
-            loginMessage.setText("Sai r dan vl!");
+            ToastBuilder.builder()
+                    .withTitle("Login Message")
+                    .withMessage("Sai r dan vl!")
+                    .withMode(Notifications.ERROR)
+                    .show();
         }
     }
 
