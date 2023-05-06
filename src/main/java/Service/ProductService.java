@@ -6,6 +6,7 @@ import Model.Product.Product;
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class ProductService implements Services<Product> {
@@ -73,6 +74,7 @@ public class ProductService implements Services<Product> {
     public void addToSortedProducts(ArrayList<String[]> sortedOptions){
         DataAccess.getSortedProducts().clear();
         System.out.println("sort options: " + sortedOptions.size() );
+        ArrayList<String> deletedProductId = new ArrayList<>();
         for (int i = 0; i < sortedOptions.size(); i++) {
             if(i == 0){
                 for(String option : sortedOptions.get(i)){
@@ -87,7 +89,8 @@ public class ProductService implements Services<Product> {
                 }
             }else if(i == 1){
                 boolean isExisted = false;
-                for(Map.Entry<String, Product> sysProduct : getAll().entrySet()){
+                deletedProductId.clear();
+                for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
                     for(String option : sortedOptions.get(i)){
                         if(option.equals("NONE")){
                             continue;
@@ -98,12 +101,17 @@ public class ProductService implements Services<Product> {
                         }
                     }
                     if(!isExisted){
-                        DataAccess.getSortedProducts().remove(sysProduct.getValue().getId());
+                        deletedProductId.add(sysProduct.getKey());
                     }
+                    isExisted = false;
+                }
+                for(String deletedId : deletedProductId){
+                    getSortedProducts().remove(deletedId);
                 }
             }else if(i == 2){
                 boolean isExisted = false;
-                for(Map.Entry<String, Product> sysProduct : getAll().entrySet()){
+                deletedProductId.clear();
+                for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
                     for(String option : sortedOptions.get(i)){
                         if(option.equals("NONE")){
                             continue;
@@ -114,12 +122,17 @@ public class ProductService implements Services<Product> {
                         }
                     }
                     if(!isExisted){
-                        DataAccess.getSortedProducts().remove(sysProduct.getValue().getId());
+                        deletedProductId.add(sysProduct.getKey());
                     }
+                    isExisted = false;
+                }
+                for(String deletedId : deletedProductId){
+                    getSortedProducts().remove(deletedId);
                 }
             }else{
                 boolean isExisted = false;
-                for(Map.Entry<String, Product> sysProduct : getAll().entrySet()){
+                deletedProductId.clear();
+                for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
                     for(String option : sortedOptions.get(i)){
                         if(option.equals("NONE")){
                             continue;
@@ -130,8 +143,12 @@ public class ProductService implements Services<Product> {
                         }
                     }
                     if(!isExisted){
-                        DataAccess.getSortedProducts().remove(sysProduct.getValue().getId());
+                        deletedProductId.add(sysProduct.getKey());
                     }
+                    isExisted = false;
+                }
+                for(String deletedId : deletedProductId){
+                    getSortedProducts().remove(deletedId);
                 }
             }
         }
