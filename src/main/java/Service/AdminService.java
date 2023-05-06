@@ -40,7 +40,10 @@ public class AdminService implements Services<User> {
 
     @Override
     public User getOne(String id) { // Search User
-        return DataAccess.getAllUsers().get(id);
+        if(DataAccess.getAllUsers().containsKey(id)) {
+            return DataAccess.getAllUsers().get(id);
+        }
+        else return null;
     }
 
     @Override
