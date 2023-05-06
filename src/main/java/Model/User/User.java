@@ -121,6 +121,10 @@ public abstract class User {
         this.phoneNum = phoneNum;
     }
 
+    public void setImageLocation(String imageLocation) {
+        this.imageLocation = imageLocation;
+    }
+
     @Override
     public String toString() {
         return "User{" +

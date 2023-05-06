@@ -8,6 +8,8 @@ import Service.UserServices;
 import com.example.officialjavafxproj.Threads.UploadImageThread;
 import com.example.officialjavafxproj.Utils.FileController;
 import com.example.officialjavafxproj.Utils.SceneController;
+import com.example.officialjavafxproj.Utils.ToastBuilder;
+import com.github.plushaze.traynotification.notification.Notifications;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -97,23 +99,30 @@ public class EditProfileControllers implements Initializable {
     }
 
     public void onSaveProfile(ActionEvent event) {
-        System.out.println(fullNameEditTextField.getText());
         currentUser.setFullName(fullNameEditTextField.getText());
         currentUser.setAddress(addressEditTextField.getText());
         currentUser.setPhoneNum(phoneNumEditTextField.getText());
-        System.out.println(imageMessage.getText());
         if(!imageMessage.getText().equals("")){
-            System.out.println("this is reached");
-            File renameFile = new File(new FileLocation().getImageDir() + currentUser.getImageLocation());
-            File file = new File(newImageDir);
-            FileController.deleteFile(renameFile);
-            FileController.renameFile(file, renameFile);
+            if(!imageMessage.getText().equals("No file chosen")){
+                File renameFile = new File(new FileLocation().getImageDir() + currentUser.getImageLocation());
+                String ext = FileController.getFileExtension(renameFile);
+                renameFile = new File(new FileLocation().getImageDir() + "Users/" + currentUser.getUserId() + "." + ext);
+                File file = new File(newImageDir);
+                FileController.deleteFile(renameFile);
+                currentUser.setImageLocation("Users/" + currentUser.getUserId() + "." + ext);
+                FileController.renameFile(file, renameFile);
+            }
         }
         try {
             new SceneController().switchScene(event, "../Pages/userProfile.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        ToastBuilder.builder()
+                .withTitle("Changed Successfully")
+                .withMessage("You information has changed successfully")
+                .withMode(Notifications.SUCCESS)
+                .show();
     }
 
     public void onResetToBegin() {
