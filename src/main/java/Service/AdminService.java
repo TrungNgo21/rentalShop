@@ -8,8 +8,7 @@ import Model.Product.Product;
 import Model.User.User;
 
 import javax.xml.crypto.Data;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AdminService implements Services<User> {
     private final DataAccess db = new DataAccess();
@@ -40,12 +39,29 @@ public class AdminService implements Services<User> {
 
     @Override
     public User getOne(String id) { // Search User
-        if(DataAccess.getAllUsers().containsKey(id)) {
-            return DataAccess.getAllUsers().get(id);
+        for(Map.Entry<String, User> entry : DataAccess.getAllUsers().entrySet()) {
+            if(id.equals(entry.getValue().getUserId()) || id.equals(entry.getValue().getUserName())) {
+                return entry.getValue();
+            }
         }
-        else return null;
+        return null;
     }
-
+    public HashMap<String, User> sortById(String type) {
+        DataAccess.getSortedProducts().clear();
+        HashMap <String, User> sortedByType =  filterAccountType(type);
+        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedByType.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
+            @Override
+            public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
+                return (o1.getValue().getUserId().compareTo(o2.getValue().getUserId()));
+            }
+        });
+        HashMap<String,User> temp = new LinkedHashMap<String,User>();
+        for (Map.Entry<String,User> user : list){
+            temp.put(user.getKey(),user.getValue());
+        }
+        return temp;
+    }
     @Override
     public HashMap<String, User> getAll() {
 //        HashMap <String, User> user = new HashMap<String, User>();
@@ -55,11 +71,11 @@ public class AdminService implements Services<User> {
         return DataAccess.getAllUsers();
     }
     // Filter the type of account users
-    public HashMap<String, Account> filterAccountType(String accountType) { // Display this hashmap to UI
-        HashMap<String, Account> container = new HashMap<String, Account>();
+    public HashMap<String, User> filterAccountType(String accountType) { // Display this hashmap to UI
+        HashMap<String, User> container = new HashMap<String, User>();
         for(Map.Entry<String, Account> entry : DataAccess.getAllAccounts().entrySet()) {
             if(entry.getValue().getAccountType().equals(accountType)) {
-                container.put(entry.getKey(), entry.getValue());
+                container.put(entry.getKey(), entry.getValue().getOwner());
             }
         }
         return container;

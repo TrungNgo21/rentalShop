@@ -348,14 +348,12 @@ public class DataAccess {
         return chosenProduct;
     }
 
-<<<<<<< HEAD
+
     public static Order getCurrentOrder() {
         return currentOrder;
     }
-=======
-    public static HashMap<String, Product> getSortedProducts() {return sortedProducts;}
 
->>>>>>> 9eb7eccc21263bdfad24ed80405e7b1e403c9723
+    public static HashMap<String, Product> getSortedProducts() {return sortedProducts;}
 
     public static void setCurrentOrder(Order currentOrder) {
         DataAccess.currentOrder = currentOrder;
