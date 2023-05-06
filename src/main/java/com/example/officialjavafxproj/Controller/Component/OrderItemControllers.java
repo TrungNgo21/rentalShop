@@ -72,6 +72,7 @@ public class OrderItemControllers {
     public void onReturnButton(ActionEvent event) throws IOException {
         User currentUser = new UserServices().getCurrentUser();
         order.getBoughtItem().setNumOfCopies(order.getQuantity() + order.getBoughtItem().getNumOfCopies());
+        order.getBoughtItem().setStatus("AVAILABLE");
         Order currentOrder = new OrderCustomerService(new DataAccess(), new OrderMiddleware()).getOne(order.getOrderId());
         System.out.println(currentOrder);
         currentUser.getAccount().setNumReturnedItems(currentUser.getAccount().getNumReturnedItems() + 1);

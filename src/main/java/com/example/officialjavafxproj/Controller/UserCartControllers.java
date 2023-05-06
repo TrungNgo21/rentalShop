@@ -62,11 +62,16 @@ public class UserCartControllers implements Initializable {
     public void onCheckoutButton(ActionEvent event) throws IOException {
         UserServices userServices = new UserServices();
         boolean isOutOfStock = false;
+        boolean isTwoDayItems = false;
         OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
         Order madeOrder = new Order(new OrderCustomerService(new DataAccess(), new OrderMiddleware()).idCreation(), new UserServices().getCurrentUser().getUserId(), LocalDate.now(), Double.parseDouble(totalPriceDisplay.getText()));
         for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
             if(details.getValue().getQuantity() > details.getValue().getBoughtItem().getNumOfCopies()){
                 isOutOfStock = true;
+                break;
+            }
+            if(details.getValue().getBoughtItem().getLoanType().equals("2-DAY")){
+                isTwoDayItems = true;
                 break;
             }
         }
@@ -76,6 +81,14 @@ public class UserCartControllers implements Initializable {
                 ToastBuilder.builder()
                         .withTitle("Exceeded Number of Items!")
                         .withMessage("Your account can only order up to 2 items")
+                        .withMode(Notifications.ERROR)
+                        .show();
+                return;
+            }
+            if(isTwoDayItems){
+                ToastBuilder.builder()
+                        .withTitle("Not Eligible!")
+                        .withMessage("Your account can not order 2-days items!")
                         .withMode(Notifications.ERROR)
                         .show();
                 return;
@@ -110,6 +123,9 @@ public class UserCartControllers implements Initializable {
                 new OrderCustomerService(new DataAccess(), new OrderMiddleware()).add(madeOrder);
                 for(OrderDetail detail : madeOrder.getOrders()){
                     detail.getBoughtItem().setNumOfCopies(detail.getBoughtItem().getNumOfCopies() - detail.getQuantity());
+                    if(detail.getBoughtItem().getNumOfCopies() == 0){
+                        detail.getBoughtItem().setStatus("BORROWED");
+                    }
                 }
                 userServices.getCurrentUser().setBalance(userServices.getCurrentUser().getBalance() - Double.parseDouble(totalPriceDisplay.getText()));
                 userServices.getCurrentUser().getAccount().setRentalThreshold(userServices.getCurrentUser().getAccount().getRentalThreshold() - orderDetailCartService.getAll().size());

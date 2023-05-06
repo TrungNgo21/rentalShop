@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,23 +20,38 @@
             </ImageView>
             <VBox prefHeight="165.0" prefWidth="220.0">
                <children>
-                  <Label fx:id="productTitleDisplay" prefHeight="101.0" prefWidth="220.0" style="-fx-wrap-text: true;" text="Seikiro: HHahaahaaahahha">
+                  <Label fx:id="productTitleDisplay" prefHeight="89.0" prefWidth="208.0" style="-fx-wrap-text: true;" text="Seikiro: HHahaahaaahahha">
                      <font>
                         <Font name="Arial Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="productPriceDisplay" prefHeight="65.0" prefWidth="219.0" text="99999">
+                  <Label fx:id="productPriceDisplay" prefHeight="41.0" prefWidth="208.0" text="99999">
                      <graphic>
                         <Label text="Price: $">
                            <font>
-                              <Font name="Arial Bold Italic" size="18.0" />
+                              <Font name="Arial Bold Italic" size="16.0" />
                            </font>
                         </Label>
                      </graphic>
                      <font>
-                        <Font name="Arial Bold Italic" size="18.0" />
+                        <Font name="Arial Bold Italic" size="16.0" />
                      </font>
                   </Label>
+                  <HBox prefHeight="41.0" prefWidth="208.0">
+                     <children>
+                        <Label fx:id="productStatusDisplay" prefHeight="35.0" prefWidth="100.0" text="AVAILABLE">
+                           <font>
+                              <Font name="Arial Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Label fx:id="productLoanDisplay" prefHeight="35.0" prefWidth="100.0" text="1-WEEK">
+                           <font>
+                              <Font name="Arial Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>

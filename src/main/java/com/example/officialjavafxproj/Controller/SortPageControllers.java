@@ -9,9 +9,9 @@ import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -19,9 +19,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-
-public class HomePageControllers implements Initializable {
-
+public class SortPageControllers implements Initializable {
 
     @FXML
     private AnchorPane navbarPane;
@@ -30,12 +28,7 @@ public class HomePageControllers implements Initializable {
     private VBox sortPane;
 
     @FXML
-    private HBox topProductsContainer;
-
-    @FXML
-    private GridPane productsGridDisplay;
-
-
+    private GridPane sortProductDisplay;
 
     public void addNavigationBar(){
         try {
@@ -53,17 +46,16 @@ public class HomePageControllers implements Initializable {
         }
     }
 
-    public void addProductToGridView(){
+    public void loadSortedProducts(){
         int row = 1;
         int column = 0;
-        for(Map.Entry<String, Product> product : new ProductService().getAll().entrySet()){
+        if(new ProductService().getSortedProducts().size() == 0){
+            Label temp = new Label();
+            temp.setText("No Products matched your requirement");
+            sortProductDisplay.getChildren().add(temp);
+        }
+        for(Map.Entry<String, Product> product : new ProductService().getSortedProducts().entrySet()){
             try {
-                FXMLLoader fxmlLoader1 = new FXMLLoader();
-                fxmlLoader1.setLocation(getClass().getResource("../Component/topProductComponent.fxml"));
-                AnchorPane productCard = fxmlLoader1.load();
-                TopProductComponentControllers productCardController = fxmlLoader1.getController();
-                productCardController.loadTopProductData(product.getValue());
-                topProductsContainer.getChildren().add(productCard);
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../Component/productComponent.fxml"));
                 AnchorPane productItem = fxmlLoader.load();
@@ -75,18 +67,20 @@ public class HomePageControllers implements Initializable {
                     column = 0;
                     ++row;
                 }
-                productsGridDisplay.setHgap(10);
-                productsGridDisplay.setVgap(10);
-                productsGridDisplay.add(productItem, column++, row);
+                sortProductDisplay.setHgap(10);
+                sortProductDisplay.setVgap(10);
+                sortProductDisplay.add(productItem, column++, row);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
         addSortedPane();
-        addProductToGridView();
+        loadSortedProducts();
     }
 }

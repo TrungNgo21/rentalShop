@@ -23,10 +23,17 @@ public class TopProductComponentControllers {
     private Label productTitleDisplay;
     @FXML
     private Label productPriceDisplay;
+
+    @FXML
+    private Label productStatusDisplay;
+
+    @FXML
+    private Label productLoanDisplay;
     @FXML
     private ImageView productViewDisplay;
 
     private String productId;
+
 
     public void loadTopProductData(Product product){
         String imageDir = new FileLocation().getImageDir() + product.getImageLocation();
@@ -38,6 +45,8 @@ public class TopProductComponentControllers {
         }
         productTitleDisplay.setText(product.getTitle());
         productPriceDisplay.setText(String.valueOf(product.getRentalFee()));
+        productStatusDisplay.setText(product.getStatus());
+        productLoanDisplay.setText(product.getLoanType());
         productId = product.getId();
 
     }
