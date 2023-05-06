@@ -341,5 +341,7 @@ public class DataAccess {
         return chosenProduct;
     }
 
+    public static HashMap<String, Product> getSortedProducts() {return sortedProducts;}
+
 
 }

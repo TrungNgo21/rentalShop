@@ -53,12 +53,27 @@ public class ProductService implements Services<Product>{
         }
         return null;
     }
-    public TreeMap<String,Product> sortById(){
-        TreeMap<String,Product> sortedList = new TreeMap<>(DataAccess.getAllProducts());
-        return sortedList;
+    public HashMap<String, Product> sortById(String type){
+        DataAccess.getSortedProducts().clear();
+        HashMap<String,Product> sortedByType = getProductByType(type);
+        List<Map.Entry<String,Product> > list = new LinkedList<Map.Entry<String,Product> >(sortedByType.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, Product>>() {
+            @Override
+            public int compare(Map.Entry<String, Product> o1, Map.Entry<String, Product> o2) {
+                return (o1.getValue().getId().compareTo(o2.getValue().getId()));
+            }
+        });
+        HashMap<String,Product> temp = new LinkedHashMap<String,Product>();
+        for (Map.Entry<String,Product> product : list){
+            temp.put(product.getKey(),product.getValue());
+        }
+        return temp;
     }
-    public HashMap<String,Product> sortByTitle(){
-        List<Map.Entry<String,Product> > list = new LinkedList<Map.Entry<String,Product> >(DataAccess.getAllProducts().entrySet());
+    public HashMap<String,Product> sortByTitle(String type){
+//        //clear
+        DataAccess.getSortedProducts().clear();
+        HashMap<String,Product> sortedByType = getProductByType(type);
+        List<Map.Entry<String,Product> > list = new LinkedList<Map.Entry<String,Product> >(sortedByType.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, Product>>() {
             @Override
             public int compare(Map.Entry<String, Product> o1, Map.Entry<String, Product> o2) {
@@ -71,6 +86,18 @@ public class ProductService implements Services<Product>{
         }
         return temp;
     }
+    public HashMap<String,Product> getProductByType(String rentalType){
+        DataAccess.getSortedProducts().clear();
+        for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
+            if(product.getValue().getRentalType().equals(rentalType)){
+                DataAccess.getSortedProducts().put(product.getKey(),product.getValue());
+            }
+        }
+
+        return DataAccess.getSortedProducts();
+    }
+
+
 
 
     @Override

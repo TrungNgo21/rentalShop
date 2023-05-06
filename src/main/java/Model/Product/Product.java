@@ -69,4 +69,5 @@ public abstract class Product {
     public String getImageLocation() {
         return imageLocation;
     }
+
 }
