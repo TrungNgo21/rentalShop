@@ -40,6 +40,10 @@ public class CartComponentControllers {
     @FXML
     private Button increaseButton;
 
+    @FXML
+    private Label productCartLoanDisplay;
+
+
     public void loadCartItemData(OrderDetail details){
         String imageDir = new FileLocation().getImageDir() + details.getBoughtItem().getImageLocation();
         try {
@@ -50,6 +54,7 @@ public class CartComponentControllers {
         }
         cartItemId = details.getOrderDetailId();
         productCartTitleDisplay.setText(details.getBoughtItem().getTitle());
+        productCartLoanDisplay.setText(details.getBoughtItem().getLoanType());
         quantityDisplay.setText(String.valueOf(details.getQuantity()));
         productCartPriceDisplay.setText(String.valueOf(details.getBoughtItem().getRentalFee() * Integer.parseInt(quantityDisplay.getText())));
         setDownButton();

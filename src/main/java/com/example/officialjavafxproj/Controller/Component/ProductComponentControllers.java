@@ -22,6 +22,13 @@ public class ProductComponentControllers {
     @FXML
     private Label productPriceDisplay;
 
+    @FXML
+    private Label productStatusDisplay;
+
+    @FXML
+    private Label productLoanDisplay;
+
+
     private String productId;
 
     public void loadProductItemData(Product product){
@@ -34,6 +41,8 @@ public class ProductComponentControllers {
         }
         productTitleDisplay.setText(product.getTitle());
         productPriceDisplay.setText(String.valueOf(product.getRentalFee()));
+        productLoanDisplay.setText(product.getLoanType());
+        productStatusDisplay.setText(product.getStatus());
         productId = product.getId();
 
     }
