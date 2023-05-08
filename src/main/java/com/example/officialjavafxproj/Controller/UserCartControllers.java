@@ -136,11 +136,6 @@ public class UserCartControllers implements Initializable {
             }
         }
 
-
-
-
-
-
     }
 
     public void addNavigationBar() {
