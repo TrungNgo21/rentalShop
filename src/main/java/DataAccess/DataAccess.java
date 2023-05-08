@@ -378,4 +378,5 @@ public class DataAccess {
     public static void addToSortedProducts(Product product){
         sortedProducts.put(product.getId(), product);
     }
+    public static HashMap<String, User> getSortedUsers(){return sortedUsers;}
 }

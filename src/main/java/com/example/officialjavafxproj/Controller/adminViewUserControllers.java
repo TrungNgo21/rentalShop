@@ -1,26 +1,25 @@
 package com.example.officialjavafxproj.Controller;
 
-import FileLocation.FileLocation;
+
 import Model.User.Customer;
 import Model.User.User;
 import Service.AdminService;
+
+import com.example.officialjavafxproj.Controller.Component.AdminUserControllers;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.event.ActionEvent;
-import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 
-import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class adminViewUserControllers implements Initializable {
@@ -30,18 +29,14 @@ public class adminViewUserControllers implements Initializable {
     @FXML
     private ChoiceBox<String> accountType;
     @FXML
-    private RadioButton userWithStock;
-
-    @FXML
     private TextField searchUser;
-    @FXML
-    private Button search;
-    @FXML
-    private ImageView userImage;
-    @FXML
-    private Label errorLabel;
-
-    private String[] userType = {"VIP Account", "Regular Account", "Guest Account"};
+//    @FXML
+//    private Button search;
+     @FXML
+     private GridPane gridPane;
+     @FXML
+     private Button deleteSearch;
+    private final String[] userType = {"VIP Account", "Regular Account", "Guest Account"};
 
     public void addNavigationBar(){
         try {
@@ -55,33 +50,136 @@ public class adminViewUserControllers implements Initializable {
         accountType.setOnAction(this::onSearchUserButton);
     }
 
+    public void addUserToGridView() {
+        int row = 0;
+        int column = 1;
+        for(Map.Entry<String, User> user : new AdminService().getAll().entrySet()){
+            try {
+                FXMLLoader fxmlLoader1 = new FXMLLoader();
+                fxmlLoader1.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
+                AnchorPane userCard = fxmlLoader1.load();
+                AdminUserControllers userCardController = fxmlLoader1.getController();
+                userCardController.loadDisplayUser(user.getValue());
+                if(column == 1){
+                    column = 0;
+                    row++;
+                }
+                gridPane.setHgap(10);
+                gridPane.setVgap(10);
+                gridPane.add(userCard, column, row++);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
     public void onSearchUserButton(ActionEvent event) {
         AdminService admin = new AdminService();
-        Customer displayUser = (Customer) admin.getOne(searchUser.getText());
+        User displayUser =  admin.getOne(searchUser.getText());
 
-        if(displayUser == null && admin.filterAccountType(accountType.getValue()).isEmpty()) {
-            errorLabel.setText("There are no users with your ID!!");
+        if(searchUser.getText().isEmpty() && !admin.filterAccountType(accountType.getValue()).isEmpty()) {
+              gridPane.getChildren().clear();
+                int row = 0;
+                int column = 1;
+              for(Map.Entry<String, User> tempUser : admin.filterAccountType(accountType.getValue()).entrySet()) {
+                  try {
+                      FXMLLoader loader = new FXMLLoader();
+                      loader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
+                      AnchorPane userCard = loader.load();
+                      AdminUserControllers userControllers = loader.getController();
+                      userControllers.loadDisplayUser(tempUser.getValue());
+                      if(column == 1){
+                          column = 0;
+                          row++;
+                      }
+                      gridPane.setHgap(10);
+                      gridPane.setVgap(10);
+                      gridPane.add(userCard, column, row++);
+                  }
+                  catch (Exception e) {
+                      throw new RuntimeException(e);
+                  }
+              }
         }
-
-        else if(displayUser != null && admin.filterAccountType(accountType.getValue()).containsValue(displayUser.getAccount())) {
-            FileLocation imageDir = new FileLocation();
-            String displayedCustomerImageURL = imageDir.getImageDir() + displayUser.getImageLocation();
-            Image displayUserImage = null;
+        else if(!searchUser.getText().isEmpty() && admin.filterAccountType(accountType.getValue()).isEmpty()) {
+            gridPane.getChildren().clear();
+            int row = 0;
+            int column = 1;
             try {
-                displayUserImage = new Image(new FileInputStream(displayedCustomerImageURL), 200, 200, false, false);
-            } catch (FileNotFoundException e) {
-                System.out.println(e.getMessage());
+               FXMLLoader loader = new FXMLLoader();
+               loader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
+               AnchorPane userCard = loader.load();
+               AdminUserControllers userControllers = loader.getController();
+               userControllers.loadDisplayUser(displayUser);
+                if(column == 1){
+                    column = 0;
+                    row++;
+                }
+                gridPane.setHgap(10);
+                gridPane.setVgap(10);
+                gridPane.add(userCard, column, row++);
             }
-            userImage.setImage(displayUserImage);
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
-        else if(displayUser == null && !admin.filterAccountType(accountType.getValue()).isEmpty()) {
-            
+        else if(!searchUser.getText().isEmpty() && !admin.filterAccountType(accountType.getValue()).isEmpty()) {
+            gridPane.getChildren().clear();
+            int row = 0;
+            int column = 1;
+            if(!admin.filterAccountType(accountType.getValue()).containsValue(displayUser)) {
+                gridPane.add(new javafx.scene.control.Label(),0,0);
+            }
+            else {
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
+                    AnchorPane userCard = loader.load();
+                    AdminUserControllers userControllers = loader.getController();
+                    userControllers.loadDisplayUser(displayUser);
+                    if(column == 1){
+                        column = 0;
+                        row++;
+                    }
+                    gridPane.setHgap(10);
+                    gridPane.setVgap(10);
+                    gridPane.add(userCard, column, row++);
+                }
+                catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 
+    public void onDeleteSearchButton() {
+        gridPane.getChildren().clear();
+        accountType.getSelectionModel().clearSelection();
+        searchUser.clear();
+        int row = 0;
+        int column = 1;
+        for(Map.Entry<String, User> user : new AdminService().getAll().entrySet()){
+            try {
+                FXMLLoader fxmlLoader1 = new FXMLLoader();
+                fxmlLoader1.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
+                AnchorPane userCard = fxmlLoader1.load();
+                AdminUserControllers userCardController = fxmlLoader1.getController();
+                userCardController.loadDisplayUser(user.getValue());
+                if(column == 1){
+                    column = 0;
+                    row++;
+                }
+                gridPane.setHgap(10);
+                gridPane.setVgap(10);
+                gridPane.add(userCard, column, row++);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
         addAccountType();
+        addUserToGridView();
     }
 }
