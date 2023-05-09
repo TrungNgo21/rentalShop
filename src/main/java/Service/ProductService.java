@@ -150,14 +150,12 @@ public class ProductService implements Services<Product> {
                     }
                     isExisted = false;
 
-                    System.out.println("noneCounter is " + noneCounter);
                     if(noneCounter == sortedOptions.get(i).length){
                         deletedProductId.clear();
                     }
                     noneCounter = 0;
                 }
                 for(String deletedId : deletedProductId){
-                    System.out.println("This is reached");
                     getSortedProducts().remove(deletedId);
                 }
             }else{
