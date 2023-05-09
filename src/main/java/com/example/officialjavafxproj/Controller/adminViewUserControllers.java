@@ -59,7 +59,7 @@ public class adminViewUserControllers implements Initializable {
                 fxmlLoader1.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
                 AnchorPane userCard = fxmlLoader1.load();
                 AdminUserControllers userCardController = fxmlLoader1.getController();
-                userCardController.loadDisplayUser(user.getValue());
+                userCardController.loadDisplayUser((Customer) user.getValue());
                 if(column == 1){
                     column = 0;
                     row++;
@@ -74,7 +74,7 @@ public class adminViewUserControllers implements Initializable {
     }
     public void onSearchUserButton(ActionEvent event) {
         AdminService admin = new AdminService();
-        User displayUser =  admin.getOne(searchUser.getText());
+        Customer displayUser = (Customer) admin.getOne(searchUser.getText());
 
         if(searchUser.getText().isEmpty() && !admin.filterAccountType(accountType.getValue()).isEmpty()) {
               gridPane.getChildren().clear();
@@ -86,7 +86,7 @@ public class adminViewUserControllers implements Initializable {
                       loader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
                       AnchorPane userCard = loader.load();
                       AdminUserControllers userControllers = loader.getController();
-                      userControllers.loadDisplayUser(tempUser.getValue());
+                      userControllers.loadDisplayUser((Customer) tempUser.getValue());
                       if(column == 1){
                           column = 0;
                           row++;
@@ -163,7 +163,7 @@ public class adminViewUserControllers implements Initializable {
                 fxmlLoader1.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
                 AnchorPane userCard = fxmlLoader1.load();
                 AdminUserControllers userCardController = fxmlLoader1.getController();
-                userCardController.loadDisplayUser(user.getValue());
+                userCardController.loadDisplayUser((Customer) user.getValue());
                 if(column == 1){
                     column = 0;
                     row++;

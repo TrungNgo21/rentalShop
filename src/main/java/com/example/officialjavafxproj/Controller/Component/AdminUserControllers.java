@@ -1,6 +1,7 @@
 package com.example.officialjavafxproj.Controller.Component;
 
 import FileLocation.FileLocation;
+import Model.User.Customer;
 import Model.User.User;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.event.ActionEvent;
@@ -21,13 +22,17 @@ public class AdminUserControllers {
     @FXML
     private Label userIdDisplay;
     @FXML
+    private Label userPhoneDisplay;
+    @FXML
+    private Label userAddressDisplay;
+    @FXML
     private Button viewButton;
 
-    public void loadDisplayUser(User user) {
+    public void loadDisplayUser(Customer user) {
         String imageDir = new FileLocation().getImageDir() + user.getImageLocation();
         try {
-            Image productImage = new Image(new FileInputStream(imageDir), 200, 175, false, false);
-            imageView.setImage(productImage);
+            Image userImage = new Image(new FileInputStream(imageDir), 200, 175, false, false);
+            imageView.setImage(userImage);
 
         }
         catch (Exception e){
@@ -35,6 +40,8 @@ public class AdminUserControllers {
         }
         userNameDisplay.setText(user.getUserName());
         userIdDisplay.setText(user.getUserId());
+        userPhoneDisplay.setText(user.getPhoneNum());
+        userAddressDisplay.setText(user.getAddress());
     }
 
     public void onViewUserProfileButton(ActionEvent event) throws IOException {

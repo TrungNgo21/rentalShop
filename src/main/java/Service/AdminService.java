@@ -47,7 +47,6 @@ public class AdminService implements Services<User> {
         return null;
     }
     public HashMap<String, User> sortById(String type) {
-        DataAccess.getSortedProducts().clear();
         HashMap <String, User> sortedByType =  filterAccountType(type);
         List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedByType.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
