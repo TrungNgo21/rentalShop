@@ -381,4 +381,5 @@ public class DataAccess {
     public static void setSortedProducts(HashMap<String, Product> sortProducts) {
         sortedProducts = sortProducts;
     }
+    public static HashMap<String, User> getGetSortedUsers() {return sortedUsers;}
 }

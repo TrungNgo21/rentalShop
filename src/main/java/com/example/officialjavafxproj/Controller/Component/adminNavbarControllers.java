@@ -20,20 +20,12 @@ public class adminNavbarControllers {
         new SceneController().switchScene(event, "../Pages/login.fxml");
     }
 
-    public void onAccountButton(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/userProfile.fxml"); // Lam profile admin
-    }
-
     public void onHomeButton(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/homepage.fxml");
+        new SceneController().switchScene(event, "../Pages/adminViewProduct.fxml");
     }
 
     public void onGoToOrderButton(ActionEvent event) throws IOException{
 //        new SceneController().switchScene(event, "../Pages/userCart.fxml"); lam view all order pages
-    }
-
-    public void loadUserName(){
-        userNameDisplay.setText(new UserServices().getCurrentUser().getUserName());
     }
 
 //    public void loadNoCartItem(){

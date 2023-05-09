@@ -56,9 +56,9 @@
          </children></VBox>
    </left>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="568.0" prefWidth="771.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+            <ScrollPane prefHeight="571.0" prefWidth="571.0">
                <content>
                   <GridPane fx:id="gridPane" gridLinesVisible="true" prefHeight="32.0" prefWidth="31.0" style="-fx-padding: 20px;" />
                </content>

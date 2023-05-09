@@ -71,13 +71,13 @@ public class AdminService implements Services<User> {
     }
     // Filter the type of account users
     public HashMap<String, User> filterAccountType(String accountType) { // Display this hashmap to UI
-        HashMap<String, User> container = new HashMap<String, User>();
+        DataAccess.getGetSortedUsers().clear();
         for(Map.Entry<String, Account> entry : DataAccess.getAllAccounts().entrySet()) {
             if(entry.getValue().getAccountType().equals(accountType)) {
-                container.put(entry.getKey(), entry.getValue().getOwner());
+                DataAccess.getGetSortedUsers().put(entry.getKey(), entry.getValue().getOwner());
             }
         }
-        return container;
+        return DataAccess.getGetSortedUsers();
     }
 
 }

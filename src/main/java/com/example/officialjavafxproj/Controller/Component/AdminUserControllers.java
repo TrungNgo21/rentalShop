@@ -38,10 +38,10 @@ public class AdminUserControllers {
         catch (Exception e){
             throw new RuntimeException(e);
         }
-        userNameDisplay.setText(user.getUserName());
+        userNameDisplay.setText(user.getFullName());
         userIdDisplay.setText(user.getUserId());
         userPhoneDisplay.setText(user.getPhoneNum());
-        userAddressDisplay.setText(user.getAddress());
+        userAddressDisplay.setText(user.getAccount().getAccountType());
     }
 
     public void onViewUserProfileButton(ActionEvent event) throws IOException {
