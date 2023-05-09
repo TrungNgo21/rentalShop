@@ -78,7 +78,6 @@ public class ProductService implements Services<Product>{
         for (Map.Entry<String,Product> product : list){
             temp.put(product.getKey(),product.getValue());
         }
-        DataAccess.setSortedProducts(temp);
         return temp;
     }
     public HashMap<String,Product> sortByTitle(String type){
@@ -96,7 +95,7 @@ public class ProductService implements Services<Product>{
         for (Map.Entry<String,Product> product : list){
             temp.put(product.getKey(),product.getValue());
         }
-        DataAccess.setSortedProducts(temp);
+
         return temp;
     }
     public HashMap<String,Product> getProductByType(String rentalType){
@@ -145,7 +144,6 @@ public class ProductService implements Services<Product>{
         System.out.println("sort options: " + sortedOptions.size() );
         ArrayList<String> deletedProductId = new ArrayList<>();
         for (int i = 0; i < sortedOptions.size(); i++) {
-
             if(i == 0){
                 int noneCounter = 0;
                 for(String option : sortedOptions.get(i)){
@@ -153,20 +151,24 @@ public class ProductService implements Services<Product>{
                         noneCounter++;
                         continue;
                     }
-
                     for(Map.Entry<String, Product> sysProduct : getAll().entrySet()){
+                        System.out.println(option);
                         if(sysProduct.getValue().getRentalType().equals(option)){
                             DataAccess.addToSortedProducts(sysProduct.getValue());
                         }
                     }
                 }
                 if(noneCounter == sortedOptions.get(i).length){
-                    DataAccess.setSortedProducts(DataAccess.getAllProducts());
+                    getSortedProducts().clear();
+                    for(Map.Entry<String, Product> sysProduct : getAll().entrySet()){
+                        DataAccess.addToSortedProducts(sysProduct.getValue());
+                    }
                 }
             }else if(i == 1){
                 boolean isExisted = false;
                 int noneCounter = 0;
                 deletedProductId.clear();
+                System.out.println(getSortedProducts());
                 for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
                     for(String option : sortedOptions.get(i)){
                         if(option.equals("NONE")){
@@ -184,8 +186,9 @@ public class ProductService implements Services<Product>{
                     isExisted = false;
                     if(noneCounter == sortedOptions.get(i).length){
                         deletedProductId.clear();
-                        noneCounter = 0;
                     }
+                    noneCounter = 0;
+
                 }
 
                 for(String deletedId : deletedProductId){
@@ -198,6 +201,7 @@ public class ProductService implements Services<Product>{
                 int noneCounter = 0;
 
                 deletedProductId.clear();
+                System.out.println(getSortedProducts());
                 for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
                     for(String option : sortedOptions.get(i)){
                         if(option.equals("NONE")){
@@ -213,11 +217,11 @@ public class ProductService implements Services<Product>{
                         deletedProductId.add(sysProduct.getKey());
                     }
                     isExisted = false;
+
                     if(noneCounter == sortedOptions.get(i).length){
                         deletedProductId.clear();
-                        noneCounter = 0;
-
                     }
+                    noneCounter = 0;
                 }
                 for(String deletedId : deletedProductId){
                     getSortedProducts().remove(deletedId);
@@ -227,6 +231,7 @@ public class ProductService implements Services<Product>{
                 int noneCounter = 0;
 
                 deletedProductId.clear();
+                System.out.println(getSortedProducts());
                 for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
                     for(String option : sortedOptions.get(i)){
                         if(option.equals("NONE")){
@@ -244,8 +249,9 @@ public class ProductService implements Services<Product>{
                     isExisted = false;
                     if(noneCounter == sortedOptions.get(i).length){
                         deletedProductId.clear();
-                        noneCounter = 0;
                     }
+                    noneCounter = 0;
+
                 }
 
                 for(String deletedId : deletedProductId){
