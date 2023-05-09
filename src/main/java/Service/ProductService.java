@@ -76,16 +76,23 @@ public class ProductService implements Services<Product> {
         System.out.println("sort options: " + sortedOptions.size() );
         ArrayList<String> deletedProductId = new ArrayList<>();
         for (int i = 0; i < sortedOptions.size(); i++) {
+
             if(i == 0){
+                int noneCounter = 0;
                 for(String option : sortedOptions.get(i)){
                     if(option.equals("NONE")){
+                        noneCounter++;
                         continue;
                     }
+
                     for(Map.Entry<String, Product> sysProduct : getAll().entrySet()){
                         if(sysProduct.getValue().getRentalType().equals(option)){
                             DataAccess.addToSortedProducts(sysProduct.getValue());
                         }
                     }
+                }
+                if(noneCounter == sortedOptions.get(i).length){
+                    DataAccess.setSortedProducts(DataAccess.getAllProducts());
                 }
             }else if(i == 1){
                 boolean isExisted = false;
