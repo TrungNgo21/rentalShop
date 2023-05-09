@@ -48,6 +48,7 @@ public class AdminViewProductController implements Initializable {
     private GridPane gridPane;
 
     private String sortedChoice;
+    private String genreChoice;
     @FXML
     private final ObservableList<String> list = FXCollections.observableArrayList( "All","DVD", "GAME", "MRecords");
 
@@ -64,31 +65,28 @@ public class AdminViewProductController implements Initializable {
     }
 
     public void addProductToGridView(){
-
-        genreSelection.setOnAction((ActionEvent event) ->{
-            genreSelection.getValue();
+        System.out.println(genreChoice);
             HashMap<String,Product> temp = new HashMap<>();
             Label emptylabel = new Label();
             int column = 1;
             int row = 0;
             ProductService productService = new ProductService();
-            String choice = genreSelection.getValue();
             gridPane.getChildren().clear();
             if(sortedChoice == null){
-                if(choice == null){
+                if(genreChoice == null){
                     gridPane.add(emptylabel,0,0);
                 }
-                else if(choice.equals("All")){
+                else if(genreChoice.equals("All")){
                     temp = DataAccess.getAllProducts();
                 }
                 else {
-                    temp = productService.getProductByType(choice);
+                    temp = productService.getProductByType(genreChoice);
                 }
             }
             else if (sortedChoice.equals("SortById")){
-                temp = productService.sortById(choice);
+                temp = productService.sortById(genreChoice);
             } else if (sortedChoice.equals("SortByTitle")) {
-                temp = productService.sortByTitle(choice);
+                temp = productService.sortByTitle(genreChoice);
             }
             System.out.println(sortedChoice);
             System.out.println(temp);
@@ -112,31 +110,28 @@ public class AdminViewProductController implements Initializable {
                     throw new RuntimeException(e);
                 }
             }
-        });
-
     }
     public void setChoiceBox(){
         genreSelection.setItems(list);
     }
-    public void setUpSortByToggleGroup(ActionEvent actionEvent){
+    public void setUpSortByToggleGroup(ActionEvent actionEvent) throws IOException{
         stockButton.setToggleGroup(toggleGroup);
         idButton.setToggleGroup(toggleGroup);
         titleButton.setToggleGroup(toggleGroup);
-        toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
-                RadioButton radioButton = (RadioButton) toggleGroup.getSelectedToggle();
-
-                if(radioButton != null){
-                    if(radioButton.equals(idButton)){
-                        sortedChoice = "SortById";
-                    }
-                    if(radioButton.equals(titleButton)){
-                        sortedChoice = "SortByTitle";
-                    }
-                }
-            }
-        });
+        if(idButton.isSelected()){
+            sortedChoice = "SortById";
+        }
+        if(titleButton.isSelected()){
+            sortedChoice = "SortByTitle";
+        }
+    }
+    public void getGenreSelection(ActionEvent actionEvent) throws IOException {
+        genreChoice = genreSelection.getValue();
+    }
+    public void show(ActionEvent actionEvent) {
+        System.out.println(genreChoice);
+        System.out.println(sortedChoice);
+        addProductToGridView();
     }
 
 
@@ -144,7 +139,6 @@ public class AdminViewProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        addNavigationBar();
-        addProductToGridView();
         setChoiceBox();
     }
 }

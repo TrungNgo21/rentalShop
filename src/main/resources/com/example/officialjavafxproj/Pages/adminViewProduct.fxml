@@ -21,7 +21,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </Label>
-            <ChoiceBox fx:id="genreSelection" prefHeight="27.0" prefWidth="210.0">
+            <ChoiceBox fx:id="genreSelection" onAction="#getGenreSelection" prefHeight="27.0" prefWidth="210.0">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
@@ -43,12 +43,12 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="58.0" prefWidth="239.0">
                      <children>
-                        <RadioButton fx:id="titleButton" mnemonicParsing="false" text="Title">
+                        <RadioButton fx:id="titleButton" mnemonicParsing="false" onAction="#setUpSortByToggleGroup" text="Title">
                            <HBox.margin>
                               <Insets bottom="10.0" left="-25.0" right="10.0" top="10.0" />
                            </HBox.margin>
                         </RadioButton>
-                        <RadioButton fx:id="idButton" mnemonicParsing="false" text="ProductID" />
+                        <RadioButton fx:id="idButton" mnemonicParsing="false" onAction="#setUpSortByToggleGroup" text="ProductID" />
                      </children>
                   </HBox>
                </children>
@@ -82,7 +82,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="128.0" text="Search">
+            <Button mnemonicParsing="false" onAction="#show" prefHeight="27.0" prefWidth="128.0" text="Search">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>

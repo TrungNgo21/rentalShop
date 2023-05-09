@@ -78,6 +78,7 @@ public class ProductService implements Services<Product>{
         for (Map.Entry<String,Product> product : list){
             temp.put(product.getKey(),product.getValue());
         }
+        DataAccess.setSortedProducts(temp);
         return temp;
     }
     public HashMap<String,Product> sortByTitle(String type){
@@ -95,6 +96,7 @@ public class ProductService implements Services<Product>{
         for (Map.Entry<String,Product> product : list){
             temp.put(product.getKey(),product.getValue());
         }
+        DataAccess.setSortedProducts(temp);
         return temp;
     }
     public HashMap<String,Product> getProductByType(String rentalType){
