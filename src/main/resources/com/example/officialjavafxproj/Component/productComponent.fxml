@@ -4,9 +4,11 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -35,6 +37,21 @@
                         <Label />
                      </graphic>
                   </Label>
+                  <HBox prefHeight="44.0" prefWidth="192.0">
+                     <children>
+                        <Label fx:id="productStatusDisplay" prefHeight="44.0" prefWidth="100.0" text="AVAILABLE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="44.0" prefWidth="0.0" />
+                        <Label fx:id="productLoanDisplay" prefHeight="44.0" prefWidth="100.0" text="1-WEEK">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                   <Label fx:id="productPriceDisplay" prefHeight="65.0" prefWidth="207.0" text="\$fddsfsdf">
                      <font>
                         <Font size="18.0" />

@@ -29,7 +29,7 @@
                   <Insets left="30.0" top="26.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="My Orders">
+            <Button mnemonicParsing="false" onAction="#onGoToOrders" prefHeight="25.0" prefWidth="81.0" text="My Orders">
                <HBox.margin>
                   <Insets left="20.0" top="26.0" />
                </HBox.margin>

@@ -1,5 +1,7 @@
 package Model.Product;
 
+import java.util.Arrays;
+
 public abstract class Product {
     private final String[] loanTypes = {"2-DAY, 1-WEEK"};
     private final String[] rentalTypes = {"RECORD", "DVD", "GAME"};
@@ -68,6 +70,34 @@ public abstract class Product {
 
     public String getImageLocation() {
         return imageLocation;
+    }
+
+    public void setNumOfCopies(int numOfCopies) {
+        this.numOfCopies = numOfCopies;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "loanTypes=" + Arrays.toString(loanTypes) +
+                ", rentalTypes=" + Arrays.toString(rentalTypes) +
+                ", rentalStatus=" + Arrays.toString(rentalStatus) +
+                ", genres=" + Arrays.toString(genres) +
+                ", id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", rentalType='" + rentalType + '\'' +
+                ", genre='" + genre + '\'' +
+                ", publishedYear='" + publishedYear + '\'' +
+                ", numOfCopies=" + numOfCopies +
+                ", rentalFee=" + rentalFee +
+                ", loanType='" + loanType + '\'' +
+                ", status='" + status + '\'' +
+                ", imageLocation='" + imageLocation + '\'' +
+                '}';
     }
 
 }

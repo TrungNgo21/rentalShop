@@ -4,12 +4,16 @@ import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Middleware.InputMiddleware;
 import Model.Account.GuestAccount;
+import Model.Order.Cart;
 import Model.User.Customer;
 import Model.User.User;
+import Service.UserCartServices;
 import Service.UserServices;
 import com.example.officialjavafxproj.Threads.UploadImageThread;
 import com.example.officialjavafxproj.Utils.FileController;
 import com.example.officialjavafxproj.Utils.SceneController;
+import com.example.officialjavafxproj.Utils.ToastBuilder;
+import com.github.plushaze.traynotification.notification.Notifications;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -79,22 +83,21 @@ public class RegisterControllers {
         InputMiddleware middleware = new InputMiddleware();
         String userName = usernameTextField.getText();
         String fullName = fullnameTextField.getText();
-        String password = passwordTextField.getText();
-        String rePass = confirmPassTextField.getText();
         String phoneNum = phoneNumTextField.getText();
         String address = addressTextField.getText();
+        String password = passwordTextField.getText();
+        String rePass = confirmPassTextField.getText();
         boolean isDisabled = (userName.isEmpty() || userName.trim().isEmpty() ||
                 fullName.isEmpty() || fullName.trim().isEmpty() ||
                 password.isEmpty() || rePass.isEmpty() ||
                 phoneNum.isEmpty() || phoneNum.trim().isEmpty() ||
                 address.isEmpty() || address.trim().isEmpty());
 
-        boolean isValid = (middleware.isValidUsername(userName) ||
-                middleware.isValidPassword(password) ||
-                password.equals(rePass) ||
-                middleware.isValidIString(20, address) ||
-                middleware.isValidIString(15, fullName) ||
-                middleware.isValidPhoneNum(phoneNum));
+        boolean isValid = (!middleware.isValidUsername(userName) ||
+                !password.equals(rePass) ||
+                !middleware.isValidIString(20, address) ||
+                !middleware.isValidIString(15, fullName) ||
+                !middleware.isValidPhoneNum(phoneNum));
 
         if(!middleware.isValidIString(15, fullName)){
             fullNameErrorMessage.setText("Your full name must have 15 characters");
@@ -131,7 +134,7 @@ public class RegisterControllers {
         }else{
             rePasswordErrorMessage.setText("");
         }
-        registerButton.setDisable(isDisabled || !isValid);
+        registerButton.setDisable(isDisabled || isValid);
     }
 
     public void onToLoginButton(ActionEvent event) throws IOException {
@@ -169,7 +172,7 @@ public class RegisterControllers {
         String ext = FileController.getFileExtension(new File(imageMessage.getText()));
         File targetFile = new File( new FileLocation().getImageDir() + "Users/" + new UserServices().idCreation() + "." + ext);
 
-        if(imageMessage.getText().equals("No file chosen")){
+        if(imageMessage.getText().equals("No file chosen") || imageMessage.getText().equals("")){
             targetFileDir = "Users/default.png";
         }else{
             targetFileDir = "Users/" + new UserServices().idCreation() + "." + ext;
@@ -187,18 +190,28 @@ public class RegisterControllers {
 
         Thread imageThread = new Thread(uploadThread);
         if(!rePass.equals(password)){
-            registerMessage.setText("Not the same password!!!");
+            ToastBuilder.builder()
+                    .withTitle("Register Message")
+                    .withMessage("Not the same password!!!")
+                    .withMode(Notifications.ERROR)
+                    .show();
         }else{
             try{
                 imageThread.start();
-                userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 100, new GuestAccount(), targetFileDir));
+                userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 1000, new GuestAccount(), new Cart(new UserCartServices().idCreation(), userServices.idCreation()),targetFileDir));
                 imageThread.join();
+                ToastBuilder.builder()
+                        .withTitle("Register Message")
+                        .withMessage("Register Successfully!!!")
+                        .withMode(Notifications.SUCCESS)
+                        .show();
                 new SceneController().switchScene(event, "../Pages/userProfile.fxml");
-                for(Map.Entry<String, User> user : userServices.getAll().entrySet()){
-                    System.out.println(user);
-                }
             }catch (Error err){
-                registerMessage.setText(err.getMessage());
+                ToastBuilder.builder()
+                        .withTitle("Register Message")
+                        .withMessage(err.getMessage())
+                        .withMode(Notifications.ERROR)
+                        .show();
                 imageThread.join();
                 FileController.deleteFile(targetFile);
             } catch (IOException e) {

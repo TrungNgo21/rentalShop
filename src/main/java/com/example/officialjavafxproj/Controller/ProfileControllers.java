@@ -7,6 +7,7 @@ import Model.Account.VIPAccount;
 import Model.User.Customer;
 import Service.UserServices;
 import com.example.officialjavafxproj.Utils.SceneController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
@@ -70,8 +71,8 @@ public class ProfileControllers implements Initializable {
 
         if(userServices.getCurrentUser() instanceof Customer){
             Customer currentCustomer = (Customer) userServices.getCurrentUser();
-            String profileImgUrl = imageDir.getImageDir() + currentCustomer.getImageLocation();
             Image currentUserProfileImg = null;
+            String profileImgUrl = imageDir.getImageDir() + currentCustomer.getImageLocation();
             try {
                 currentUserProfileImg = new Image(new FileInputStream(profileImgUrl), 400, 400, false, false);
             } catch (FileNotFoundException e) {
@@ -83,25 +84,36 @@ public class ProfileControllers implements Initializable {
             addressDisplay.setText(currentCustomer.getAddress());
             phoneNumDisplay.setText(currentCustomer.getPhoneNum());
             balanceDisplay.setText(String.valueOf(currentCustomer.getBalance()));
+            if(currentCustomer.getRentalList().size() > 0){
+                currentCustomer.getAccount().setCurrentlyBorrowed(true);
+            }else{
+                currentCustomer.getAccount().setCurrentlyBorrowed(false);
+            }
             statusDisplay.setText(String.valueOf(currentCustomer.getAccount().getIsCurrentlyBorrowed()));
             accountIdDisplay.setText(currentCustomer.getAccount().getAccountId());
             noReturnedItemsDisplay.setText(String.valueOf(currentCustomer.getAccount().getNumReturnedItems()));
             noMaximumItemsDisplay.setText(String.valueOf(currentCustomer.getAccount().getRentalThreshold()));
             accountTypeDisplay.setText(currentCustomer.getAccount().getAccountType());
             if(currentCustomer.getAccount() instanceof GuestAccount ){
-                GuestAccount currentUserAccount = (GuestAccount) currentCustomer.getAccount();
-                accountPointsDisplay.setText("Cannot accumulate points yet");
-                noFreeToBorrowDisplay.setText("Cannot borrow anything free now");
+                accountPointsDisplay.setText("None");
+                noFreeToBorrowDisplay.setText("Not Now");
             }else if(currentCustomer.getAccount() instanceof RegularAccount){
-                RegularAccount currentUserAccount = (RegularAccount) currentCustomer.getAccount();
-                accountPointsDisplay.setText("Cannot accumulate points yet");
-                noFreeToBorrowDisplay.setText("Cannot borrow anything free now");
+                accountPointsDisplay.setText("None");
+                noFreeToBorrowDisplay.setText("Not Now");
             }else{
                 VIPAccount currentUserAccount = (VIPAccount) currentCustomer.getAccount();
                 accountPointsDisplay.setText(String.valueOf(currentUserAccount.getPoints()));
                 noFreeToBorrowDisplay.setText(currentUserAccount.getPoints() >= 100 ? "1" : "Points must be over 100 to borrow free");
             }
         }
+    }
+
+    public void onEditProfile(ActionEvent event) throws IOException{
+        new SceneController().switchScene(event, "../Pages/editUserProfile.fxml");
+    }
+
+    public void onBackToShop(ActionEvent event) throws IOException{
+        new SceneController().switchScene(event, "../Pages/homepage.fxml");
     }
 
     public void addNavigationBar(){

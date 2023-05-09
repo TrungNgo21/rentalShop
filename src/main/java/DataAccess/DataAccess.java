@@ -1,5 +1,6 @@
 package DataAccess;
 
+import Middleware.DateMiddleware;
 import Model.Account.Account;
 import Model.Account.GuestAccount;
 import Model.Account.RegularAccount;
@@ -21,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +33,9 @@ public class DataAccess {
 
     private static final HashMap<String, User> sortedUsers = new HashMap<>();
 
-    private static final HashMap<String, Product> sortedProducts = new HashMap<>();
+    private static HashMap<String, Product> sortedProducts = new HashMap<>();
+
+    private static final ArrayList<String[]> sortedOptions = new ArrayList<>();
     private static final HashMap<String, Account> accounts = new HashMap<>();
 
     private static final ArrayList<Cart> carts = new ArrayList<>();
@@ -44,6 +48,8 @@ public class DataAccess {
     private static User currentUser;
 
     private static Product chosenProduct;
+
+    private static Order currentOrder;
 
     private static ArrayList<String[]> getDataFromFile(String fileLocation) {
         try {
@@ -72,7 +78,7 @@ public class DataAccess {
                 users.put(userData[0],
                         new Admin(userData[0], userData[1], userData[2], userData[3], userData[4], userData[5], userData[6]));
             }
-            users.put(userData[0], new Customer(userData[0], userData[1], userData[2], userData[3], userData[4], userData[5], Double.parseDouble(userData[6]), new GuestAccount(), userData[7]));
+            users.put(userData[0], new Customer(userData[0], userData[1], userData[2], userData[3], userData[4], userData[5], Double.parseDouble(userData[6]), new GuestAccount(), new Cart(), userData[7]));
         }
     }
 
@@ -125,7 +131,7 @@ public class DataAccess {
     private static void loadAllOrdersNoDetail() {
         ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getOrderFileDir());
         for (String[] orderData : Objects.requireNonNull(dataFile)) {
-            Order order = new Order(orderData[0], orderData[1]);
+            Order order = new Order(orderData[0], orderData[1], LocalDate.parse(orderData[2], new DateMiddleware().dateParser()), Double.parseDouble(orderData[3]));
             orders.add(order);
         }
     }
@@ -182,15 +188,15 @@ public class DataAccess {
     private static void transferAllAccounts() {
         try {
             FileWriter writer = new FileWriter(new FileLocation().getAccountFileDir(), false);
-            for (Map.Entry<String, Account> account : accounts.entrySet()) {
-                writer.write(account.getValue().getAccountId() + ";"
-                        + account.getValue().getAccountType() + ";"
-                        + account.getValue().getPoints() + ";"
-                        + account.getValue().getNumReturnedItems() + ";"
-                        + account.getValue().getIsAllowed2DaysItems() + ";"
-                        + account.getValue().getRentalThreshold() + ";"
-                        + account.getValue().getIsCurrentlyBorrowed() + ";"
-                        + account.getValue().getOwner().getUserId() + "\n");
+            for (Map.Entry<String, User> user : users.entrySet()) {
+                writer.write(user.getValue().getAccount().getAccountId() + ";"
+                        + user.getValue().getAccount().getAccountType() + ";"
+                        + user.getValue().getAccount().getPoints() + ";"
+                        + user.getValue().getAccount().getNumReturnedItems() + ";"
+                        + user.getValue().getAccount().getIsAllowed2DaysItems() + ";"
+                        + user.getValue().getAccount().getRentalThreshold() + ";"
+                        + user.getValue().getAccount().getIsCurrentlyBorrowed() + ";"
+                        + user.getValue().getAccount().getOwner().getUserId() + "\n");
             }
             writer.close();
         } catch (IOException err) {
@@ -268,11 +274,13 @@ public class DataAccess {
 
     private static void transferAllOrders() {
         try {
-            FileWriter writer = new FileWriter(new FileLocation().getCartFileDir(), false);
+            FileWriter writer = new FileWriter(new FileLocation().getOrderFileDir(), false);
             for (Map.Entry<String, User> user : users.entrySet()) {
                 for (Order order : user.getValue().getRentalList()) {
                     writer.write(order.getOrderId() + ";"
-                            + user.getValue().getUserId() + "\n");
+                            + user.getValue().getUserId() + ";"
+                            + new DateMiddleware().dateAfterFormat(order.getOrderDate()) + ";"
+                            + order.getTotalPrice() + "\n");
                 }
             }
             writer.close();
@@ -282,22 +290,23 @@ public class DataAccess {
     }
 
     public static void loadAllData() {
+        loadAllCartsNoDetail();
         loadAllUsersNoAccounts();
         loadAllAccounts();
         loadAllProducts();
         loadAllOrderDetails();
-//        loadAllOrdersNoDetail();
-        loadAllCartsNoDetail();
-//        loadAllOrders();
+        loadAllOrdersNoDetail();
+        loadAllOrders();
         loadAllCarts();
     }
 
     public static void transferAllData() {
         transferAllUsers();
+        transferAllProduct();
         transferAllAccounts();
         transferAllOrderDetails();
         transferAllCarts();
-
+        transferAllOrders();
     }
 
 
@@ -341,7 +350,37 @@ public class DataAccess {
         return chosenProduct;
     }
 
-    public static HashMap<String, Product> getSortedProducts() {return sortedProducts;}
+
+    public static Order getCurrentOrder() {
+        return currentOrder;
+    }
 
 
+    public static void setCurrentOrder(Order currentOrder) {
+        DataAccess.currentOrder = currentOrder;
+    }
+
+    public static void addSortedOptions(String[] options){
+        sortedOptions.add(options);
+    }
+
+    public static ArrayList<String[]> getSortedOptions(){
+        return sortedOptions;
+    }
+
+    public static ArrayList<OrderDetail> getOrderDetails(){
+        return orderDetails;
+    }
+
+    public static HashMap<String, Product> getSortedProducts(){
+        return sortedProducts;
+    }
+
+    public static void addToSortedProducts(Product product){
+        sortedProducts.put(product.getId(), product);
+    }
+
+    public static void setSortedProducts(HashMap<String, Product> sortProducts) {
+        sortedProducts = sortProducts;
+    }
 }
