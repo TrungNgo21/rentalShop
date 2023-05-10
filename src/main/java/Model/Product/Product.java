@@ -17,6 +17,7 @@ public abstract class Product {
     private String loanType;
     private String status;
 
+    private int stock;
     private String imageLocation;
 
     public Product(String id, String title, String rentalType, String genre, String publishedYear, int numOfCopies, double rentalFee, String loanType, String status, String imageLocation) {
@@ -72,6 +73,10 @@ public abstract class Product {
         return imageLocation;
     }
 
+
+    public int getStock() {
+        return stock;
+    }
     public void setNumOfCopies(int numOfCopies) {
         this.numOfCopies = numOfCopies;
     }

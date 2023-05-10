@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="520.0" style="-fx-border-color: #ccc; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.officialjavafxproj.Controller.Component.AdminProductController">
+    <children>
+        <ImageView fx:id="imageView" fitHeight="175.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+        <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="352.0" style="-fx-padding: 10;">
+            <children>
+                <Label fx:id="productTitleDisplay" prefHeight="71.0" prefWidth="300.0" style="-fx-wrap-text: true;" text="Sekiro: Shadow Die Twice">
+                    <font>
+                        <Font name="Arial Bold" size="16.0" />
+                    </font>
+                </Label>
+                <Label fx:id="productStockDisplay" prefHeight="35.0" prefWidth="355.0" style="-fx-wrap-text: true;" text="54">
+                    <font>
+                        <Font name="Arial Bold" size="18.0" />
+                    </font>
+                    <graphic>
+                        <Label prefHeight="35.0" prefWidth="8.0" style="-fx-wrap-text: true;" text="\$">
+                            <font>
+                                <Font name="Arial Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </graphic>
+                </Label>
+                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="300.0">
+               <children>
+                  <Button fx:id="editButton" alignment="CENTER" mnemonicParsing="false" prefHeight="27.0" prefWidth="100.0" text="Edit Product">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</HBox>
