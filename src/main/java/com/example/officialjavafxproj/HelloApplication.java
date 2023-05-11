@@ -24,7 +24,7 @@ public class HelloApplication extends Application {
         DataAccess.loadAllData();
         boolean isLoadedAll = true;
         stage.initStyle(StageStyle.UNDECORATED);
-        sceneSwitcher.setCurrentScene(stage,"../hello-view.fxml");
+        sceneSwitcher.setCurrentScene(stage,"../Pages/adminSortProduct.fxml");
     }
 
     public static void main(String[] args) {

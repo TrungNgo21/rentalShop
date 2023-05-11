@@ -80,6 +80,12 @@ public abstract class Product {
         this.status = status;
     }
 
+    public void setTitle(String title) {this.title = title;}
+
+    public void setRentalFee(double rentalFee) {this.rentalFee = rentalFee;}
+
+    public void setImageLocation(String imageLocation) {this.imageLocation = imageLocation;}
+
     @Override
     public String toString() {
         return "Product{" +

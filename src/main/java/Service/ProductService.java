@@ -64,27 +64,23 @@ public class ProductService implements Services<Product>{
         }
         return null;
     }
-    public HashMap<String, Product> sortById(String type){
-        DataAccess.getSortedProducts().clear();
-        HashMap<String,Product> sortedByType = getProductByType(type);
-        List<Map.Entry<String,Product> > list = new LinkedList<Map.Entry<String,Product> >(sortedByType.entrySet());
+    public void sortByPrice(){
+        List<Map.Entry<String,Product> > list = new LinkedList<Map.Entry<String,Product> >(DataAccess.getSortedProducts().entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, Product>>() {
             @Override
             public int compare(Map.Entry<String, Product> o1, Map.Entry<String, Product> o2) {
-                return (o1.getValue().getId().compareTo(o2.getValue().getId()));
+                return (int) (o1.getValue().getRentalFee() - o2.getValue().getRentalFee());
             }
         });
         HashMap<String,Product> temp = new LinkedHashMap<String,Product>();
+        DataAccess.getSortedProducts().clear();
         for (Map.Entry<String,Product> product : list){
             temp.put(product.getKey(),product.getValue());
         }
-        return temp;
+        DataAccess.setSortedProducts(temp);
     }
-    public HashMap<String,Product> sortByTitle(String type){
-//        //clear
-        DataAccess.getSortedProducts().clear();
-        HashMap<String,Product> sortedByType = getProductByType(type);
-        List<Map.Entry<String,Product> > list = new LinkedList<Map.Entry<String,Product> >(sortedByType.entrySet());
+    public void sortByTitle(){
+        List<Map.Entry<String,Product> > list = new LinkedList<Map.Entry<String,Product> >(DataAccess.getSortedProducts().entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, Product>>() {
             @Override
             public int compare(Map.Entry<String, Product> o1, Map.Entry<String, Product> o2) {
@@ -92,11 +88,12 @@ public class ProductService implements Services<Product>{
             }
         });
         HashMap<String,Product> temp = new LinkedHashMap<String,Product>();
+        DataAccess.getSortedProducts().clear();
         for (Map.Entry<String,Product> product : list){
             temp.put(product.getKey(),product.getValue());
         }
+        DataAccess.setSortedProducts(temp);
 
-        return temp;
     }
     public HashMap<String,Product> getProductByType(String rentalType){
         DataAccess.getSortedProducts().clear();
@@ -141,7 +138,6 @@ public class ProductService implements Services<Product>{
 
     public void addToSortedProducts(ArrayList<String[]> sortedOptions){
         DataAccess.getSortedProducts().clear();
-        System.out.println("sort options: " + sortedOptions.size() );
         ArrayList<String> deletedProductId = new ArrayList<>();
         for (int i = 0; i < sortedOptions.size(); i++) {
             if(i == 0){
