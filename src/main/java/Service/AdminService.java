@@ -80,7 +80,7 @@ public class AdminService implements Services<User> {
         return DataAccess.getSortedUsers();
     }
 
-    public void sortFromZToA() {
+    public void sortDecreasingOrderId() {
 //        DataAccess.getSortedUsers().clear();
 //        HashMap<String, User> sortedUSer = filterAccountType(type);
 //        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedUSer.entrySet());
@@ -99,7 +99,7 @@ public class AdminService implements Services<User> {
         Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
             @Override
             public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
-                return (o2.getValue().getUserName().compareTo(o1.getValue().getUserName()));
+                return (o2.getValue().getUserId().compareTo(o1.getValue().getUserId()));
             }
         });
         HashMap<String, User> temp = new LinkedHashMap<String, User>();
@@ -110,7 +110,7 @@ public class AdminService implements Services<User> {
         DataAccess.setSortedUsers(temp);
     }
 
-    public void sortFromAToZ() {
+    public void sortIncreasingOrderId() {
 //        DataAccess.getSortedUsers().clear();
 //        HashMap<String, User> sortedUSer = filterAccountType(type);
 //        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedUSer.entrySet());
@@ -129,7 +129,7 @@ public class AdminService implements Services<User> {
         Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
             @Override
             public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
-                return (o1.getValue().getUserName().compareTo(o2.getValue().getUserName()));
+                return (o1.getValue().getUserId().compareTo(o2.getValue().getUserId()));
             }
         });
         HashMap<String, User> temp = new LinkedHashMap<String, User>();

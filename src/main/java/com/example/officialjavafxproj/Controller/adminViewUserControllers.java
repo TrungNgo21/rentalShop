@@ -107,12 +107,12 @@ public class adminViewUserControllers implements Initializable {
     public void sortUsers(ActionEvent event) {
         if(increasingOrder.isSelected()) {
             gridPane.getChildren().clear();
-            new AdminService().sortFromAToZ();
+            new AdminService().sortIncreasingOrderId();
             addUserToGridView();
         }
         else if(decreasingOrder.isSelected()) {
             gridPane.getChildren().clear();
-            new AdminService().sortFromZToA();
+            new AdminService().sortDecreasingOrderId();
             addUserToGridView();
         }
     }

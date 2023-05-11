@@ -39,17 +39,17 @@
                   <Insets top="24.0" />
                </VBox.margin>
             </Separator>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="195.0" text="Sorted By Alphabetical">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="195.0" text="Sorted By User Id">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="increasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="From A-Z">
+            <RadioButton fx:id="increasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="Increasing Order">
                <padding>
                   <Insets left="5.0" top="10.0" />
                </padding>
             </RadioButton>
-            <RadioButton fx:id="decreasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="From Z-A">
+            <RadioButton fx:id="decreasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="Decreasing Order">
                <padding>
                   <Insets bottom="10.0" left="5.0" top="10.0" />
                </padding>
