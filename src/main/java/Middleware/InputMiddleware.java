@@ -35,6 +35,13 @@ public class InputMiddleware {
             return username.length() >= 12;
         }
     }
+    public boolean isPositve(String num) {
+        if(num.isEmpty()){
+            return false;
+        }
+        return Double.parseDouble(num) > 0;
+    }
+
 
     public boolean isValidIString(int length, String inputI4){
         return inputI4.length() >= length;

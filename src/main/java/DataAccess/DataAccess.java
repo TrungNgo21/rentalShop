@@ -35,6 +35,7 @@ public class DataAccess {
 
     private static HashMap<String, Product> sortedProducts = new HashMap<>();
 
+
     private static final ArrayList<String[]> sortedOptions = new ArrayList<>();
     private static final HashMap<String, Account> accounts = new HashMap<>();
 
@@ -357,6 +358,8 @@ public class DataAccess {
         return currentOrder;
     }
 
+
+
     public static void setCurrentOrder(Order currentOrder) {
         DataAccess.currentOrder = currentOrder;
     }
@@ -376,13 +379,12 @@ public class DataAccess {
     public static HashMap<String, Product> getSortedProducts(){
         return sortedProducts;
     }
+    public static void setSortedProducts(HashMap<String, Product> sortedProducts) {DataAccess.sortedProducts = sortedProducts;}
 
     public static void addToSortedProducts(Product product){
         sortedProducts.put(product.getId(), product);
     }
-    public static void setSortedProducts(HashMap<String, Product> sortProducts) {
-        sortedProducts = sortProducts;
-    }
+
     public static HashMap<String, User> getSortedUsers() {return sortedUsers;}
 
     public static User getSelectedCustomer() {return selectedCustomer;}

@@ -2,6 +2,7 @@ package com.example.officialjavafxproj.Controller.Component;
 
 import Model.Product.Product;
 import Service.ProductService;
+import Service.UserServices;
 import com.example.officialjavafxproj.Utils.CheckboxController;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.event.ActionEvent;
@@ -55,17 +56,9 @@ public class SortComponentControllers implements Initializable {
         productService.addSortedOptions(CheckboxController.getAllOptions(availabilityCheckboxes));
 
         productService.addToSortedProducts(productService.getSortedOptions());
-        new SceneController().switchScene(event, "../Pages/sortPage.fxml");
+//        new SceneController().switchScene(event, "../Pages/sortPage.fxml");
+        new SceneController().switchScene(event,"../Pages/adminSortProduct.fxml");
 
-//        for(String[] options : productService.getSortedOptions()){
-//            for (String option : options){
-//                System.out.println(option);
-//            }
-//        }
-//
-//        for(Map.Entry<String, Product> product : productService.getSortedProducts().entrySet()){
-//            System.out.println(product.getValue().getTitle());
-//        }
     }
     public void onResetButton(){
         gameCheckbox.setSelected(false);

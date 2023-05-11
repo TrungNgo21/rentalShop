@@ -12,7 +12,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 
+
 public class ProductService implements Services<Product> {
+
+
 
     private final DataAccess db = new DataAccess();
 
@@ -46,66 +49,66 @@ public class ProductService implements Services<Product> {
 
     @Override
     public Product getOne(String productIdentifier) {
-        for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
-            if(productIdentifier.equals(product.getValue().getId()) || productIdentifier.equals(product.getValue().getTitle())){
+        for (Map.Entry<String, Product> product : DataAccess.getAllProducts().entrySet()) {
+            if (productIdentifier.equals(product.getValue().getId()) || productIdentifier.equals(product.getValue().getTitle())) {
                 return product.getValue();
             }
         }
         return null;
     }
-    public Product getStock(){
-        for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
-            if(product.getValue().getNumOfCopies() == 0){
+
+    public Product getStock() {
+        for (Map.Entry<String, Product> product : DataAccess.getAllProducts().entrySet()) {
+            if (product.getValue().getNumOfCopies() == 0) {
                 return product.getValue();
             }
         }
         return null;
     }
-    public HashMap<String, Product> sortById(String type){
-        DataAccess.getSortedProducts().clear();
-        HashMap<String,Product> sortedByType = getProductByType(type);
-        List<Map.Entry<String,Product> > list = new LinkedList<Map.Entry<String,Product> >(sortedByType.entrySet());
+
+    public void sortByPrice() {
+        List<Map.Entry<String, Product>> list = new LinkedList<Map.Entry<String, Product>>(DataAccess.getSortedProducts().entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, Product>>() {
             @Override
             public int compare(Map.Entry<String, Product> o1, Map.Entry<String, Product> o2) {
-                return (o1.getValue().getId().compareTo(o2.getValue().getId()));
+                return (int) (o1.getValue().getRentalFee() - o2.getValue().getRentalFee());
             }
         });
-        HashMap<String,Product> temp = new LinkedHashMap<String,Product>();
-        for (Map.Entry<String,Product> product : list){
-            temp.put(product.getKey(),product.getValue());
-        }
-        return temp;
-    }
-    public HashMap<String,Product> sortByTitle(String type){
-//        //clear
+        HashMap<String, Product> temp = new LinkedHashMap<String, Product>();
         DataAccess.getSortedProducts().clear();
-        HashMap<String,Product> sortedByType = getProductByType(type);
-        List<Map.Entry<String,Product> > list = new LinkedList<Map.Entry<String,Product> >(sortedByType.entrySet());
+        for (Map.Entry<String, Product> product : list) {
+            temp.put(product.getKey(), product.getValue());
+        }
+        DataAccess.setSortedProducts(temp);
+    }
+
+    public void sortByTitle() {
+        List<Map.Entry<String, Product>> list = new LinkedList<Map.Entry<String, Product>>(DataAccess.getSortedProducts().entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, Product>>() {
             @Override
             public int compare(Map.Entry<String, Product> o1, Map.Entry<String, Product> o2) {
                 return (o1.getValue().getTitle().compareTo(o2.getValue().getTitle()));
             }
         });
-        HashMap<String,Product> temp = new LinkedHashMap<String,Product>();
-        for (Map.Entry<String,Product> product : list){
-            temp.put(product.getKey(),product.getValue());
-        }
-        return temp;
-    }
-    public HashMap<String,Product> getProductByType(String rentalType){
+        HashMap<String, Product> temp = new LinkedHashMap<String, Product>();
         DataAccess.getSortedProducts().clear();
-        for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
-            if(product.getValue().getRentalType().equals(rentalType)){
-                DataAccess.getSortedProducts().put(product.getKey(),product.getValue());
+        for (Map.Entry<String, Product> product : list) {
+            temp.put(product.getKey(), product.getValue());
+        }
+        DataAccess.setSortedProducts(temp);
+
+    }
+
+    public HashMap<String, Product> getProductByType(String rentalType) {
+        DataAccess.getSortedProducts().clear();
+        for (Map.Entry<String, Product> product : DataAccess.getAllProducts().entrySet()) {
+            if (product.getValue().getRentalType().equals(rentalType)) {
+                DataAccess.getSortedProducts().put(product.getKey(), product.getValue());
             }
         }
 
         return DataAccess.getSortedProducts();
     }
-
-
 
 
     @Override
@@ -121,127 +124,133 @@ public class ProductService implements Services<Product> {
         return DataAccess.getChosenProduct();
     }
 
-    public void addSortedOptions(String[] options){
+    public void addSortedOptions(String[] options) {
         DataAccess.addSortedOptions(options);
     }
 
-    public ArrayList<String[]> getSortedOptions(){
+    public ArrayList<String[]> getSortedOptions() {
         return DataAccess.getSortedOptions();
     }
 
-    public HashMap<String, Product> getSortedProducts(){
+    public HashMap<String, Product> getSortedProducts() {
         return DataAccess.getSortedProducts();
     }
 
-    public void addToSortedProducts(ArrayList<String[]> sortedOptions){
+    public void addToSortedProducts(ArrayList<String[]> sortedOptions) {
         DataAccess.getSortedProducts().clear();
-        System.out.println("sort options: " + sortedOptions.size() );
         ArrayList<String> deletedProductId = new ArrayList<>();
         for (int i = 0; i < sortedOptions.size(); i++) {
-
-            if(i == 0){
+            if (i == 0) {
                 int noneCounter = 0;
-                for(String option : sortedOptions.get(i)){
-                    if(option.equals("NONE")){
+                for (String option : sortedOptions.get(i)) {
+                    if (option.equals("NONE")) {
                         noneCounter++;
                         continue;
                     }
-
-                    for(Map.Entry<String, Product> sysProduct : getAll().entrySet()){
-                        if(sysProduct.getValue().getRentalType().equals(option)){
+                    for (Map.Entry<String, Product> sysProduct : getAll().entrySet()) {
+                        System.out.println(option);
+                        if (sysProduct.getValue().getRentalType().equals(option)) {
                             DataAccess.addToSortedProducts(sysProduct.getValue());
                         }
                     }
                 }
-                if(noneCounter == sortedOptions.get(i).length){
-                    DataAccess.setSortedProducts(DataAccess.getAllProducts());
+                if (noneCounter == sortedOptions.get(i).length) {
+                    getSortedProducts().clear();
+                    for (Map.Entry<String, Product> sysProduct : getAll().entrySet()) {
+                        DataAccess.addToSortedProducts(sysProduct.getValue());
+                    }
                 }
-            }else if(i == 1){
+            } else if (i == 1) {
                 boolean isExisted = false;
                 int noneCounter = 0;
                 deletedProductId.clear();
-                for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
-                    for(String option : sortedOptions.get(i)){
-                        if(option.equals("NONE")){
+                System.out.println(getSortedProducts());
+                for (Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()) {
+                    for (String option : sortedOptions.get(i)) {
+                        if (option.equals("NONE")) {
                             noneCounter++;
                             continue;
                         }
-                        if(sysProduct.getValue().getGenre().equals(option)){
+                        if (sysProduct.getValue().getGenre().equals(option)) {
                             isExisted = true;
                             break;
                         }
                     }
-                    if(!isExisted){
+                    if (!isExisted) {
                         deletedProductId.add(sysProduct.getKey());
                     }
                     isExisted = false;
-                    if(noneCounter == sortedOptions.get(i).length){
+                    if (noneCounter == sortedOptions.get(i).length) {
                         deletedProductId.clear();
-                        noneCounter = 0;
                     }
+                    noneCounter = 0;
+
                 }
 
-                for(String deletedId : deletedProductId){
+                for (String deletedId : deletedProductId) {
                     getSortedProducts().remove(deletedId);
                 }
 
 
-            }else if(i == 2){
+            } else if (i == 2) {
                 boolean isExisted = false;
                 int noneCounter = 0;
 
                 deletedProductId.clear();
-                for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
-                    for(String option : sortedOptions.get(i)){
-                        if(option.equals("NONE")){
+                System.out.println(getSortedProducts());
+                for (Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()) {
+                    for (String option : sortedOptions.get(i)) {
+                        if (option.equals("NONE")) {
                             noneCounter++;
                             continue;
                         }
-                        if(sysProduct.getValue().getLoanType().equals(option)){
+                        if (sysProduct.getValue().getLoanType().equals(option)) {
                             isExisted = true;
                             break;
                         }
                     }
-                    if(!isExisted){
+                    if (!isExisted) {
                         deletedProductId.add(sysProduct.getKey());
                     }
                     isExisted = false;
-                    if(noneCounter == sortedOptions.get(i).length){
-                        deletedProductId.clear();
-                        noneCounter = 0;
 
+                    if (noneCounter == sortedOptions.get(i).length) {
+                        deletedProductId.clear();
                     }
+                    noneCounter = 0;
                 }
-                for(String deletedId : deletedProductId){
+                for (String deletedId : deletedProductId) {
                     getSortedProducts().remove(deletedId);
                 }
-            }else{
+            } else {
                 boolean isExisted = false;
                 int noneCounter = 0;
 
                 deletedProductId.clear();
-                for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
-                    for(String option : sortedOptions.get(i)){
-                        if(option.equals("NONE")){
+                System.out.println(getSortedProducts());
+                for (Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()) {
+                    for (String option : sortedOptions.get(i)) {
+                        if (option.equals("NONE")) {
                             noneCounter++;
                             continue;
                         }
-                        if(sysProduct.getValue().getStatus().equals(option)){
+                        if (sysProduct.getValue().getStatus().equals(option)) {
                             isExisted = true;
                             break;
                         }
                     }
-                    if(!isExisted){
+                    if (!isExisted) {
                         deletedProductId.add(sysProduct.getKey());
                     }
                     isExisted = false;
-                    if(noneCounter == sortedOptions.get(i).length){
+                    if (noneCounter == sortedOptions.get(i).length) {
                         deletedProductId.clear();
-                        noneCounter = 0;
                     }
+                    noneCounter = 0;
+
                 }
 
-                for(String deletedId : deletedProductId){
+                for (String deletedId : deletedProductId) {
                     getSortedProducts().remove(deletedId);
                 }
 
