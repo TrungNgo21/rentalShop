@@ -25,7 +25,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         try {
             DataAccess.loadAllData();
-            Parent root = FXMLLoader.load(getClass().getResource("./Pages/adminViewCustomers.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("./Pages/adminViewProduct.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

@@ -51,6 +51,8 @@ public class DataAccess {
 
     private static Order currentOrder;
 
+    private static User selectedCustomer;
+
     private static ArrayList<String[]> getDataFromFile(String fileLocation) {
         try {
             ArrayList<String[]> dataFile = new ArrayList<>();
@@ -381,5 +383,8 @@ public class DataAccess {
     public static void setSortedProducts(HashMap<String, Product> sortProducts) {
         sortedProducts = sortProducts;
     }
-    public static HashMap<String, User> getGetSortedUsers() {return sortedUsers;}
+    public static HashMap<String, User> getSortedUsers() {return sortedUsers;}
+
+    public static User getSelectedCustomer() {return selectedCustomer;}
+    public static void setSelectedCustomer(User user) {DataAccess.selectedCustomer = user;}
 }

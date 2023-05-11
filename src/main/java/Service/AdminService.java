@@ -71,13 +71,54 @@ public class AdminService implements Services<User> {
     }
     // Filter the type of account users
     public HashMap<String, User> filterAccountType(String accountType) { // Display this hashmap to UI
-        DataAccess.getGetSortedUsers().clear();
+        DataAccess.getSortedUsers().clear();
         for(Map.Entry<String, Account> entry : DataAccess.getAllAccounts().entrySet()) {
             if(entry.getValue().getAccountType().equals(accountType)) {
-                DataAccess.getGetSortedUsers().put(entry.getKey(), entry.getValue().getOwner());
+                DataAccess.getSortedUsers().put(entry.getKey(), entry.getValue().getOwner());
             }
         }
-        return DataAccess.getGetSortedUsers();
+        return DataAccess.getSortedUsers();
+    }
+
+    public HashMap<String, User> sortFromZToA(String type) {
+        DataAccess.getSortedUsers().clear();
+        HashMap<String, User> sortedUSer = filterAccountType(type);
+        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedUSer.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
+            @Override
+            public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
+                return (o2.getValue().getUserName().compareTo(o1.getValue().getUserName()));
+            }
+        });
+        HashMap<String,User> temp = new LinkedHashMap<String,User>();
+        for (Map.Entry<String,User> user : list){
+            temp.put(user.getKey(),user.getValue());
+        }
+        return temp;
+    }
+
+    public HashMap<String, User> sortFromAToZ(String type) {
+        DataAccess.getSortedUsers().clear();
+        HashMap<String, User> sortedUSer = filterAccountType(type);
+        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedUSer.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
+            @Override
+            public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
+                return (o1.getValue().getUserName().compareTo(o2.getValue().getUserName()));
+            }
+        });
+        HashMap<String,User> temp = new LinkedHashMap<String,User>();
+        for (Map.Entry<String,User> user : list){
+            temp.put(user.getKey(),user.getValue());
+        }
+        return temp;
+    }
+    public static User getSelectedUser(){
+        return DataAccess.getSelectedCustomer();
+    }
+
+    public static void setSelectedUser(User user) {
+        DataAccess.setSelectedCustomer(user);
     }
 
 }
