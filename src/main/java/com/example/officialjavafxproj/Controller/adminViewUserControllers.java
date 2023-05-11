@@ -7,6 +7,7 @@ import Model.User.Customer;
 import Model.User.User;
 import Service.AdminService;
 
+import Service.ProductService;
 import com.example.officialjavafxproj.Controller.Component.AdminProductController;
 import com.example.officialjavafxproj.Controller.Component.AdminUserControllers;
 import com.example.officialjavafxproj.Utils.SceneController;
@@ -46,8 +47,6 @@ public class adminViewUserControllers implements Initializable {
      private RadioButton increasingOrder;
      @FXML
      private RadioButton decreasingOrder;
-     @FXML
-     private ToggleGroup alphabet;
 
      private String choice;
     private final String[] userType = {"VIP Account", "Regular Account", "Guest Account", "All"};
@@ -65,22 +64,78 @@ public class adminViewUserControllers implements Initializable {
     }
 
     public void addUserToGridView() {
-        accountType.setOnAction((ActionEvent) -> {
-            accountType.getValue();
+//        gridPane.getChildren().clear();
+        int column = 0;
+        int row = 0;
+        if (new AdminService().getSortedCustomer().size() == 0) {
+            Label temp = new Label();
+            temp.setText("No Users matched your requirement");
+            gridPane.getChildren().add(temp);
+        }
+        for (Map.Entry<String, User> user : new AdminService().getSortedCustomer().entrySet()) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
+                HBox userItem = fxmlLoader.load();
+                AdminUserControllers adminUserController = fxmlLoader.getController();
+                adminUserController.loadDisplayUser((Customer) user.getValue());
+                DataAccess.getSortedUsers().put(user.getKey(), user.getValue());
+                if(column == 1){
+                    column = 0;
+                    row++;
+                }
+                gridPane.setHgap(10);
+                gridPane.setVgap(10);
+                gridPane.add(userItem, column, row++);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public void onSearchUserButton(ActionEvent event) {
+        gridPane.getChildren().clear();
+        HashMap<String, User> tempUsers = new HashMap<String, User>();
+        for(Map.Entry<String, User> user : new AdminService().getSortedCustomer().entrySet()) {
+            if(searchUser.getText().equals(user.getValue().getUserId())|| searchUser.getText().equals(user.getValue().getUserName())) {
+                tempUsers.put(user.getKey(), user.getValue());
+            }
+        }
+        DataAccess.setSortedUsers(tempUsers);
+        addUserToGridView();
+    }
+
+    public void sortUsers(ActionEvent event) {
+        if(increasingOrder.isSelected()) {
+            gridPane.getChildren().clear();
+            new AdminService().sortFromAToZ();
+            addUserToGridView();
+        }
+        else if(decreasingOrder.isSelected()) {
+            gridPane.getChildren().clear();
+            new AdminService().sortFromZToA();
+            addUserToGridView();
+        }
+    }
+    public void setToggle() {
+        ToggleGroup toggleGroup = new ToggleGroup();
+        increasingOrder.setToggleGroup(toggleGroup);
+        decreasingOrder.setToggleGroup(toggleGroup);
+    }
+    public void filterByType() {
+            accountType.setOnAction((ActionEvent) -> {
             HashMap<String, User> temp = new HashMap<>();
             Label emptylabel = new Label();
-            int column = 1;
-            int row = 0;
             AdminService adminService = new AdminService();
             DataAccess.getSortedUsers().clear();
             choice = accountType.getValue();
             gridPane.getChildren().clear();
-            if(choice == null) {
+            if(choice.equals(null)) {
                 emptylabel.setText("You have chosen no filter!!");
                 gridPane.add(emptylabel, 0, 0);
             }
-            else if(choice.equals("All")) {
+             if(choice.equals("All")) {
                 temp = DataAccess.getAllUsers();
+                DataAccess.setSortedUsers(temp);
                 ToastBuilder.builder()
                         .withTitle("Load Message")
                         .withMessage("You are viewing All users")
@@ -89,6 +144,7 @@ public class adminViewUserControllers implements Initializable {
             }
             else if(choice.equals("VIP Account")) {
                 temp = adminService.filterAccountType("VIPAccount");
+                DataAccess.setSortedUsers(temp);
                 ToastBuilder.builder()
                         .withTitle("Load Message")
                         .withMessage("You are viewing All users")
@@ -97,6 +153,7 @@ public class adminViewUserControllers implements Initializable {
             }
             else if(choice.equals("Guest Account")) {
                 temp = adminService.filterAccountType("GuestAccount");
+                DataAccess.setSortedUsers(temp);
                 ToastBuilder.builder()
                         .withTitle("Load Message")
                         .withMessage("You are viewing All users")
@@ -105,170 +162,36 @@ public class adminViewUserControllers implements Initializable {
             }
             else if(choice.equals("Regular Account")) {
                 temp = adminService.filterAccountType("RegularAccount");
+                DataAccess.setSortedUsers(temp);
                 ToastBuilder.builder()
                         .withTitle("Load Message")
                         .withMessage("You are viewing All users")
                         .withMode(Notifications.NOTICE)
                         .show();
             }
-
-            for(Map.Entry<String, User> user : temp.entrySet()) {
-                try {
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
-                    HBox userItem = loader.load();
-                    AdminUserControllers adminProductController = loader.getController();
-
-                    adminProductController.loadDisplayUser((Customer) user.getValue());
-                    DataAccess.getSortedUsers().put(user.getKey(), user.getValue());
-                    adminService.setSelectedUser(user.getValue());
-                    if(column == 1){
-                        column = 0;
-                        row++;
-                    }
-                    gridPane.setHgap(10);
-                    gridPane.setVgap(10);
-                    gridPane.add(userItem,column,row++);
+                if (new AdminService().getSortedCustomer().size() == 0) {
+                    Label tmp = new Label();
+                    tmp.setText("No Users matched your requirement");
+                    gridPane.getChildren().add(tmp);
                 }
-                catch (Exception e){
-                    throw new RuntimeException(e);
-                }
-            }
+                addUserToGridView();
         });
     }
-    public void onSearchUserButton(ActionEvent event) {
-        int column = 0;
-        int row = 1;
-        AdminService adminService = new AdminService();
-        HashMap<String, User> temp = new HashMap<>();
-        alphabet.getToggles().addAll(increasingOrder, decreasingOrder);
-        if(!increasingOrder.isSelected() && !decreasingOrder.isSelected()) {
-            temp = DataAccess.getSortedUsers();
-            for(Map.Entry<String, User> user : temp.entrySet()) {
-                if(searchUser.getText().equals(user.getValue().getUserId())|| searchUser.getText().equals(user.getValue().getUserName())) {
-                    try {
-                        FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
-                        HBox userItem = loader.load();
-                        AdminUserControllers adminProductController = loader.getController();
-
-                        adminProductController.loadDisplayUser((Customer) user.getValue());
-                        DataAccess.getSortedUsers().put(user.getKey(), user.getValue());
-                        ToastBuilder.builder()
-                                .withTitle("Annoucing Message")
-                                .withMessage("You are searching for " + user.getValue().getUserName())
-                                .withMode(Notifications.SUCCESS)
-                                .show();
-                        gridPane.getChildren().clear();
-                        if(column == 1){
-                            column = 0;
-                            row++;
-                        }
-                        gridPane.setHgap(10);
-                        gridPane.setVgap(10);
-                        gridPane.add(userItem,column,row++);
-                    }
-                    catch (Exception e){
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
-        else if(increasingOrder.isSelected()) {
-            temp = adminService.sortFromAToZ(choice);
-            for(Map.Entry<String, User> user : temp.entrySet()) {
-                try {
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
-                    HBox userItem = loader.load();
-                    AdminUserControllers adminProductController = loader.getController();
-
-                    adminProductController.loadDisplayUser((Customer) user.getValue());
-                    DataAccess.getSortedUsers().put(user.getKey(), user.getValue());
-                    ToastBuilder.builder()
-                            .withTitle("Annoucing Message")
-                            .withMessage("You are searching for " + user.getValue().getUserName())
-                            .withMode(Notifications.SUCCESS)
-                            .show();
-                    gridPane.getChildren().clear();
-                    if(column == 1){
-                        column = 0;
-                        row++;
-                    }
-                    gridPane.setHgap(10);
-                    gridPane.setVgap(10);
-                    gridPane.add(userItem,column,row++);
-                }
-                catch (Exception e){
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        else if(decreasingOrder.isSelected()) {
-            temp = adminService.sortFromZToA(choice);
-            for(Map.Entry<String, User> user : temp.entrySet()) {
-                try {
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
-                    HBox userItem = loader.load();
-                    AdminUserControllers adminProductController = loader.getController();
-
-                    adminProductController.loadDisplayUser((Customer) user.getValue());
-                    DataAccess.getSortedUsers().put(user.getKey(), user.getValue());
-                    ToastBuilder.builder()
-                            .withTitle("Annoucing Message")
-                            .withMessage("You are searching for " + user.getValue().getUserName())
-                            .withMode(Notifications.SUCCESS)
-                            .show();
-                    gridPane.getChildren().clear();
-                    if(column == 1){
-                        column = 0;
-                        row++;
-                    }
-                    gridPane.setHgap(10);
-                    gridPane.setVgap(10);
-                    gridPane.add(userItem,column,row++);
-                }
-                catch (Exception e){
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-    }
-
-    public void sortByAlphabetical() {
-
-    }
-    public void onDeleteSearchButton() {
+    public void onDeleteSearchButton(ActionEvent event) {
         gridPane.getChildren().clear();
         accountType.getSelectionModel().clearSelection();
-        alphabet.selectToggle(null);
+        increasingOrder.setSelected(false);
+        decreasingOrder.setSelected(false);
         searchUser.clear();
-        int row = 0;
-        int column = 1;
-        for(Map.Entry<String, User> user : new AdminService().getAll().entrySet()){
-            try {
-                FXMLLoader fxmlLoader1 = new FXMLLoader();
-                fxmlLoader1.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
-                AnchorPane userCard = fxmlLoader1.load();
-                AdminUserControllers userCardController = fxmlLoader1.getController();
-                userCardController.loadDisplayUser((Customer) user.getValue());
-                if(column == 1){
-                    column = 0;
-                    row++;
-                }
-                gridPane.setHgap(10);
-                gridPane.setVgap(10);
-                gridPane.add(userCard, column, row++);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        DataAccess.getSortedUsers().clear();
+        addUserToGridView();
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
         addAccountType();
+        filterByType();
         addUserToGridView();
+        setToggle();
     }
 }

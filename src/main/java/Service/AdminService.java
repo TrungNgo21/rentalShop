@@ -80,38 +80,64 @@ public class AdminService implements Services<User> {
         return DataAccess.getSortedUsers();
     }
 
-    public HashMap<String, User> sortFromZToA(String type) {
-        DataAccess.getSortedUsers().clear();
-        HashMap<String, User> sortedUSer = filterAccountType(type);
-        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedUSer.entrySet());
+    public void sortFromZToA() {
+//        DataAccess.getSortedUsers().clear();
+//        HashMap<String, User> sortedUSer = filterAccountType(type);
+//        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedUSer.entrySet());
+//        Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
+//            @Override
+//            public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
+//                return (o2.getValue().getUserName().compareTo(o1.getValue().getUserName()));
+//            }
+//        });
+//        HashMap<String,User> temp = new LinkedHashMap<String,User>();
+//        for (Map.Entry<String,User> user : list){
+//            temp.put(user.getKey(),user.getValue());
+//        }
+//        return temp;
+        List<Map.Entry<String, User>> list = new LinkedList<Map.Entry<String, User>>(DataAccess.getSortedUsers().entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
             @Override
             public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
                 return (o2.getValue().getUserName().compareTo(o1.getValue().getUserName()));
             }
         });
-        HashMap<String,User> temp = new LinkedHashMap<String,User>();
-        for (Map.Entry<String,User> user : list){
-            temp.put(user.getKey(),user.getValue());
+        HashMap<String, User> temp = new LinkedHashMap<String, User>();
+        DataAccess.getSortedUsers().clear();
+        for (Map.Entry<String, User> user : list) {
+            temp.put(user.getKey(), user.getValue());
         }
-        return temp;
+        DataAccess.setSortedUsers(temp);
     }
 
-    public HashMap<String, User> sortFromAToZ(String type) {
-        DataAccess.getSortedUsers().clear();
-        HashMap<String, User> sortedUSer = filterAccountType(type);
-        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedUSer.entrySet());
+    public void sortFromAToZ() {
+//        DataAccess.getSortedUsers().clear();
+//        HashMap<String, User> sortedUSer = filterAccountType(type);
+//        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedUSer.entrySet());
+//        Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
+//            @Override
+//            public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
+//                return (o1.getValue().getUserName().compareTo(o2.getValue().getUserName()));
+//            }
+//        });
+//        HashMap<String,User> temp = new LinkedHashMap<String,User>();
+//        for (Map.Entry<String,User> user : list){
+//            temp.put(user.getKey(),user.getValue());
+//        }
+//        return temp;
+        List<Map.Entry<String, User>> list = new LinkedList<Map.Entry<String, User>>(DataAccess.getSortedUsers().entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
             @Override
             public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
                 return (o1.getValue().getUserName().compareTo(o2.getValue().getUserName()));
             }
         });
-        HashMap<String,User> temp = new LinkedHashMap<String,User>();
-        for (Map.Entry<String,User> user : list){
-            temp.put(user.getKey(),user.getValue());
+        HashMap<String, User> temp = new LinkedHashMap<String, User>();
+        DataAccess.getSortedUsers().clear();
+        for (Map.Entry<String, User> user : list) {
+            temp.put(user.getKey(), user.getValue());
         }
-        return temp;
+        DataAccess.setSortedUsers(temp);
     }
     public static User getSelectedUser(){
         return DataAccess.getSelectedCustomer();
@@ -119,6 +145,10 @@ public class AdminService implements Services<User> {
 
     public static void setSelectedUser(User user) {
         DataAccess.setSelectedCustomer(user);
+    }
+
+    public HashMap<String, User> getSortedCustomer() {
+        return DataAccess.getSortedUsers();
     }
 
 }

@@ -40,9 +40,9 @@ public class minh {
                 System.out.println(tmp.getValue().getUserId() + " " + tmp.getValue().getAccount().getAccountType());
             }
         System.out.println("After sorting: ");
-        temp = admin.sortFromAToZ(accountType);
-        for(Map.Entry<String, User> tmp : temp.entrySet()) {
-            System.out.println(tmp.getValue().getUserId() + " " + tmp.getValue().getAccount().getAccountType());
-        }
+//        temp = admin.sortFromAToZ(accountType);
+//        for(Map.Entry<String, User> tmp : temp.entrySet()) {
+//            System.out.println(tmp.getValue().getUserId() + " " + tmp.getValue().getAccount().getAccountType());
+//        }
     }
 }

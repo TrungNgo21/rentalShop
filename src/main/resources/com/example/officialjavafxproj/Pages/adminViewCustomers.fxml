@@ -8,7 +8,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -45,19 +44,25 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="increasingOrder" mnemonicParsing="false" text="From A-Z">
+            <RadioButton fx:id="increasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="From A-Z">
+               <padding>
+                  <Insets left="5.0" top="10.0" />
+               </padding>
+            </RadioButton>
+            <RadioButton fx:id="decreasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="From Z-A">
+               <padding>
+                  <Insets bottom="10.0" left="5.0" top="10.0" />
+               </padding>
+            </RadioButton>
+            <Separator prefWidth="200.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="227.0" text="Search By Username or ID">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
                <padding>
                   <Insets top="10.0" />
                </padding>
-               <toggleGroup>
-                  <ToggleGroup fx:id="alphabet" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="decreasingOrder" mnemonicParsing="false" text="From Z-A" toggleGroup="$alphabet">
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </RadioButton>
+            </Label>
             <TextField fx:id="searchUser" prefHeight="0.0" prefWidth="157.0" promptText="Search By Name or ID">
                <VBox.margin>
                   <Insets top="24.0" />
