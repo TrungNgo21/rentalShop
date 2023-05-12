@@ -234,7 +234,6 @@ public class DataAccess {
                         for (OrderDetail detail : order.getOrders()) {
                             writer.write(detail.getOrderDetailId() + ";"
                                     + order.getOrderId() + ";"
-                                    + "NaN" + ";"
                                     + detail.getBoughtItem().getId() + ";"
                                     + detail.getQuantity() + "\n");
                         }
@@ -243,7 +242,6 @@ public class DataAccess {
                 if(user.getValue().getCart() != null){
                     for (OrderDetail detail : user.getValue().getCart().getShoppingItems()) {
                         writer.write(detail.getOrderDetailId() + ";"
-                                + "NaN" + ";"
                                 + user.getValue().getCart().getCartId() + ";"
                                 + detail.getBoughtItem().getId() + ";"
                                 + detail.getQuantity() + "\n");

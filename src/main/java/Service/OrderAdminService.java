@@ -7,6 +7,7 @@ import Model.Order.Order;
 import java.util.HashMap;
 
 public class OrderAdminService extends OrderService{
+    private static Order selectedOrder;
     public OrderAdminService(DataAccess db) {
         super(db);
     }
@@ -48,5 +49,11 @@ public class OrderAdminService extends OrderService{
             orders.put(order.getOrderId(), order);
         }
         return orders;
+    }
+
+    public Order getSelectedOrder() {return selectedOrder;}
+
+    public void setSelectedOrder(Order order) {
+        this.selectedOrder = order;
     }
 }

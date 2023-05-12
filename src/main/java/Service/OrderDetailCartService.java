@@ -49,7 +49,6 @@ public class OrderDetailCartService implements Services<OrderDetail>{
         HashMap<String, OrderDetail> orderDetails = new HashMap<>();
         for(OrderDetail detail : DataAccess.getCurrentUser().getCart().getShoppingItems()){
                 orderDetails.put(detail.getOrderDetailId(), detail);
-
         }
         return orderDetails;
     }
