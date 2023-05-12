@@ -238,7 +238,7 @@
             <AnchorPane prefHeight="80.0" prefWidth="338.0" />
             <AnchorPane prefHeight="64.0" prefWidth="764.0">
                <children>
-                  <Button alignment="CENTER" layoutX="626.0" layoutY="19.0" mnemonicParsing="false" onAction="#onBackToShop" prefHeight="26.0" prefWidth="134.0" text="Back To User Page" />
+                  <Button alignment="CENTER" layoutX="626.0" layoutY="19.0" mnemonicParsing="false" onAction="#onUserPageBackButton" prefHeight="26.0" prefWidth="134.0" text="Back To User Page" />
                </children>
             </AnchorPane>
          </children>

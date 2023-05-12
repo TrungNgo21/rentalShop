@@ -1,5 +1,6 @@
 package com.example.officialjavafxproj.Controller;
 
+import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Model.Account.GuestAccount;
 import Model.Account.RegularAccount;
@@ -7,6 +8,7 @@ import Model.Account.VIPAccount;
 import Model.User.Customer;
 import Service.AdminService;
 import com.example.officialjavafxproj.Utils.SceneController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -108,6 +110,10 @@ public class adminViewProfileControllers implements Initializable {
             accountPointsDisplay.setText(String.valueOf(currentUserAccount.getPoints()));
             noFreeToBorrowDisplay.setText(currentUserAccount.getPoints() >= 100 ? "1" : "Points must be over 100 to borrow free");
         }
+    }
+
+    public void onUserPageBackButton(ActionEvent actionEvent) throws IOException{
+        new SceneController().switchScene(actionEvent, "../Pages/adminViewCustomers.fxml");
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
