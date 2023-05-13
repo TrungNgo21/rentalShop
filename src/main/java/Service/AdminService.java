@@ -39,7 +39,7 @@ public class AdminService implements Services<User> {
 
     @Override
     public User getOne(String id) { // Search User
-        for(Map.Entry<String, User> entry : DataAccess.getAllUsers().entrySet()) {
+        for(Map.Entry<String, User> entry : DataAccess.getSortedUsers().entrySet()) {
             if(id.equals(entry.getValue().getUserId()) || id.equals(entry.getValue().getUserName())) {
                 return entry.getValue();
             }
@@ -107,6 +107,7 @@ public class AdminService implements Services<User> {
         for (Map.Entry<String, User> user : list) {
             temp.put(user.getKey(), user.getValue());
         }
+        DataAccess.getSortedUsers().clear();
         DataAccess.setSortedUsers(temp);
     }
 
@@ -137,6 +138,7 @@ public class AdminService implements Services<User> {
         for (Map.Entry<String, User> user : list) {
             temp.put(user.getKey(), user.getValue());
         }
+        DataAccess.getSortedUsers().clear();
         DataAccess.setSortedUsers(temp);
     }
     public static User getSelectedUser(){

@@ -44,12 +44,12 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="increasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="Increasing Order">
+            <RadioButton fx:id="increasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="Ascending Order">
                <padding>
                   <Insets left="5.0" top="10.0" />
                </padding>
             </RadioButton>
-            <RadioButton fx:id="decreasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="Decreasing Order">
+            <RadioButton fx:id="decreasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="Descending Order">
                <padding>
                   <Insets bottom="10.0" left="5.0" top="10.0" />
                </padding>
@@ -73,7 +73,7 @@
                   <Insets left="70.0" top="24.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="deleteSearch" mnemonicParsing="false" onAction="#onDeleteSearchButton" prefHeight="25.0" prefWidth="87.0" text="Delete">
+            <Button fx:id="deleteSearch" mnemonicParsing="false" onAction="#onDeleteSearchButton" prefHeight="25.0" prefWidth="87.0" text="Reset">
                <VBox.margin>
                   <Insets left="70.0" top="12.0" />
                </VBox.margin>

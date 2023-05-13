@@ -25,6 +25,7 @@ import javafx.scene.layout.HBox;
 import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -37,8 +38,8 @@ public class adminViewUserControllers implements Initializable {
     private ChoiceBox<String> accountType;
     @FXML
     private TextField searchUser;
-//    @FXML
-//    private Button search;
+    @FXML
+    private Button search;
      @FXML
      private GridPane gridPane;
      @FXML
@@ -48,9 +49,40 @@ public class adminViewUserControllers implements Initializable {
      @FXML
      private RadioButton decreasingOrder;
 
+     private HashMap<String, User> filteredUser;
+
      private String choice;
     private final String[] userType = {"VIP Account", "Regular Account", "Guest Account", "All"};
 
+    public void resetSearchDisable() {
+        if(search.isPressed()) {
+            searchUser.setDisable(false);
+        }
+        else {
+            searchUser.setDisable(true);
+        }
+    }
+    public void resetSearchButtonDisable() {
+        increasingOrder.setOnMouseClicked(mouseEvent -> {
+            search.setDisable(false);
+        });
+        decreasingOrder.setOnMouseClicked(mouseEvent -> {
+            search.setDisable(false);
+        });
+
+    }
+    public void resetDisable() {
+        accountType.setOnAction((ActionEvent event) -> {
+            increasingOrder.setDisable(false);
+            decreasingOrder.setDisable(false);
+        });
+    }
+    public void setDisable() {
+            increasingOrder.setDisable(true);
+            decreasingOrder.setDisable(true);
+            search.setDisable(true);
+            searchUser.setDisable(true);
+    }
     public void addNavigationBar(){
         try {
             navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
@@ -60,7 +92,6 @@ public class adminViewUserControllers implements Initializable {
     }
     public void addAccountType() {
         accountType.getItems().addAll(userType);
-        accountType.setOnAction(this::onSearchUserButton);
     }
 
     public void addUserToGridView() {
@@ -79,7 +110,6 @@ public class adminViewUserControllers implements Initializable {
                 HBox userItem = fxmlLoader.load();
                 AdminUserControllers adminUserController = fxmlLoader.getController();
                 adminUserController.loadDisplayUser((Customer) user.getValue());
-                DataAccess.getSortedUsers().put(user.getKey(), user.getValue());
                 if(column == 1){
                     column = 0;
                     row++;
@@ -94,25 +124,69 @@ public class adminViewUserControllers implements Initializable {
     }
     public void onSearchUserButton(ActionEvent event) {
         gridPane.getChildren().clear();
+        DataAccess.getSortedUsers().clear();
         HashMap<String, User> tempUsers = new HashMap<String, User>();
-        for(Map.Entry<String, User> user : new AdminService().getSortedCustomer().entrySet()) {
-            if(searchUser.getText().equals(user.getValue().getUserId())|| searchUser.getText().equals(user.getValue().getUserName())) {
-                tempUsers.put(user.getKey(), user.getValue());
-            }
+        increasingOrder.setDisable(false);
+        decreasingOrder.setDisable(false);
+        increasingOrder.setSelected(false);
+        decreasingOrder.setSelected(false);
+        searchUser.setDisable(false);
+        choice =  accountType.getValue();
+        if(choice.equals("All")) {
+            filterByType(choice);
         }
-        DataAccess.setSortedUsers(tempUsers);
-        addUserToGridView();
+        else if(choice.equals("Guest Account")) {
+            filterByType(choice);
+        }
+        else if(choice.equals("VIP Account")) {
+            filterByType(choice);
+        }
+        else if(choice.equals("Regular Account")) {
+            filterByType(choice);
+        }
+
+        if(searchUser.getText().isEmpty()) {
+            DataAccess.setSortedUsers(filteredUser);
+            addUserToGridView();
+        }
+        else if(accountType.getValue().isEmpty()) {
+            for(Map.Entry<String, User> entry : DataAccess.getAllUsers().entrySet()) {
+                if(searchUser.getText().equals(entry.getValue().getUserId())|| searchUser.getText().equals(entry.getValue().getUserName())) {
+                    tempUsers.put(entry.getKey(), entry.getValue());
+                }
+            }
+            DataAccess.setSortedUsers(tempUsers);
+            addUserToGridView();
+        }
+        else if(!searchUser.getText().isEmpty() && !accountType.getValue().isEmpty()) {
+            for(Map.Entry<String, User> user : DataAccess.getAllUsers().entrySet()) {
+                if(searchUser.getText().equals(user.getValue().getUserId())|| searchUser.getText().equals(user.getValue().getUserName())) {
+//                tempUsers.put(user.getKey(), user.getValue());
+                    for(Map.Entry<String, User> tmp :filteredUser.entrySet()) {
+                        if(searchUser.getText().equals(tmp.getValue().getUserId()) || searchUser.getText().equals(user.getValue().getFullName())) {
+                            tempUsers.put(tmp.getValue().getUserId(), tmp.getValue());
+                            break;
+                        }
+                    }
+                }
+            }
+            DataAccess.setSortedUsers(tempUsers);
+            addUserToGridView();
+        }
+
     }
 
     public void sortUsers(ActionEvent event) {
         if(increasingOrder.isSelected()) {
             gridPane.getChildren().clear();
             new AdminService().sortIncreasingOrderId();
+            search.setDisable(true);
             addUserToGridView();
         }
         else if(decreasingOrder.isSelected()) {
             gridPane.getChildren().clear();
             new AdminService().sortDecreasingOrderId();
+            search.setDisable(true);
             addUserToGridView();
         }
     }
@@ -121,76 +195,66 @@ public class adminViewUserControllers implements Initializable {
         increasingOrder.setToggleGroup(toggleGroup);
         decreasingOrder.setToggleGroup(toggleGroup);
     }
-    public void filterByType() {
-            accountType.setOnAction((ActionEvent) -> {
-            HashMap<String, User> temp = new HashMap<>();
-            Label emptylabel = new Label();
-            AdminService adminService = new AdminService();
-            DataAccess.getSortedUsers().clear();
-            choice = accountType.getValue();
-            gridPane.getChildren().clear();
-            if(choice.equals(null)) {
-                emptylabel.setText("You have chosen no filter!!");
-                gridPane.add(emptylabel, 0, 0);
-            }
-             if(choice.equals("All")) {
-                temp = DataAccess.getAllUsers();
-                DataAccess.setSortedUsers(temp);
-                ToastBuilder.builder()
-                        .withTitle("Load Message")
-                        .withMessage("You are viewing All users")
-                        .withMode(Notifications.NOTICE)
-                        .show();
-            }
-            else if(choice.equals("VIP Account")) {
-                temp = adminService.filterAccountType("VIPAccount");
-                DataAccess.setSortedUsers(temp);
-                ToastBuilder.builder()
-                        .withTitle("Load Message")
-                        .withMessage("You are viewing All users")
-                        .withMode(Notifications.NOTICE)
-                        .show();
-            }
-            else if(choice.equals("Guest Account")) {
-                temp = adminService.filterAccountType("GuestAccount");
-                DataAccess.setSortedUsers(temp);
-                ToastBuilder.builder()
-                        .withTitle("Load Message")
-                        .withMessage("You are viewing All users")
-                        .withMode(Notifications.NOTICE)
-                        .show();
-            }
-            else if(choice.equals("Regular Account")) {
-                temp = adminService.filterAccountType("RegularAccount");
-                DataAccess.setSortedUsers(temp);
-                ToastBuilder.builder()
-                        .withTitle("Load Message")
-                        .withMessage("You are viewing All users")
-                        .withMode(Notifications.NOTICE)
-                        .show();
-            }
-                if (new AdminService().getSortedCustomer().size() == 0) {
-                    Label tmp = new Label();
-                    tmp.setText("No Users matched your requirement");
-                    gridPane.getChildren().add(tmp);
+    public void filterByType(String type) {
+                HashMap<String, User> temp = new HashMap<>();
+                filteredUser = new HashMap<>();
+                AdminService adminService = new AdminService();
+                DataAccess.getSortedUsers().clear();
+                gridPane.getChildren().clear();
+                if(type == null) {
+                    temp = adminService.getAll();
+                    DataAccess.setSortedUsers(temp);
+                    filteredUser.putAll(temp);
+                    addUserToGridView();
                 }
-                addUserToGridView();
-        });
+                 if(type.equals("All")) {
+                    temp = adminService.getAll();
+                    DataAccess.setSortedUsers(temp);
+                    filteredUser.putAll(temp);
+                    for(Map.Entry<String, User> tmo : filteredUser.entrySet()) {
+                        System.out.println(choice);
+                    }
+                }
+                else if(type.equals("VIP Account")) {
+                    temp = adminService.filterAccountType("VIPAccount");
+                    DataAccess.setSortedUsers(temp);
+                    filteredUser.putAll(temp);
+                    for(Map.Entry<String, User> tmo : filteredUser.entrySet()) {
+                        System.out.println(tmo.getValue().getUserId());
+                    }
+                }
+                else if(type.equals("Guest Account")) {
+                    temp = adminService.filterAccountType("GuestAccount");
+                    DataAccess.setSortedUsers(temp);
+                    filteredUser.putAll(temp);
+                }
+                else if(type.equals("Regular Account")) {
+                    temp = adminService.filterAccountType("RegularAccount");
+                    DataAccess.setSortedUsers(temp);
+                    filteredUser.putAll(temp);
+                }
     }
     public void onDeleteSearchButton(ActionEvent event) {
         gridPane.getChildren().clear();
         accountType.getSelectionModel().clearSelection();
         increasingOrder.setSelected(false);
         decreasingOrder.setSelected(false);
+        increasingOrder.setDisable(true);
+        decreasingOrder.setDisable(true);
         searchUser.clear();
+        searchUser.setDisable(true);
+        search.setDisable(true);
         DataAccess.getSortedUsers().clear();
         addUserToGridView();
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
+        setDisable();
+        resetDisable();
+        resetSearchButtonDisable();
+        resetSearchDisable();
         addAccountType();
-        filterByType();
         addUserToGridView();
         setToggle();
     }
