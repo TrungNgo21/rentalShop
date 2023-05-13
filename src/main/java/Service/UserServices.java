@@ -28,11 +28,11 @@ public class UserServices implements Services<User> {
 
     @Override
     public void add(User user) {
-//        if(!checker.isDuplicatedUsername(user.getUserName(), DataAccess.getAllUsers())) {
-//            DataAccess.getAllUsers().put(idCreation(), user);
-//        }else{
-//            throw new Error("Duplicate username!");
-//        }
+        if(!checker.isDuplicatedUsername(user.getUserName(), DataAccess.getAllUsers())) {
+            DataAccess.getAllUsers().put(idCreation(), user);
+        }else{
+            throw new Error("Duplicate username!");
+        }
     }
 
     @Override
@@ -68,6 +68,7 @@ public class UserServices implements Services<User> {
     public User getCurrentUser(){
         return DataAccess.getCurrentUser();
     }
+
 
     public void setCurrentUser(User user){
         db.setCurrentUser(user);

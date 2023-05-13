@@ -31,7 +31,7 @@ import java.util.Objects;
 public class DataAccess {
     private static final HashMap<String, User> users = new HashMap<>();
 
-    private static final HashMap<String, User> sortedUsers = new HashMap<>();
+    private static HashMap<String, User> sortedUsers = new HashMap<>();
 
     private static HashMap<String, Product> sortedProducts = new HashMap<>();
 
@@ -50,6 +50,8 @@ public class DataAccess {
     private static Product chosenProduct;
 
     private static Order currentOrder;
+
+    private static User selectedCustomer;
 
     private static ArrayList<String[]> getDataFromFile(String fileLocation) {
         try {
@@ -353,6 +355,8 @@ public class DataAccess {
         return currentOrder;
     }
 
+
+
     public static void setCurrentOrder(Order currentOrder) {
         DataAccess.currentOrder = currentOrder;
     }
@@ -372,6 +376,7 @@ public class DataAccess {
     public static HashMap<String, Product> getSortedProducts(){
         return sortedProducts;
     }
+//    public static void setSortedProducts(HashMap<String, Product> sortedProducts) {DataAccess.sortedProducts = sortedProducts;}
 
     public static void addToSortedProducts(Product product){
         sortedProducts.put(product.getId(), product);
@@ -382,4 +387,12 @@ public class DataAccess {
     }
 
     public static HashMap<String, User> getGetSortedUsers() {return sortedUsers;}
+
+    public static void setSortedUsers(HashMap<String, User> sortedUser) {
+        DataAccess.sortedUsers = sortedUser;
+    }
+    public static HashMap<String, User> getSortedUsers() {return sortedUsers;}
+
+    public static User getSelectedCustomer() {return selectedCustomer;}
+    public static void setSelectedCustomer(User user) {DataAccess.selectedCustomer = user;}
 }

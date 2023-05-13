@@ -73,10 +73,10 @@ public abstract class Product {
         return imageLocation;
     }
 
-
     public int getStock() {
         return stock;
     }
+
     public void setNumOfCopies(int numOfCopies) {
         this.numOfCopies = numOfCopies;
     }
@@ -84,6 +84,12 @@ public abstract class Product {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public void setTitle(String title) {this.title = title;}
+
+    public void setRentalFee(double rentalFee) {this.rentalFee = rentalFee;}
+
+    public void setImageLocation(String imageLocation) {this.imageLocation = imageLocation;}
 
     @Override
     public String toString() {

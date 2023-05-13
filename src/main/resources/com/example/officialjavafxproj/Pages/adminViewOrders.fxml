@@ -50,9 +50,9 @@
             </Separator>
             <VBox spacing="20.0">
                <children>
-                  <RadioButton mnemonicParsing="false" text="Sort By Order ID" />
-                  <RadioButton mnemonicParsing="false" text="Sort By Order Date" />
-                  <RadioButton mnemonicParsing="false" text="Sort By User ID" />
+                  <RadioButton onAction="#onOrderIDSortButton" mnemonicParsing="false" text="Sort By Order ID" />
+                  <RadioButton onAction="#onOrderDateSortButton" mnemonicParsing="false" text="Sort By Order Date" />
+                  <RadioButton onAction="#onUserIDSortButton" mnemonicParsing="false" text="Sort By User ID" />
                </children>
                <VBox.margin>
                   <Insets left="20.0" top="20.0" />

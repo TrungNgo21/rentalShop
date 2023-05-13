@@ -113,20 +113,5 @@
             </children>
         </VBox>
     </left>
-    <top>
-        <HBox prefHeight="88.0" prefWidth="879.0" BorderPane.alignment="CENTER" />
-    </top>
-    <center>
-        <VBox prefHeight="568.0" prefWidth="771.0" BorderPane.alignment="CENTER">
-            <children>
-                <ScrollPane prefHeight="571.0" prefWidth="571.0">
-                    <content>
-                        <GridPane fx:id="gridPane" prefHeight="40.0" prefWidth="14.0" style="-fx-padding: 20px;" />
-                    </content>
-                </ScrollPane>
-            </children></VBox>
-    </center>
-    <right>
-        <AnchorPane prefHeight="556.0" prefWidth="169.0" BorderPane.alignment="CENTER" />
-    </right>
+
 </BorderPane>

@@ -5,6 +5,7 @@ import Model.Order.Order;
 import Model.User.Customer;
 import Model.User.User;
 import Service.AdminService;
+import Service.OrderAdminService;
 import com.example.officialjavafxproj.Controller.Component.AdminOrderController;
 import com.example.officialjavafxproj.Controller.Component.AdminUserControllers;
 import com.example.officialjavafxproj.Utils.SceneController;
@@ -36,6 +37,7 @@ public class AdminViewOrderController implements Initializable {
     @FXML
     private RadioButton sortByUserID;
     private ToggleGroup toggleGroup = new ToggleGroup();
+    private OrderAdminService orderAdminService = new OrderAdminService(new DataAccess());
 
     private void addNavigationBar() {
         try {
@@ -46,9 +48,13 @@ public class AdminViewOrderController implements Initializable {
     }
 
     private void addAllOrder() {
+        addOrder(DataAccess.getAllOrders());
+    }
+
+    private void addOrder(ArrayList<Order> orderList) {
         int column = 0;
         int row = 1;
-        for(Order order: DataAccess.getAllOrders()) {
+        for(Order order: orderList) {
             try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("../Component/adminViewOrderComponent.fxml"));
@@ -91,9 +97,19 @@ public class AdminViewOrderController implements Initializable {
             }
         }
     }
-
+    @FXML
     private void onOrderIDSortButton() {
-//        Collections.sort(DataAccess.getAllOrders());
+        addOrder(orderAdminService.getSortedOrderID());
+    }
+
+    @FXML
+    private void onOrderDateSortButton() {
+        addOrder(orderAdminService.getSortedOrderDate());
+    }
+
+    @FXML
+    private void onUserIDSortButton() {
+        addOrder(orderAdminService.getSortedUserID());
     }
 
     @Override

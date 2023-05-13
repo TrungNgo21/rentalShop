@@ -6,6 +6,7 @@ import java.io.File;
 
 public class trung {
     public static void main(String[] args) {
+
         int width = 400;
         int height = 400;
         String path = "/Users/trungngo/Desktop/OfficialJavaFXProj/src/main/resources/com/example/officialjavafxproj/Image/Public/default.png";
