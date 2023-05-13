@@ -3,7 +3,7 @@ package Model.Product;
 import java.util.Arrays;
 
 public abstract class Product {
-    private final String[] loanTypes = {"2-DAY, 1-WEEK"};
+    private final String[] loanTypes = {"2-DAY", "1-WEEK"};
     private final String[] rentalTypes = {"RECORD", "DVD", "GAME"};
     private final String[] rentalStatus = {"BORROWED", "AVAILABLE"};
     private final String[] genres = {"ACTION", "HORROR", "DRAMA", "COMEDY"};
@@ -31,6 +31,12 @@ public abstract class Product {
         this.status = status;
         this.imageLocation = imageLocation;
     }
+
+    public String[] getLoanTypes() {return loanTypes;}
+
+    public String[] getRentalTypes() {return rentalTypes;}
+
+    public String[] getGenres() {return genres;}
 
     public String getPublishedYear() {
         return publishedYear;
@@ -83,6 +89,12 @@ public abstract class Product {
     public void setTitle(String title) {this.title = title;}
 
     public void setRentalFee(double rentalFee) {this.rentalFee = rentalFee;}
+
+    public void setRentalType(String rentalType) {this.rentalType = rentalType;}
+
+    public void setGenre(String genre) {this.genre = genre;}
+
+    public void setLoanType(String loanType) {this.loanType = loanType;}
 
     public void setImageLocation(String imageLocation) {this.imageLocation = imageLocation;}
 

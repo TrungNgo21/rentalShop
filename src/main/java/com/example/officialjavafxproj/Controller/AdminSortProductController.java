@@ -5,6 +5,7 @@ import Model.Product.Product;
 import Service.ProductService;
 import com.example.officialjavafxproj.Controller.Component.AdminProductController;
 import com.example.officialjavafxproj.Utils.SceneController;
+import com.example.officialjavafxproj.Utils.SearchController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -18,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
@@ -69,8 +71,6 @@ public class AdminSortProductController implements Initializable {
             priceButton.setDisable(false);
         }
     }
-
-
     public void addSortedPane() {
         try {
             sortLayout.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
@@ -103,6 +103,30 @@ public class AdminSortProductController implements Initializable {
             }
         }
     }
+    public void loadSearchProducts() {
+        gridPane.getChildren().clear();
+        int column = 0;
+        int row = 0;
+        if ( SearchController.getTempContainer().isEmpty()) {
+            Label temp = new Label();
+            temp.setText("No Products matched your requirement");
+            gridPane.getChildren().add(temp);
+        }
+        for (Map.Entry<String, Product> product : SearchController.getTempContainer().entrySet()) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("../Component/adminViewProductComponent.fxml"));
+                HBox productItem = fxmlLoader.load();
+                AdminProductController adminProductController = fxmlLoader.getController();
+                adminProductController.loadProductDisplay(product.getValue());
+                gridPane.setHgap(10);
+                gridPane.setVgap(10);
+                gridPane.add(productItem, column, row++);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     public void setToggleGroup() {
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -111,14 +135,24 @@ public class AdminSortProductController implements Initializable {
     }
 
     public void search(ActionEvent actionEvent) {
+        String search = searchTextField.getText().trim();
         if (priceButton.isSelected()) {
             new ProductService().sortByPrice();
         }
         if (titleButton.isSelected()) {
             new ProductService().sortByTitle();
         }
-        loadSortedProducts();
+        if (!search.trim().isEmpty()) {
+            if(DataAccess.getSortedProducts().isEmpty()){
+                SearchController.searchByIdentify(search,DataAccess.getAllProducts());
+            }
+            else {
+                SearchController.searchByIdentify(search,DataAccess.getSortedProducts());
+                loadSearchProducts();
+            }
+        }
     }
+
 
 
     @Override
