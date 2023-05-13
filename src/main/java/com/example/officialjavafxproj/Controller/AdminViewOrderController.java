@@ -93,7 +93,7 @@ public class AdminViewOrderController implements Initializable {
     }
 
     private void onOrderIDSortButton() {
-        Collections.sort(DataAccess.getAllOrders());
+//        Collections.sort(DataAccess.getAllOrders());
     }
 
     @Override
