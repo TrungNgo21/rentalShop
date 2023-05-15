@@ -54,10 +54,16 @@ public class SortComponentControllers implements Initializable {
         productService.addSortedOptions(CheckboxController.getAllOptions(genresCheckboxes));
         productService.addSortedOptions(CheckboxController.getAllOptions(loanCheckboxes));
         productService.addSortedOptions(CheckboxController.getAllOptions(availabilityCheckboxes));
-
         productService.addToSortedProducts(productService.getSortedOptions());
-//        new SceneController().switchScene(event, "../Pages/sortPage.fxml");
-        new SceneController().switchScene(event,"../Pages/adminSortProduct.fxml");
+        UserServices userServices = new UserServices();
+        if(userServices.getCurrentUser().equals("ADMIN")){
+            new SceneController().switchScene(event,"../Pages/adminSortProduct.fxml");
+        }
+        else {
+                    new SceneController().switchScene(event, "../Pages/sortPage.fxml");
+        }
+
+
 
     }
     public void onResetButton(){

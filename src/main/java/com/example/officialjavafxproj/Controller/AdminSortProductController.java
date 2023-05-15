@@ -46,11 +46,12 @@ public class AdminSortProductController implements Initializable {
         titleButton.setOnMouseClicked(mouseEvent -> {
             searchTextField.setDisable(true);
         });
-        priceButton.setOnMouseClicked(MouseEvent ->{
+        priceButton.setOnMouseClicked(MouseEvent -> {
             searchTextField.setDisable(true);
         });
     }
-    public void resetToBegin(ActionEvent actionEvent){
+
+    public void resetToBegin(ActionEvent actionEvent) {
         titleButton.setDisable(false);
         priceButton.setDisable(false);
         titleButton.setSelected(false);
@@ -60,17 +61,18 @@ public class AdminSortProductController implements Initializable {
         DataAccess.getSortedProducts().clear();
         loadSortedProducts();
     }
-    public void onFiedReleased(){
+
+    public void onFiedReleased() {
         String search = searchTextField.getText();
-        if(!search.trim().isEmpty()){
+        if (!search.trim().isEmpty()) {
             titleButton.setDisable(true);
             priceButton.setDisable(true);
-        }
-        else {
+        } else {
             titleButton.setDisable(false);
             priceButton.setDisable(false);
         }
     }
+
     public void addSortedPane() {
         try {
             sortLayout.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
@@ -103,11 +105,12 @@ public class AdminSortProductController implements Initializable {
             }
         }
     }
+
     public void loadSearchProducts() {
         gridPane.getChildren().clear();
         int column = 0;
         int row = 0;
-        if ( SearchController.getTempContainer().isEmpty()) {
+        if (SearchController.getTempContainer().isEmpty()) {
             Label temp = new Label();
             temp.setText("No Products matched your requirement");
             gridPane.getChildren().add(temp);
@@ -143,18 +146,15 @@ public class AdminSortProductController implements Initializable {
             new ProductService().sortByTitle();
         }
         if (!search.trim().isEmpty()) {
-            if(DataAccess.getSortedProducts().isEmpty()){
-                SearchController.searchByIdentify(search,DataAccess.getAllProducts());
-            }
-            else {
-                SearchController.searchByIdentify(search,DataAccess.getSortedProducts());
+            if (DataAccess.getSortedProducts().isEmpty()) {
+                SearchController.searchByIdentify(search, DataAccess.getAllProducts());
+                loadSearchProducts();
+            } else {
+                SearchController.searchByIdentify(search, DataAccess.getSortedProducts());
                 loadSearchProducts();
             }
         }
     }
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadSortedProducts();
