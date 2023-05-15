@@ -111,7 +111,6 @@ public class adminViewProfileControllers implements Initializable {
             noFreeToBorrowDisplay.setText(currentUserAccount.getPoints() >= 100 ? "1" : "Points must be over 100 to borrow free");
         }
     }
-
     public void onUserPageBackButton(ActionEvent actionEvent) throws IOException{
         new SceneController().switchScene(actionEvent, "../Pages/adminViewCustomers.fxml");
     }

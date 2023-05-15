@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.GridPane;
@@ -95,7 +96,7 @@ public class adminViewUserControllers implements Initializable {
     }
 
     public void addUserToGridView() {
-//        gridPane.getChildren().clear();
+        gridPane.getChildren().clear();
         int column = 0;
         int row = 0;
         if (new AdminService().getSortedCustomer().size() == 0) {
@@ -147,6 +148,7 @@ public class adminViewUserControllers implements Initializable {
 
         if(searchUser.getText().isEmpty()) {
             DataAccess.setSortedUsers(filteredUser);
+            sortUsers();
             addUserToGridView();
         }
         else if(accountType.getValue().isEmpty()) {
@@ -156,12 +158,12 @@ public class adminViewUserControllers implements Initializable {
                 }
             }
             DataAccess.setSortedUsers(tempUsers);
+            sortUsers();
             addUserToGridView();
         }
         else if(!searchUser.getText().isEmpty() && !accountType.getValue().isEmpty()) {
             for(Map.Entry<String, User> user : DataAccess.getAllUsers().entrySet()) {
                 if(searchUser.getText().equals(user.getValue().getUserId())|| searchUser.getText().equals(user.getValue().getUserName())) {
-//                tempUsers.put(user.getKey(), user.getValue());
                     for(Map.Entry<String, User> tmp :filteredUser.entrySet()) {
                         if(searchUser.getText().equals(tmp.getValue().getUserId()) || searchUser.getText().equals(user.getValue().getFullName())) {
                             tempUsers.put(tmp.getValue().getUserId(), tmp.getValue());
@@ -171,12 +173,13 @@ public class adminViewUserControllers implements Initializable {
                 }
             }
             DataAccess.setSortedUsers(tempUsers);
+            sortUsers();
             addUserToGridView();
         }
 
     }
 
-    public void sortUsers(ActionEvent event) {
+    public void sortUsers() {
         if(increasingOrder.isSelected()) {
             gridPane.getChildren().clear();
             new AdminService().sortIncreasingOrderId();
