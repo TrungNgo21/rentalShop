@@ -40,8 +40,16 @@ public class AdminSortProductController implements Initializable {
     private Button searchButton;
     @FXML
     private Button resetButton;
+    @FXML
+    private AnchorPane adminNavbar;
 
-
+    public void addNavigationBar(){
+        try {
+            adminNavbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void setDisableButton() {
         titleButton.setOnMouseClicked(mouseEvent -> {
             searchTextField.setDisable(true);
@@ -141,9 +149,11 @@ public class AdminSortProductController implements Initializable {
         String search = searchTextField.getText().trim();
         if (priceButton.isSelected()) {
             new ProductService().sortByPrice();
+            loadSortedProducts();
         }
         if (titleButton.isSelected()) {
             new ProductService().sortByTitle();
+            loadSortedProducts();
         }
         if (!search.trim().isEmpty()) {
             if (DataAccess.getSortedProducts().isEmpty()) {
@@ -154,9 +164,11 @@ public class AdminSortProductController implements Initializable {
                 loadSearchProducts();
             }
         }
+
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addNavigationBar();
         loadSortedProducts();
         addSortedPane();
         setToggleGroup();

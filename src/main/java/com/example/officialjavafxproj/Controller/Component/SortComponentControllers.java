@@ -56,7 +56,7 @@ public class SortComponentControllers implements Initializable {
         productService.addSortedOptions(CheckboxController.getAllOptions(availabilityCheckboxes));
         productService.addToSortedProducts(productService.getSortedOptions());
         UserServices userServices = new UserServices();
-        if(userServices.getCurrentUser().equals("ADMIN")){
+        if(userServices.getCurrentUser().getUserId().equals("ADMIN")){
             new SceneController().switchScene(event,"../Pages/adminSortProduct.fxml");
         }
         else {

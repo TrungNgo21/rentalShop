@@ -63,9 +63,7 @@ public class AdminViewProductController implements Initializable {
                     loader.setLocation(getClass().getResource("../Component/adminViewProductComponent.fxml"));
                     HBox productItem = loader.load();
                     AdminProductController adminProductController = loader.getController();
-
                     adminProductController.loadProductDisplay(product.getValue());
-                    System.out.println(product.getValue());
                     gridPane.setHgap(10);
                     gridPane.setVgap(10);
                     gridPane.add(productItem,column,row++);
@@ -79,7 +77,7 @@ public class AdminViewProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        addNavigationBar();
+        addNavigationBar();
         addSortedPane();
         addProductToGridView();
     }

@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginControllers {
-
     @FXML
     private BorderPane borderPane;
     @FXML
@@ -45,7 +44,13 @@ public class LoginControllers {
         UserServices service = new UserServices();
         SceneController sceneController = new SceneController();
         if(service.login(usernameTextField.getText(), passwordField.getText())){
-            sceneController.switchScene(event, "../Pages/userProfile.fxml");
+            if(new UserServices().getCurrentUser().getUserId().equals("ADMIN")){
+                sceneController.switchScene(event, "../Pages/adminViewProduct.fxml");
+            }
+            else {
+                sceneController.switchScene(event, "../Pages/userProfile.fxml");
+            }
+
             ToastBuilder.builder()
                     .withTitle("Login Message")
                     .withMessage("Login Successful!")

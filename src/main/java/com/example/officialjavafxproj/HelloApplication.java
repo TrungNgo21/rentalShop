@@ -10,6 +10,9 @@ import com.github.plushaze.traynotification.notification.Notification;
 import com.github.plushaze.traynotification.notification.Notifications;
 import com.github.plushaze.traynotification.notification.TrayNotification;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -24,7 +27,7 @@ public class HelloApplication extends Application {
         DataAccess.loadAllData();
         boolean isLoadedAll = true;
         stage.initStyle(StageStyle.UNDECORATED);
-        sceneSwitcher.setCurrentScene(stage,"../Pages/adminSortProduct.fxml");
+        sceneSwitcher.setCurrentScene(stage,"../hello-view.fxml");
     }
 
     public static void main(String[] args) {

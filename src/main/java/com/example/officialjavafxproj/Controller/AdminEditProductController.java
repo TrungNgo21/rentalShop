@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
 
 public class AdminEditProductController implements Initializable {
     @FXML
-    private AnchorPane navbarPane;
+    private AnchorPane adminNavbar;
     @FXML
     private ImageView productImage;
     @FXML
@@ -69,6 +69,14 @@ public class AdminEditProductController implements Initializable {
     ObservableList<String> rentalTypeList = FXCollections.observableArrayList(product.getRentalTypes());
     ObservableList<String> genreTypeList = FXCollections.observableArrayList(product.getGenres());
     ObservableList<String> loanTypeList = FXCollections.observableArrayList(product.getLoanTypes());
+
+    public void addNavigationBar(){
+        try {
+            adminNavbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setChoiceBox(){
         rentalTypeChoiceBox.setItems(rentalTypeList);
@@ -229,6 +237,7 @@ public class AdminEditProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addNavigationBar();
         loadProductDetail();
         setChoiceBox();
     }
