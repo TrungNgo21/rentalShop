@@ -34,8 +34,8 @@ public class AdminOrderController {
 
     public void onViewOrderButton(ActionEvent actionEvent) throws IOException {
         OrderAdminService adminService = new OrderAdminService(new DataAccess());
-        new SceneController().switchScene(actionEvent, "../Pages/adminViewOrderDetail.fxml");
         Order order = adminService.getOne(orderID);
         adminService.setSelectedOrder(order);
+        new SceneController().switchScene(actionEvent, "../Pages/adminViewOrderDetail.fxml");
     }
 }

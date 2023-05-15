@@ -5,6 +5,7 @@ import Middleware.OrderMiddleware;
 import Model.Order.Order;
 import Model.User.User;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class OrderAdminService extends OrderService{
@@ -33,37 +34,49 @@ public class OrderAdminService extends OrderService{
 
     }
 
-    public ArrayList<Order> getSortedOrderID() {
-        ArrayList<Order> orderList = DataAccess.getAllOrders();
-        Collections.sort(orderList, new Comparator<Order>() {
+    public HashMap<String, Order> getSortedOrderID() {
+        List<Map.Entry<String, Order>> list = new LinkedList<Map.Entry<String, Order>>(getAll().entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, Order>>() {
             @Override
-            public int compare(Order o1, Order o2) {
-                return (o1.getOrderId().compareTo(o2.getOrderId()));
+            public int compare(Map.Entry<String, Order> o1, Map.Entry<String, Order> o2) {
+                return o1.getValue().getOrderId().compareTo(o2.getValue().getOrderId());
             }
         });
-        return orderList;
+        HashMap<String, Order> temp = new LinkedHashMap<String, Order>();
+        for (Map.Entry<String, Order> order : list) {
+            temp.put(order.getKey(), order.getValue());
+        }
+        return temp;
     }
 
-    public ArrayList<Order> getSortedOrderDate() {
-        ArrayList<Order> orderList = DataAccess.getAllOrders();
-        Collections.sort(orderList, new Comparator<Order>() {
+    public HashMap<String, Order> getSortedOrderDate() {
+        List<Map.Entry<String, Order>> list = new LinkedList<Map.Entry<String, Order>>(getAll().entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, Order>>() {
             @Override
-            public int compare(Order o1, Order o2) {
-                return (o1.getOrderDate().compareTo(o2.getOrderDate()));
+            public int compare(Map.Entry<String, Order> o1, Map.Entry<String, Order> o2) {
+                return o1.getValue().getOrderDate().compareTo(o2.getValue().getOrderDate());
             }
         });
-        return orderList;
+        HashMap<String, Order> temp = new LinkedHashMap<String, Order>();
+        for (Map.Entry<String, Order> order : list) {
+            temp.put(order.getKey(), order.getValue());
+        }
+        return temp;
     }
 
-    public ArrayList<Order> getSortedUserID() {
-        ArrayList<Order> orderList = DataAccess.getAllOrders();
-        Collections.sort(orderList, new Comparator<Order>() {
+    public HashMap<String, Order> getSortedUserID() {
+        List<Map.Entry<String, Order>> list = new LinkedList<Map.Entry<String, Order>>(getAll().entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, Order>>() {
             @Override
-            public int compare(Order o1, Order o2) {
-                return (o1.getUserId().compareTo(o2.getUserId()));
+            public int compare(Map.Entry<String, Order> o1, Map.Entry<String, Order> o2) {
+                return o1.getValue().getUserId().compareTo(o2.getValue().getUserId());
             }
         });
-        return orderList;
+        HashMap<String, Order> temp = new LinkedHashMap<String, Order>();
+        for (Map.Entry<String, Order> order : list) {
+            temp.put(order.getKey(), order.getValue());
+        }
+        return temp;
     }
 
     @Override

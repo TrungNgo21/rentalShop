@@ -136,7 +136,7 @@ public class DataAccess {
             Order order = new Order(orderData[0], orderData[1], LocalDate.parse(orderData[2], new DateMiddleware().dateParser()), Double.parseDouble(orderData[3]));
             orders.add(order);
         }
-    }
+    }   
 
     private static void loadAllCartsNoDetail() {
         ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getCartFileDir());

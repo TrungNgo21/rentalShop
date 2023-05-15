@@ -36,33 +36,36 @@ public class AdminViewOrderController implements Initializable {
     private RadioButton sortByOrderDate;
     @FXML
     private RadioButton sortByUserID;
-    private ToggleGroup toggleGroup = new ToggleGroup();
     private OrderAdminService orderAdminService = new OrderAdminService(new DataAccess());
 
     private void addNavigationBar() {
         try {
-            navbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "com/example/officialjavafxproj/Component/adminNavbarComponent.fxml"));
+            navbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void addAllOrder() {
-        addOrder(DataAccess.getAllOrders());
+        addOrder(new OrderAdminService(new DataAccess()).getAll());
     }
 
-    private void addOrder(ArrayList<Order> orderList) {
+    private void addOrder(HashMap<String, Order> orderList) {
         int column = 0;
         int row = 1;
-        for(Order order: orderList) {
+        gridPane.getChildren().clear();
+        for(Map.Entry<String, Order> order: orderList.entrySet()) {
             try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("../Component/adminViewOrderComponent.fxml"));
                 HBox userItem = loader.load();
                 AdminOrderController adminOrderController = loader.getController();
-                adminOrderController.loadDisplayOrder(order);
-                DataAccess.getAllOrders().add(order);
-                gridPane.getChildren().clear();
+                adminOrderController.loadDisplayOrder(order.getValue());
+                DataAccess.getAllOrders().add(order.getValue());
+                if(column == 1) {
+                    column = 0;
+                    row++;
+                }
                 gridPane.setHgap(10);
                 gridPane.setVgap(10);
                 gridPane.add(userItem,column,row++);
@@ -112,8 +115,16 @@ public class AdminViewOrderController implements Initializable {
         addOrder(orderAdminService.getSortedUserID());
     }
 
+    private void setToggleGroup() {
+        ToggleGroup toggleGroup = new ToggleGroup();
+        sortByOrderDate.setToggleGroup(toggleGroup);
+        sortByOrderID.setToggleGroup(toggleGroup);
+        sortByUserID.setToggleGroup(toggleGroup);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setToggleGroup();
         addNavigationBar();
         addAllOrder();
     }
