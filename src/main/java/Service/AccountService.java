@@ -14,4 +14,8 @@ public class AccountService {
         }
         return arrayAccounts;
     }
+
+    public void updateAccounts(Account account){
+        DataAccess.getAllAccounts().put(account.getOwner().getUserId(), account);
+    }
 }

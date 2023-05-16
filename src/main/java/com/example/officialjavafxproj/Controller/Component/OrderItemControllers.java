@@ -11,6 +11,7 @@ import Model.Order.Order;
 import Model.Order.OrderDetail;
 import Model.Product.Product;
 import Model.User.User;
+import Service.AccountService;
 import Service.OrderCustomerService;
 import Service.ProductService;
 import Service.UserServices;
@@ -84,12 +85,14 @@ public class OrderItemControllers {
                 RegularAccount regularAccount = new RegularAccount(currentAccount.getAccountId(), "RegularAccount", currentAccount.getPoints(), currentAccount.getNumReturnedItems(), true, 9999, currentAccount.getIsCurrentlyBorrowed());
                 currentUser.setAccount(regularAccount);
                 currentUser.getAccount().setOwner(currentUser);
+                new AccountService().updateAccounts(currentUser.getAccount());
             }
             else if(currentUser.getAccount() instanceof RegularAccount){
                 Account currentAccount = currentUser.getAccount();
                 VIPAccount VIPAccount = new VIPAccount(currentAccount.getAccountId(), "VIPAccount", currentAccount.getPoints(), currentAccount.getNumReturnedItems(), true, 9999, currentAccount.getIsCurrentlyBorrowed());
                 currentUser.setAccount(VIPAccount);
                 currentUser.getAccount().setOwner(currentUser);
+                new AccountService().updateAccounts(currentUser.getAccount());
             }
         }
         if(currentUser.getAccount() instanceof VIPAccount){
