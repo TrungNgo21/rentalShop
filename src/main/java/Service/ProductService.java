@@ -51,6 +51,14 @@ public class ProductService implements Services<Product> {
         return DataAccess.getAllProducts();
     }
 
+    public ArrayList<Product> getArrayProducts(){
+        ArrayList<Product> products = new ArrayList<>();
+        for(Map.Entry<String, Product> product : getAll().entrySet()){
+            products.add(product.getValue());
+        }
+        return products;
+    }
+
     public void setTargetProduct(Product currentProduct) {
         DataAccess.setChosenProduct(currentProduct);
     }

@@ -2,12 +2,6 @@ package com.example.officialjavafxproj;
 
 import DataAccess.DataAccess;
 import com.example.officialjavafxproj.Utils.SceneController;
-
-import com.example.officialjavafxproj.Utils.ToastBuilder;
-import com.github.plushaze.traynotification.animations.Animations;
-import com.github.plushaze.traynotification.notification.Notification;
-import com.github.plushaze.traynotification.notification.Notifications;
-import com.github.plushaze.traynotification.notification.TrayNotification;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -23,7 +17,7 @@ public class HelloApplication extends Application {
         DataAccess.loadAllData();
         boolean isLoadedAll = true;
         stage.initStyle(StageStyle.UNDECORATED);
-        sceneSwitcher.setCurrentScene(stage,"../hello-view.fxml");
+        sceneSwitcher.setCurrentScene(stage,"../Pages/homepageAdmin.fxml");
     }
 
     public static void main(String[] args) {
