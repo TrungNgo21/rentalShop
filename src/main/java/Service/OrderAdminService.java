@@ -3,6 +3,7 @@ package Service;
 import DataAccess.DataAccess;
 import Middleware.OrderMiddleware;
 import Model.Order.Order;
+import Model.Order.OrderDetail;
 import Model.User.User;
 
 import java.lang.reflect.Array;
@@ -96,6 +97,14 @@ public class OrderAdminService extends OrderService{
             orders.put(order.getOrderId(), order);
         }
         return orders;
+    }
+
+    public HashMap<String, OrderDetail> getAllOrderDetail(Order order) {
+        HashMap<String, OrderDetail> orderDetailHashMap = new HashMap<>();
+        for(OrderDetail orderDetail: order.getOrders()) {
+            orderDetailHashMap.put(orderDetail.getOrderDetailId(), orderDetail);
+        }
+        return orderDetailHashMap;
     }
 
     public Order getSelectedOrder() {return selectedOrder;}
