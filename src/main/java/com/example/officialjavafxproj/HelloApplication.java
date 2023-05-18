@@ -17,7 +17,7 @@ public class HelloApplication extends Application {
         DataAccess.loadAllData();
         boolean isLoadedAll = true;
         stage.initStyle(StageStyle.UNDECORATED);
-        sceneSwitcher.setCurrentScene(stage,"../Pages/homepageAdmin.fxml");
+        sceneSwitcher.setCurrentScene(stage,"../Pages/login.fxml");
     }
 
     public static void main(String[] args) {
