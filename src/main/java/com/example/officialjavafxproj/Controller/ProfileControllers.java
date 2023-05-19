@@ -118,6 +118,7 @@ public class ProfileControllers implements Initializable {
 
     public void addNavigationBar(){
         SceneController sceneSwitcher = new SceneController();
+        navbarPane.getChildren().clear();
         try {
             navbarPane.getChildren().add(sceneSwitcher.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {

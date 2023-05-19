@@ -13,3 +13,4 @@ Acc0012;GuestAccount;0;0;false;2;false;C012
 Acc000;GuestAccount;0;1;false;2;false;C000
 Acc0011;GuestAccount;0;0;false;2;false;C011
 Acc010;GuestAccount;0;0;false;2;false;C010
+Acc016;AdminAccount;0;7;false;1;false;ADMIN

@@ -17,6 +17,7 @@ public abstract class Product {
     private String loanType;
     private String status;
 
+    private int stock;
     private String imageLocation;
 
     public Product(String id, String title, String rentalType, String genre, String publishedYear, int numOfCopies, double rentalFee, String loanType, String status, String imageLocation) {
@@ -72,6 +73,10 @@ public abstract class Product {
         return imageLocation;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
     public void setNumOfCopies(int numOfCopies) {
         this.numOfCopies = numOfCopies;
     }
@@ -79,6 +84,18 @@ public abstract class Product {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public void setTitle(String title) {this.title = title;}
+
+    public void setRentalFee(double rentalFee) {this.rentalFee = rentalFee;}
+
+    public void setRentalType(String rentalType) {this.rentalType = rentalType;}
+
+    public void setGenre(String genre) {this.genre = genre;}
+
+    public void setLoanType(String loanType) {this.loanType = loanType;}
+
+    public void setImageLocation(String imageLocation) {this.imageLocation = imageLocation;}
 
     @Override
     public String toString() {

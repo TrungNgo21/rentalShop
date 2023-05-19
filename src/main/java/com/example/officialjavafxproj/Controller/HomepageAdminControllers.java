@@ -21,8 +21,9 @@ public class HomepageAdminControllers implements Initializable {
     private GridPane chartDisplay;
 
     public void addNavigationBar(){
+        navbarPane.getChildren().clear();
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,6 +47,7 @@ public class HomepageAdminControllers implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addNavigationBar();
         addCharts();
     }
 }
