@@ -22,7 +22,7 @@ public class AdminNavbarControllers {
     public void onViewProductButton(ActionEvent event) throws IOException{
         new SceneController().switchScene(event, "../Pages/adminViewProduct.fxml");
     }
-    public void onViewUserButton(ActionEvent actionEvent) throws IOException{
+    public void onViewUsersButton(ActionEvent actionEvent) throws IOException{
         new SceneController().switchScene(actionEvent, "../Pages/adminViewCustomers.fxml");
     }
 
