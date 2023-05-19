@@ -1,10 +1,7 @@
 package DataAccess;
 
 import Middleware.DateMiddleware;
-import Model.Account.Account;
-import Model.Account.GuestAccount;
-import Model.Account.RegularAccount;
-import Model.Account.VIPAccount;
+import Model.Account.*;
 import Model.Order.Cart;
 import Model.Order.Order;
 import Model.Order.OrderDetail;
@@ -16,6 +13,7 @@ import Model.User.Admin;
 import Model.User.Customer;
 import Model.User.User;
 import FileLocation.FileLocation;
+import Service.UserServices;
 
 
 import java.io.BufferedReader;
@@ -81,7 +79,9 @@ public class DataAccess {
                 users.put(userData[0],
                         new Admin(userData[0], userData[1], userData[2], userData[3], userData[4], userData[5], userData[6]));
             }
-            users.put(userData[0], new Customer(userData[0], userData[1], userData[2], userData[3], userData[4], userData[5], Double.parseDouble(userData[6]), new GuestAccount(), new Cart(), userData[7]));
+            else {
+                users.put(userData[0], new Customer(userData[0], userData[1], userData[2], userData[3], userData[4], userData[5], Double.parseDouble(userData[6]), new GuestAccount(), new Cart(), userData[7]));
+            }
         }
     }
 
@@ -98,6 +98,11 @@ public class DataAccess {
                 RegularAccount regularAcc = (RegularAccount) users.get(accountData[7]).getAccount();
                 regularAcc.setOwner(users.get(accountData[7]));
                 accounts.put(accountData[0], regularAcc);
+            } else if (Objects.equals(accountData[1],"AdminAccount")) {
+                users.get(accountData[7]).setAccount(new AdminAccount(accountData[0], accountData[1], Integer.parseInt(accountData[2]), Integer.parseInt(accountData[3]), Boolean.parseBoolean(accountData[4]), Integer.parseInt(accountData[5]), Boolean.parseBoolean(accountData[6])));
+                AdminAccount adminAccount = (AdminAccount) users.get(accountData[7]).getAccount();
+                adminAccount.setOwner(users.get(accountData[7]));
+                accounts.put(accountData[0],adminAccount);
             } else {
                 users.get(accountData[7]).setAccount(new VIPAccount(accountData[0], accountData[1], Integer.parseInt(accountData[2]), Integer.parseInt(accountData[3]), Boolean.parseBoolean(accountData[4]), Integer.parseInt(accountData[5]), Boolean.parseBoolean(accountData[6])));
                 VIPAccount VIPAcc = (VIPAccount) users.get(accountData[7]).getAccount();

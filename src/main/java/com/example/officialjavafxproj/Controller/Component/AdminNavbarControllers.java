@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
-public class adminNavbarControllers {
+public class AdminNavbarControllers {
     @FXML
     private Label userNameDisplay;
 
@@ -20,15 +20,14 @@ public class adminNavbarControllers {
         new SceneController().switchScene(event, "../Pages/login.fxml");
     }
 
-    public void onHomeButton(ActionEvent event) throws IOException{
+
+    public void onHomeButton(ActionEvent event) throws IOException {
         new SceneController().switchScene(event, "../Pages/adminViewCustomers.fxml");
     }
-
-    public void onGoToOrderButton(ActionEvent event) throws IOException{
-//        new SceneController().switchScene(event, "../Pages/userCart.fxml"); lam view all order pages
+    public void onViewProductButton(ActionEvent event) throws IOException{
+        new SceneController().switchScene(event, "../Pages/adminViewProduct.fxml");
     }
-
-//    public void loadNoCartItem(){
-//        noCartItem.setText(String.valueOf(new OrderDetailService().getAll().size()));
-//    }
+    public void onViewUserButton(ActionEvent actionEvent) throws IOException{
+        new SceneController().switchScene(actionEvent, "../Pages/adminViewCustomers.fxml");
+    }
 }

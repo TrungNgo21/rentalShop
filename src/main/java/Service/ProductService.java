@@ -2,6 +2,7 @@ package Service;
 
 import DataAccess.DataAccess;
 import Model.Product.Product;
+import com.example.officialjavafxproj.Utils.SearchController;
 
 import java.util.*;
 
@@ -48,18 +49,18 @@ public class ProductService implements Services<Product> {
     }
 
     @Override
-    public Product getOne(String productIdentifier) {
-        for (Map.Entry<String, Product> product : DataAccess.getAllProducts().entrySet()) {
-            if (productIdentifier.equals(product.getValue().getId()) || productIdentifier.equals(product.getValue().getTitle())) {
+    public Product getOne(String id) {
+        for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
+            if(product.getValue().getId().equals(id)){
                 return product.getValue();
             }
         }
         return null;
     }
 
-    public Product getStock() {
-        for (Map.Entry<String, Product> product : DataAccess.getAllProducts().entrySet()) {
-            if (product.getValue().getNumOfCopies() == 0) {
+    public Product getStock(){
+        for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
+            if(product.getValue().getNumOfCopies() == 0){
                 return product.getValue();
             }
         }
@@ -98,18 +99,6 @@ public class ProductService implements Services<Product> {
         DataAccess.setSortedProducts(temp);
 
     }
-
-    public HashMap<String, Product> getProductByType(String rentalType) {
-        DataAccess.getSortedProducts().clear();
-        for (Map.Entry<String, Product> product : DataAccess.getAllProducts().entrySet()) {
-            if (product.getValue().getRentalType().equals(rentalType)) {
-                DataAccess.getSortedProducts().put(product.getKey(), product.getValue());
-            }
-        }
-
-        return DataAccess.getSortedProducts();
-    }
-
 
     @Override
     public HashMap<String, Product> getAll() {
@@ -164,10 +153,11 @@ public class ProductService implements Services<Product> {
                 boolean isExisted = false;
                 int noneCounter = 0;
                 deletedProductId.clear();
-                System.out.println(getSortedProducts());
-                for (Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()) {
-                    for (String option : sortedOptions.get(i)) {
-                        if (option.equals("NONE")) {
+//                System.out.println(getSortedProducts());
+                for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
+                    for(String option : sortedOptions.get(i)){
+                        if(option.equals("NONE")){
+
                             noneCounter++;
                             continue;
                         }
@@ -197,10 +187,10 @@ public class ProductService implements Services<Product> {
                 int noneCounter = 0;
 
                 deletedProductId.clear();
-                System.out.println(getSortedProducts());
-                for (Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()) {
-                    for (String option : sortedOptions.get(i)) {
-                        if (option.equals("NONE")) {
+//                System.out.println(getSortedProducts());
+                for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
+                    for(String option : sortedOptions.get(i)){
+                        if(option.equals("NONE")){
                             noneCounter++;
                             continue;
                         }
@@ -227,10 +217,11 @@ public class ProductService implements Services<Product> {
                 int noneCounter = 0;
 
                 deletedProductId.clear();
-                System.out.println(getSortedProducts());
-                for (Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()) {
-                    for (String option : sortedOptions.get(i)) {
-                        if (option.equals("NONE")) {
+//                System.out.println(getSortedProducts());
+                for(Map.Entry<String, Product> sysProduct : getSortedProducts().entrySet()){
+                    for(String option : sortedOptions.get(i)){
+                        if(option.equals("NONE")){
+
                             noneCounter++;
                             continue;
                         }

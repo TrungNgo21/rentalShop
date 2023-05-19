@@ -6,7 +6,9 @@ import java.util.regex.Pattern;
 public class InputMiddleware {
     private final String passwordPatternStr = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-[{}]:;',?/*~$^+=<>]).{8,12}$";
     private final String digitPatternStr = "^\\d+$";
+    private final String negativePatternStr = "^-[1-9]\\d*|0$";
     private final String whiteSpacePatternStr = "\\s+";
+    private final Pattern negativePattern = Pattern.compile(negativePatternStr);
     private final Pattern passPattern = Pattern.compile(passwordPatternStr);
     private final Pattern digitPattern = Pattern.compile(digitPatternStr);
 
@@ -35,11 +37,22 @@ public class InputMiddleware {
             return username.length() >= 12;
         }
     }
-    public boolean isPositve(String num) {
+    public boolean isPositive(String num) {
         if(num.isEmpty()){
             return false;
         }
+        Matcher matcher = digitPattern.matcher(num);
+        Matcher matcher1 = negativePattern.matcher(num);
+        if(!matcher.matches() && !matcher1.matches()){
+            return false;
+        }
+
         return Double.parseDouble(num) > 0;
+    }
+    public boolean isValidNumber(String num){
+        Matcher matcher = negativePattern.matcher(num);
+        Matcher matcher1 = digitPattern.matcher(num);
+        return matcher.matches() || matcher1.matches();
     }
 
 

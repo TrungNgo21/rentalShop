@@ -20,19 +20,14 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+    private SceneController sceneSwitcher = new SceneController();
 
     @Override
     public void start(Stage stage) throws IOException {
-        try {
-            DataAccess.loadAllData();
-            Parent root = FXMLLoader.load(getClass().getResource("./Pages/adminViewCustomers.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        DataAccess.loadAllData();
+        boolean isLoadedAll = true;
+        stage.initStyle(StageStyle.UNDECORATED);
+        sceneSwitcher.setCurrentScene(stage,"../hello-view.fxml");
     }
 
     public static void main(String[] args) {

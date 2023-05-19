@@ -1,6 +1,5 @@
 package com.example.officialjavafxproj.Controller;
 
-import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Model.Account.GuestAccount;
 import Model.Account.RegularAccount;
@@ -22,7 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class adminViewProfileControllers implements Initializable {
+public class AdminViewProfileControllers implements Initializable {
     @FXML
     private ImageView profileImage;
 

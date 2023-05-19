@@ -112,6 +112,9 @@ public class AdminViewUserControllers implements Initializable {
                 fxmlLoader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
                 HBox userItem = fxmlLoader.load();
                 AdminUserControllers adminUserController = fxmlLoader.getController();
+                if(user.getValue().getUserId().equals("ADMIN")){
+                    continue;
+                }
                 adminUserController.loadDisplayUser((Customer) user.getValue());
                 if(column == 1){
                     column = 0;
@@ -224,7 +227,7 @@ public class AdminViewUserControllers implements Initializable {
                     DataAccess.setSortedUsers(temp);
                     filteredUser.putAll(temp);
                     for(Map.Entry<String, User> tmo : filteredUser.entrySet()) {
-                        System.out.println(choice);
+
                     }
                 }
                 else if(type.equals("VIP Account")) {
@@ -232,7 +235,6 @@ public class AdminViewUserControllers implements Initializable {
                     DataAccess.setSortedUsers(temp);
                     filteredUser.putAll(temp);
                     for(Map.Entry<String, User> tmo : filteredUser.entrySet()) {
-                        System.out.println(tmo.getValue().getUserId());
                     }
                 }
                 else if(type.equals("Guest Account")) {

@@ -15,19 +15,19 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.AdminEditProductController">
     <children>
-        <AnchorPane fx:id="navbarPane" prefHeight="80.0" prefWidth="1280.0" />
-        <HBox layoutX="143.0" layoutY="114.0" prefHeight="420.0" prefWidth="995.0">
+        <AnchorPane fx:id="adminNavbar" prefHeight="80.0" prefWidth="1280.0" />
+        <HBox layoutX="143.0" layoutY="114.0" prefHeight="420.0" prefWidth="1104.0">
             <children>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                     <children>
-                        <ImageView fx:id="profileImage" fitHeight="338.0" fitWidth="400.0" layoutX="5.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="productImage" fitHeight="338.0" fitWidth="400.0" layoutX="5.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Image/Product/I000-1999.jpg" />
                             </image>
                         </ImageView>
                     </children>
                 </AnchorPane>
-                <VBox prefHeight="420.0" prefWidth="644.0" style="-fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5 0 0 5;">
+                <VBox prefHeight="420.0" prefWidth="753.0" style="-fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5 0 0 5;">
                     <children>
                         <Label prefHeight="71.0" prefWidth="644.0" style="-fx-border-width: 0 0 2 0; -fx-border-color: #ccc;" text="Edit Product">
                             <font>
@@ -38,7 +38,7 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="89.0" prefWidth="541.0">
                                     <children>
-                                        <Label prefHeight="23.0" prefWidth="179.0" text="Name">
+                                        <Label prefHeight="23.0" prefWidth="139.0" text="Name">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
@@ -60,14 +60,14 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="561.0">
                                     <children>
-                                        <Label prefHeight="23.0" prefWidth="123.0" text="Price">
+                                        <Label prefHeight="23.0" prefWidth="163.0" text="Price">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="priceTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="440.0">
+                                        <TextField fx:id="priceTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="451.0">
                                             <HBox.margin>
-                                                <Insets left="53.0" />
+                                                <Insets />
                                             </HBox.margin>
                                         </TextField>
                                     </children>
@@ -80,16 +80,16 @@
                         </VBox>
                         <VBox prefHeight="114.0" prefWidth="539.0">
                             <children>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="644.0">
+                                <HBox alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="642.0">
                                     <children>
-                                        <Label prefHeight="23.0" prefWidth="253.0" text="NumOfCopies">
+                                        <Label prefHeight="23.0" prefWidth="166.0" text="NumOfCopies">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="copiesTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="440.0">
+                                        <TextField fx:id="copiesTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="445.0">
                                             <HBox.margin>
-                                                <Insets left="15.0" />
+                                                <Insets />
                                             </HBox.margin>
                                         </TextField>
                                     </children>
@@ -100,9 +100,31 @@
                                 <Label fx:id="copiesWarningMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="540.0" />
                             </children>
                         </VBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="115.0" prefWidth="675.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="29.0" prefWidth="83.0" text="RentalType">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="rentalTypeChoiceBox" prefHeight="27.0" prefWidth="135.0" />
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="84.0" text="GenreType">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="genreTypeChoiceBox" prefWidth="150.0" />
+                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="77.0" text="LoanType">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="loanTypeChoiceBox" prefHeight="27.0" prefWidth="144.0" />
+                     </children>
+                  </HBox>
                     </children>
                     <padding>
-                        <Insets left="50.0" right="50.0" />
+                        <Insets left="5.0" right="5.0" />
                     </padding>
                     <HBox.margin>
                         <Insets left="10.0" />
@@ -114,7 +136,7 @@
             <children>
                 <AnchorPane prefHeight="64.0" prefWidth="253.0">
                     <children>
-                        <Button fx:id="uploadImageButton" alignment="CENTER" layoutX="102.0" layoutY="27.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" text="Upload New Image" />
+                        <Button fx:id="uploadImageButton" alignment="CENTER" layoutX="102.0" layoutY="27.0" mnemonicParsing="false" onAction="#onUploadImage" prefHeight="26.0" prefWidth="134.0" text="Upload New Image" />
                     </children>
                 </AnchorPane>
                 <AnchorPane prefHeight="64.0" prefWidth="706.0">

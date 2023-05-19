@@ -5,6 +5,7 @@ import Model.Product.Product;
 import Service.ProductService;
 import com.example.officialjavafxproj.Controller.Component.AdminProductController;
 import com.example.officialjavafxproj.Utils.SceneController;
+import com.example.officialjavafxproj.Utils.SearchController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -18,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
@@ -38,17 +40,26 @@ public class AdminSortProductController implements Initializable {
     private Button searchButton;
     @FXML
     private Button resetButton;
+    @FXML
+    private AnchorPane adminNavbar;
 
-
+    public void addNavigationBar(){
+        try {
+            adminNavbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void setDisableButton() {
         titleButton.setOnMouseClicked(mouseEvent -> {
             searchTextField.setDisable(true);
         });
-        priceButton.setOnMouseClicked(MouseEvent ->{
+        priceButton.setOnMouseClicked(MouseEvent -> {
             searchTextField.setDisable(true);
         });
     }
-    public void resetToBegin(ActionEvent actionEvent){
+
+    public void resetToBegin(ActionEvent actionEvent) {
         titleButton.setDisable(false);
         priceButton.setDisable(false);
         titleButton.setSelected(false);
@@ -58,18 +69,17 @@ public class AdminSortProductController implements Initializable {
         DataAccess.getSortedProducts().clear();
         loadSortedProducts();
     }
-    public void onFiedReleased(){
+
+    public void onFiedReleased() {
         String search = searchTextField.getText();
-        if(!search.trim().isEmpty()){
+        if (!search.trim().isEmpty()) {
             titleButton.setDisable(true);
             priceButton.setDisable(true);
-        }
-        else {
+        } else {
             titleButton.setDisable(false);
             priceButton.setDisable(false);
         }
     }
-
 
     public void addSortedPane() {
         try {
@@ -104,6 +114,31 @@ public class AdminSortProductController implements Initializable {
         }
     }
 
+    public void loadSearchProducts() {
+        gridPane.getChildren().clear();
+        int column = 0;
+        int row = 0;
+        if (SearchController.getTempContainer().isEmpty()) {
+            Label temp = new Label();
+            temp.setText("No Products matched your requirement");
+            gridPane.getChildren().add(temp);
+        }
+        for (Map.Entry<String, Product> product : SearchController.getTempContainer().entrySet()) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("../Component/adminViewProductComponent.fxml"));
+                HBox productItem = fxmlLoader.load();
+                AdminProductController adminProductController = fxmlLoader.getController();
+                adminProductController.loadProductDisplay(product.getValue());
+                gridPane.setHgap(10);
+                gridPane.setVgap(10);
+                gridPane.add(productItem, column, row++);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     public void setToggleGroup() {
         ToggleGroup toggleGroup = new ToggleGroup();
         priceButton.setToggleGroup(toggleGroup);
@@ -111,18 +146,29 @@ public class AdminSortProductController implements Initializable {
     }
 
     public void search(ActionEvent actionEvent) {
+        String search = searchTextField.getText().trim();
         if (priceButton.isSelected()) {
             new ProductService().sortByPrice();
+            loadSortedProducts();
         }
         if (titleButton.isSelected()) {
             new ProductService().sortByTitle();
+            loadSortedProducts();
         }
-        loadSortedProducts();
+        if (!search.trim().isEmpty()) {
+            if (DataAccess.getSortedProducts().isEmpty()) {
+                SearchController.searchByIdentify(search, DataAccess.getAllProducts());
+                loadSearchProducts();
+            } else {
+                SearchController.searchByIdentify(search, DataAccess.getSortedProducts());
+                loadSearchProducts();
+            }
+        }
+
     }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addNavigationBar();
         loadSortedProducts();
         addSortedPane();
         setToggleGroup();
