@@ -55,11 +55,8 @@ public class BarchartBuilder {
     }
 
 
-    public BarchartBuilder build(){
-        return this;
-    }
-
-    public BarChart<String, Number> getBarChart() {
+    public BarChart<String, Number> build(){
         return barChart;
     }
+
 }

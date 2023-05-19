@@ -23,8 +23,8 @@ public class PieChartControllers implements Initializable {
         PieChart pieChart = PieChartBuilder.builder()
                 .withTitle("Accounts Distribution")
                 .withAccountData(ChartDataController.getChartAccountData(new AccountService().getAllAccounts()))
-                .build()
-                .getPieChart();
+                .withValueDisplay(true)
+                .build();
         pieChartDisplay.getChildren().add(pieChart);
     }
 

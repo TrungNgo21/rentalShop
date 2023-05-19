@@ -31,9 +31,7 @@ public class BarChartControllers implements Initializable {
                 .withXAxis("Rental Types")
                 .withYAxis("Number")
                 .withProductData(ChartDataController.getChartProductData(new ProductService().getArrayProducts(), groups), groups)
-                .build()
-                .getBarChart();
-        System.out.println(barChart.getData().get(2).getData());
+                .build();
 
         barChartDisplay.getChildren().add(barChart);
 

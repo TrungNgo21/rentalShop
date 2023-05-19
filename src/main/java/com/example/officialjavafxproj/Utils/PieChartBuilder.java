@@ -1,5 +1,6 @@
 package com.example.officialjavafxproj.Utils;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
@@ -32,11 +33,17 @@ public class PieChartBuilder {
         return this;
     }
 
-    public PieChartBuilder build(){
+    public PieChartBuilder withValueDisplay(Boolean isDisplayData){
+        if(isDisplayData){
+            pieChart.getData().forEach(data -> {
+                data.nameProperty().bind(Bindings.concat(data.getName(), " ", data.pieValueProperty()));
+            });
+        }
         return this;
     }
 
-    public PieChart getPieChart(){
+    public PieChart build(){
         return pieChart;
     }
+
 }

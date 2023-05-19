@@ -15,9 +15,8 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         DataAccess.loadAllData();
-        boolean isLoadedAll = true;
         stage.initStyle(StageStyle.UNDECORATED);
-        sceneSwitcher.setCurrentScene(stage,"../Pages/login.fxml");
+        sceneSwitcher.setCurrentScene(stage,"../Pages/homepageAdmin.fxml");
     }
 
     public static void main(String[] args) {
