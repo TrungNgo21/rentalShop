@@ -13,7 +13,6 @@ public class AdminNavbarControllers {
     @FXML
     private Label userNameDisplay;
 
-    @FXML
 //    private Label noCartItem;
     public void onLogoutButton(ActionEvent event) throws IOException {
         new UserServices().setCurrentUser(null);
