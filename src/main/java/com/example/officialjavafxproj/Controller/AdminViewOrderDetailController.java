@@ -6,12 +6,16 @@ import Model.Order.OrderDetail;
 import Service.OrderAdminService;
 import com.example.officialjavafxproj.Controller.Component.AdminOrderDetailController;
 import com.example.officialjavafxproj.Utils.SceneController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +27,11 @@ public class AdminViewOrderDetailController implements Initializable {
     private AnchorPane navbar;
     private Order order;
     @FXML
-    private GridPane container;
+    private ScrollPane container;
+    @FXML
+    private VBox productList;
+    @FXML
+    private Label totalPrice;
     private void addNavigationBar() {
         try {
             navbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
@@ -32,9 +40,8 @@ public class AdminViewOrderDetailController implements Initializable {
         }
     }
     private void addOrderDetail() {
-        int column = 0;
-        int row = 0;
         order = new OrderAdminService(new DataAccess()).getSelectedOrder();
+        VBox vBox = new VBox();
         for(Map.Entry<String, OrderDetail> orderDetail: new OrderAdminService(new DataAccess()).getAllOrderDetail(order).entrySet()) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -42,22 +49,33 @@ public class AdminViewOrderDetailController implements Initializable {
                 VBox userItem = loader.load();
                 AdminOrderDetailController adminOrderController = loader.getController();
                 adminOrderController.loadDisplayOrder(orderDetail.getValue(), order);
-                if(column == 1) {
-                    column = 0;
-                    row++;
-                }
-
-                container.setHgap(10);
-                container.setHgap(10);
-                container.add(userItem, column, row++);
+                vBox.getChildren().add(userItem);
+                vBox.setSpacing(20);
+                container.setContent(vBox);
+                container.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+                container.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             } catch (Exception e) {
                 throw new RuntimeException(e);
            }
         }
     }
+
+    private void addProductTotalPrice() {
+        for(Map.Entry<String, OrderDetail> orderDetail: new OrderAdminService(new DataAccess()).getAllOrderDetail(order).entrySet()) {
+            Label product = new Label(orderDetail.getValue().getBoughtItem().getTitle());
+            product.setFont(new Font("Arial", 18));
+            productList.getChildren().add(product);
+        }
+        totalPrice.setText((int)order.getTotalPrice()+"");
+    }
+
+    public void onUserPageBackButton(ActionEvent actionEvent) throws IOException{
+        new SceneController().switchScene(actionEvent, "../Pages/adminViewOrders.fxml");
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
         addOrderDetail();
+        addProductTotalPrice();
     }
 }

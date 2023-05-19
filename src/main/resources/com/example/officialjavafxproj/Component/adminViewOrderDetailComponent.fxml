@@ -2,11 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="179.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.AdminOrderDetailController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="179.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.AdminOrderDetailController">
    <children>
       <Label fx:id="orderDetailID" prefHeight="27.0" prefWidth="277.0" text="#OD001">
          <graphic>
@@ -77,7 +78,7 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="orderCartID"  text="CART008">
+                  <Label fx:id="orderCartID" text="CART008">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -117,6 +118,11 @@
                   <Label fx:id="orderQuantity" text="2" />
                </children>
             </VBox>
+            <ImageView fx:id="image" fitHeight="70.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </ImageView>
          </children>
          <VBox.margin>
             <Insets top="40.0" />
