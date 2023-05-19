@@ -24,29 +24,29 @@ public class NavbarControllers implements Initializable {
         new SceneController().switchScene(event, "../Pages/login.fxml");
     }
 
-//    public void onAccountButton(ActionEvent event) throws IOException{
-//        new SceneController().switchScene(event, "../Pages/userProfile.fxml");
-//    }
+    public void onAccountButton(ActionEvent event) throws IOException{
+        new SceneController().switchScene(event, "../Pages/userProfile.fxml");
+    }
 
     public void onHomeButton(ActionEvent event) throws IOException{
         new SceneController().switchScene(event, "../Pages/homepage.fxml");
     }
 
-//    public void onGoToCartButton(ActionEvent event) throws IOException{
-//        new SceneController().switchScene(event, "../Pages/userCart.fxml");
-//    }
-//
-//    public void onGoToOrders(ActionEvent event) throws IOException {
-//        new SceneController().switchScene(event, "../Pages/userOrders.fxml");
-//    }
+    public void onGoToCartButton(ActionEvent event) throws IOException{
+        new SceneController().switchScene(event, "../Pages/userCart.fxml");
+    }
+
+    public void onGoToOrders(ActionEvent event) throws IOException {
+        new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+    }
 
     public void loadUserName(){
         userNameDisplay.setText(new UserServices().getCurrentUser().getUserName());
     }
 
-//    public void loadNoCartItem(){
-//        noCartItem.setText(String.valueOf(new OrderDetailCartService().getAll().size()));
-//    }
+    public void loadNoCartItem(){
+        noCartItem.setText(String.valueOf(new OrderDetailCartService().getAll().size()));
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadUserName();

@@ -2,38 +2,32 @@ package com.example.officialjavafxproj.Controller;
 
 
 import DataAccess.DataAccess;
-import Model.Product.Product;
 import Model.User.Customer;
 import Model.User.User;
 import Service.AdminService;
 
-import Service.ProductService;
-import com.example.officialjavafxproj.Controller.Component.AdminProductController;
 import com.example.officialjavafxproj.Controller.Component.AdminUserControllers;
 import com.example.officialjavafxproj.Utils.SceneController;
-import com.example.officialjavafxproj.Utils.ToastBuilder;
-import com.github.plushaze.traynotification.notification.Notifications;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class adminViewUserControllers implements Initializable {
+public class AdminViewUserControllers implements Initializable {
     @FXML
     private AnchorPane navbarPane;
+    @FXML
+    private AnchorPane footerPane;
 
     @FXML
     private ChoiceBox<String> accountType;
@@ -54,6 +48,14 @@ public class adminViewUserControllers implements Initializable {
 
      private String choice;
     private final String[] userType = {"VIP Account", "Regular Account", "Guest Account", "All"};
+
+    public void addFooterPane() {
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void resetSearchDisable() {
         if(search.isPressed()) {
@@ -151,25 +153,32 @@ public class adminViewUserControllers implements Initializable {
             sortUsers();
             addUserToGridView();
         }
-        else if(accountType.getValue().isEmpty()) {
-            for(Map.Entry<String, User> entry : DataAccess.getAllUsers().entrySet()) {
-                if(searchUser.getText().equals(entry.getValue().getUserId())|| searchUser.getText().equals(entry.getValue().getUserName())) {
-                    tempUsers.put(entry.getKey(), entry.getValue());
-                }
-            }
-            DataAccess.setSortedUsers(tempUsers);
-            sortUsers();
-            addUserToGridView();
-        }
-        else if(!searchUser.getText().isEmpty() && !accountType.getValue().isEmpty()) {
-            for(Map.Entry<String, User> user : DataAccess.getAllUsers().entrySet()) {
-                if(searchUser.getText().equals(user.getValue().getUserId())|| searchUser.getText().equals(user.getValue().getUserName())) {
-                    for(Map.Entry<String, User> tmp :filteredUser.entrySet()) {
-                        if(searchUser.getText().equals(tmp.getValue().getUserId()) || searchUser.getText().equals(user.getValue().getFullName())) {
-                            tempUsers.put(tmp.getValue().getUserId(), tmp.getValue());
-                            break;
-                        }
-                    }
+//        else if(accountType.getValue().isEmpty()) {
+//            for(Map.Entry<String, User> entry : DataAccess.getAllUsers().entrySet()) {
+//                if(searchUser.getText().equals(entry.getValue().getUserId())|| searchUser.getText().equals(entry.getValue().getFullName())) {
+//                    tempUsers.put(entry.getKey(), entry.getValue());
+//                }
+//            }
+//            DataAccess.setSortedUsers(tempUsers);
+//            sortUsers();
+//            addUserToGridView();
+//        }
+        else if(!searchUser.getText().isEmpty()) {
+//            for(Map.Entry<String, User> user : DataAccess.getAllUsers().entrySet()) {
+//                if(searchUser.getText().equals(user.getValue().getUserId())|| searchUser.getText().equals(user.getValue().getUserName())) {
+//                    for(Map.Entry<String, User> tmp :filteredUser.entrySet()) {
+//                        if(searchUser.getText().equals(tmp.getValue().getUserId()) || searchUser.getText().equals(user.getValue().getFullName())) {
+//                            tempUsers.put(tmp.getValue().getUserId(), tmp.getValue());
+//                            break;
+//                        }
+//                    }
+//                }
+//            }
+//
+            for(Map.Entry<String, User> tmp :filteredUser.entrySet()) {
+                if(searchUser.getText().equals(tmp.getValue().getUserId()) || searchUser.getText().equals(tmp.getValue().getUserName())) {
+                    tempUsers.put(tmp.getValue().getUserId(), tmp.getValue());
+                    break;
                 }
             }
             DataAccess.setSortedUsers(tempUsers);
@@ -259,6 +268,7 @@ public class adminViewUserControllers implements Initializable {
         resetSearchDisable();
         addAccountType();
         addUserToGridView();
+        addFooterPane();
         setToggle();
     }
 }
