@@ -151,7 +151,7 @@ public class AdminViewUserControllers implements Initializable {
             filterByType(choice);
         }
 
-        if(searchUser.getText().isEmpty()) {
+        if(searchUser.getText().trim().isEmpty()) {
             DataAccess.setSortedUsers(filteredUser);
             sortUsers();
             addUserToGridView();
@@ -166,7 +166,7 @@ public class AdminViewUserControllers implements Initializable {
 //            sortUsers();
 //            addUserToGridView();
 //        }
-        else if(!searchUser.getText().isEmpty()) {
+        else if(!searchUser.getText().trim().isEmpty()) {
 //            for(Map.Entry<String, User> user : DataAccess.getAllUsers().entrySet()) {
 //                if(searchUser.getText().equals(user.getValue().getUserId())|| searchUser.getText().equals(user.getValue().getUserName())) {
 //                    for(Map.Entry<String, User> tmp :filteredUser.entrySet()) {
@@ -179,7 +179,7 @@ public class AdminViewUserControllers implements Initializable {
 //            }
 //
             for(Map.Entry<String, User> tmp :filteredUser.entrySet()) {
-                if(searchUser.getText().equals(tmp.getValue().getUserId()) || searchUser.getText().equals(tmp.getValue().getUserName())) {
+                if(searchUser.getText().equals(tmp.getValue().getUserId()) || tmp.getValue().getFullName().contains(searchUser.getText().trim())) {
                     tempUsers.put(tmp.getValue().getUserId(), tmp.getValue());
                     break;
                 }
