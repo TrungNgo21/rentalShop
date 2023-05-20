@@ -42,9 +42,6 @@ public class HomePageControllers implements Initializable {
 
 
     public void addNavigationBar(){
-//        Thread navbarRender = new Thread(() ->{
-//        });
-//        navbarRender.start();
             try {
                 navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
             } catch (IOException e) {
@@ -54,9 +51,6 @@ public class HomePageControllers implements Initializable {
     }
 
     public void addSortedPane(){
-//        Thread sortPaneRender = new Thread(() ->{
-//        });
-//        sortPaneRender.start();
         try {
             sortPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
         } catch (IOException e) {
@@ -65,9 +59,6 @@ public class HomePageControllers implements Initializable {
     }
 
     public void addProductToGridView(){
-//        Thread productRender = new Thread(()->{
-//        });
-//        productRender.start();
         int row = 1;
         int column = 0;
         for(Map.Entry<String, Product> product : new ProductService().getAll().entrySet()){
