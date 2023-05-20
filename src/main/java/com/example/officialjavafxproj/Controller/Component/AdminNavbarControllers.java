@@ -19,6 +19,10 @@ public class AdminNavbarControllers {
         new SceneController().switchScene(event, "../Pages/login.fxml");
     }
 
+
+    public void onHomeButton(ActionEvent event) throws IOException {
+        new SceneController().switchScene(event, "../Pages/adminViewCustomers.fxml");
+    }
     public void onViewProductButton(ActionEvent event) throws IOException{
         new SceneController().switchScene(event, "../Pages/adminViewProduct.fxml");
     }
