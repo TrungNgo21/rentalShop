@@ -26,6 +26,10 @@ public class AdminNavbarControllers {
         new SceneController().switchScene(actionEvent, "../Pages/adminViewCustomers.fxml");
     }
 
+    public void onViewOrdersButton(ActionEvent actionEvent) throws IOException{
+        new SceneController().switchScene(actionEvent, "../Pages/adminViewOrders.fxml");
+    }
+
     public void onHomepageButton(ActionEvent actionEvent) throws IOException{
         new SceneController().switchScene(actionEvent, "../Pages/homepageAdmin.fxml");
     }
