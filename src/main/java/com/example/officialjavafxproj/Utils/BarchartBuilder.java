@@ -39,6 +39,16 @@ public class BarchartBuilder {
         return this;
     }
 
+    public BarchartBuilder withMaxWidth(double v){
+        barChart.setMaxWidth(v);
+        return this;
+    }
+
+    public BarchartBuilder withMaxHeight(double v){
+        barChart.setMaxHeight(v);
+        return this;
+    }
+
     public BarchartBuilder withProductData(ArrayList<String[]> data, String[] groups){
         for(String group : groups){
             XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -48,7 +58,6 @@ public class BarchartBuilder {
                     series.getData().add(new XYChart.Data<>(dataElement[0], Double.parseDouble(dataElement[1]), dataElement[2]));
                 }
             }
-            System.out.println(series.getData());
             barChart.getData().add(series);
         }
         return this;

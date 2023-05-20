@@ -3,7 +3,7 @@ package Model.Product;
 import java.util.Arrays;
 
 public abstract class Product {
-    private static final String[] loanTypes = {"2-DAY, 1-WEEK"};
+    private static final String[] loanTypes = {"2-DAY", "1-WEEK"};
     private static final String[] rentalTypes = {"RECORD", "DVD", "GAME"};
     private static final String[] rentalStatus = {"BORROWED", "AVAILABLE"};
     private static final String[] genres = {"ACTION", "HORROR", "DRAMA", "COMEDY"};

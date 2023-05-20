@@ -26,10 +26,6 @@ public class AdminSortProductController implements Initializable {
     @FXML
     private VBox sortLayout;
     @FXML
-    private RadioButton priceButton;
-    @FXML
-    private RadioButton titleButton;
-    @FXML
     private TextField searchTextField;
     @FXML
     private Button searchButton;
@@ -45,35 +41,12 @@ public class AdminSortProductController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void setDisableButton() {
-        titleButton.setOnMouseClicked(mouseEvent -> {
-            searchTextField.setDisable(true);
-        });
-        priceButton.setOnMouseClicked(MouseEvent -> {
-            searchTextField.setDisable(true);
-        });
-    }
 
     public void resetToBegin(ActionEvent actionEvent) {
-        titleButton.setDisable(false);
-        priceButton.setDisable(false);
-        titleButton.setSelected(false);
-        priceButton.setSelected(false);
         searchTextField.setDisable(false);
         searchTextField.clear();
         DataAccess.getSortedProducts().clear();
         loadSortedProducts();
-    }
-
-    public void onFiedReleased() {
-        String search = searchTextField.getText();
-        if (!search.trim().isEmpty()) {
-            titleButton.setDisable(true);
-            priceButton.setDisable(true);
-        } else {
-            titleButton.setDisable(false);
-            priceButton.setDisable(false);
-        }
     }
 
     public void addSortedPane() {
@@ -134,22 +107,8 @@ public class AdminSortProductController implements Initializable {
         }
     }
 
-    public void setToggleGroup() {
-        ToggleGroup toggleGroup = new ToggleGroup();
-        priceButton.setToggleGroup(toggleGroup);
-        titleButton.setToggleGroup(toggleGroup);
-    }
-
     public void search(ActionEvent actionEvent) {
         String search = searchTextField.getText().trim();
-        if (priceButton.isSelected()) {
-            new ProductService().sortByPrice();
-            loadSortedProducts();
-        }
-        if (titleButton.isSelected()) {
-            new ProductService().sortByTitle();
-            loadSortedProducts();
-        }
         if (!search.trim().isEmpty()) {
             if (DataAccess.getSortedProducts().isEmpty()) {
                 SearchController.searchByIdentify(search, DataAccess.getAllProducts());
@@ -166,7 +125,5 @@ public class AdminSortProductController implements Initializable {
         addNavigationBar();
         loadSortedProducts();
         addSortedPane();
-        setToggleGroup();
-        setDisableButton();
     }
 }

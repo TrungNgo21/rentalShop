@@ -42,6 +42,16 @@ public class PieChartBuilder {
         return this;
     }
 
+    public PieChartBuilder withMaxWidth(double v){
+        pieChart.setMaxWidth(v);
+        return this;
+    }
+
+    public PieChartBuilder withMaxHeight(double v){
+        pieChart.setMaxHeight(v);
+        return this;
+    }
+
     public PieChart build(){
         return pieChart;
     }

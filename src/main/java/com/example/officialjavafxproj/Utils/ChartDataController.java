@@ -1,5 +1,6 @@
 package com.example.officialjavafxproj.Utils;
 
+import Middleware.DateMiddleware;
 import Model.Account.Account;
 import Model.Product.Product;
 
@@ -7,9 +8,8 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 public class ChartDataController {
     public static ArrayList<String[]> getChartProductData(ArrayList<Product> products, String[] groups){
@@ -58,6 +58,14 @@ public class ChartDataController {
             System.out.println(Arrays.asList(string));
         }
 
+        return dataFile;
+    }
+
+    public static ArrayList<String[]> getChartRevenueData(TreeMap<LocalDate, Double> revenue){
+        ArrayList<String[]> dataFile = new ArrayList<>();
+       for(Map.Entry<LocalDate, Double> revenueDaily : revenue.entrySet()){
+           dataFile.add(new String[]{revenueDaily.getKey().toString(), String.valueOf(revenueDaily.getValue())});
+       }
         return dataFile;
     }
 
