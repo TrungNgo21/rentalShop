@@ -45,11 +45,11 @@
                         <Insets left="20.0" top="26.0" />
                     </HBox.margin>
                 </Button>
-            <Button mnemonicParsing="false" onAction="#onViewProductButton" prefHeight="27.0" prefWidth="113.0" text="ViewProduct">
-               <HBox.margin>
-                  <Insets left="20.0" top="26.0" />
-               </HBox.margin>
-            </Button>
+                <Button mnemonicParsing="false" onAction="#onViewProductButton" prefHeight="27.0" prefWidth="113.0" text="ViewProduct">
+                    <HBox.margin>
+                        <Insets left="20.0" top="26.0" />
+                    </HBox.margin>
+                </Button>
             </children>
         </HBox>
         <Button layoutX="1195.0" layoutY="39.0" mnemonicParsing="false" onAction="#onLogoutButton" prefHeight="25.0" prefWidth="81.0" text="Logout" AnchorPane.rightAnchor="50.0" />
