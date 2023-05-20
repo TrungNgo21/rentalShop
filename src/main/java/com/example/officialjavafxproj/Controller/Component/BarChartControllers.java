@@ -20,9 +20,13 @@ public class BarChartControllers implements Initializable {
     private AnchorPane barChartDisplay;
 
     private String[] groups;
+    private String[] genres;
 
     public void setGroups(String[] types){
         groups = types;
+    }
+    public void setGenres(String[] itemGenres){
+        genres = itemGenres;
     }
 
     public void setUpBarChart(){
@@ -30,9 +34,10 @@ public class BarChartControllers implements Initializable {
 //                .withXCategories(FXCollections.observableArrayList(groups))
                 .withXAxis("Rental Types")
                 .withYAxis("Number")
-                .withProductData(ChartDataController.getChartProductData(new ProductService().getArrayProducts(), groups), groups)
+                .withProductData(ChartDataController.getChartProductData(new ProductService().getArrayProducts(), groups), genres)
                 .withMaxWidth(400)
                 .withMaxHeight(300)
+                .withTitle("Details Products Number")
                 .build();
 
         barChartDisplay.getChildren().add(barChart);
@@ -42,6 +47,7 @@ public class BarChartControllers implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setGroups(Product.getRentalTypes());
+        setGenres(Product.getGenres());
         setUpBarChart();
     }
 }

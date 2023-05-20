@@ -86,6 +86,7 @@ public class SortComponentControllers implements Initializable {
         week1Checkbox.setSelected(false);
         availableCheckbox.setSelected(false);
         borrowedCheckbox.setSelected(false);
+
     }
 
     public void loadLastCheckboxValue(){

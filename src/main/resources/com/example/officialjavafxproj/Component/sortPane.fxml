@@ -167,8 +167,8 @@
       </VBox>
       <VBox alignment="CENTER" prefHeight="92.0" prefWidth="300.0" spacing="10.0">
          <children>
-            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#onSearchButton" prefHeight="33.0" prefWidth="228.0" text="Search" />
-            <Button fx:id="resetButton" mnemonicParsing="false" onAction="#onResetButton" prefHeight="33.0" prefWidth="228.0" text="Reset" />
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#onSearchButton" prefHeight="33.0" prefWidth="228.0" text="Filter" />
+            <Button fx:id="resetButton" mnemonicParsing="false" onAction="#onResetButton" prefHeight="33.0" prefWidth="228.0" text="Reset Checkbox" />
          </children>
       </VBox>
    </children>

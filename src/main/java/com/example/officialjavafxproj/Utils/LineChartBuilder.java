@@ -35,6 +35,11 @@ public class LineChartBuilder {
         return this;
     }
 
+    public LineChartBuilder withTitle(String title){
+        lineChart.setTitle(title);
+        return this;
+    }
+
 
     public static LineChartBuilder builder(){
         return new LineChartBuilder();

@@ -118,6 +118,10 @@ public class ProductService implements Services<Product> {
         DataAccess.setChosenProduct(currentProduct);
     }
 
+    public void setSortedProduct(HashMap<String, Product> sortedProducts){
+        DataAccess.setSortedProducts(sortedProducts);
+    }
+
     public Product getTargetProduct() {
         return DataAccess.getChosenProduct();
     }
