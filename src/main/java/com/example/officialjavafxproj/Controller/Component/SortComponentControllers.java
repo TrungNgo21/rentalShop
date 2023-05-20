@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,9 +44,15 @@ public class SortComponentControllers implements Initializable {
     @FXML
     private CheckBox comedyCheckbox;
 
+    @FXML
+    private RadioButton titleButton;
+
+    @FXML
+    private RadioButton priceButton;
 
     public void onSearchButton(ActionEvent event) throws IOException {
         ProductService productService = new ProductService();
+        ArrayList<RadioButton> orderOptions = new ArrayList<>(Arrays.asList(priceButton, titleButton));
         ArrayList<CheckBox> typeCheckboxes = new ArrayList<>(Arrays.asList(gameCheckbox, dvdsCheckbox, movieCheckbox));
         ArrayList<CheckBox> genresCheckboxes = new ArrayList<>(Arrays.asList(actionCheckbox, horrorCheckbox, dramaCheckbox, comedyCheckbox));
         ArrayList<CheckBox> loanCheckboxes = new ArrayList<>(Arrays.asList(day2Checkbox, week1Checkbox));
@@ -54,13 +62,13 @@ public class SortComponentControllers implements Initializable {
         productService.addSortedOptions(CheckboxController.getAllOptions(genresCheckboxes));
         productService.addSortedOptions(CheckboxController.getAllOptions(loanCheckboxes));
         productService.addSortedOptions(CheckboxController.getAllOptions(availabilityCheckboxes));
-        productService.addToSortedProducts(productService.getSortedOptions());
+        productService.addToSortedProducts(productService.getSortedOptions(), orderOptions);
         UserServices userServices = new UserServices();
         if(userServices.getCurrentUser().getUserId().equals("ADMIN")){
             new SceneController().switchScene(event,"../Pages/adminSortProduct.fxml");
         }
         else {
-                    new SceneController().switchScene(event, "../Pages/sortPage.fxml");
+            new SceneController().switchScene(event, "../Pages/sortPage.fxml");
         }
 
 
@@ -78,6 +86,7 @@ public class SortComponentControllers implements Initializable {
         week1Checkbox.setSelected(false);
         availableCheckbox.setSelected(false);
         borrowedCheckbox.setSelected(false);
+
     }
 
     public void loadLastCheckboxValue(){
