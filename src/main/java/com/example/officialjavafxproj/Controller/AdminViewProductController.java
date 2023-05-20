@@ -73,6 +73,9 @@ public class AdminViewProductController implements Initializable {
                 }
             }
     }
+    public void addProductButton(ActionEvent actionEvent) throws IOException{
+        new SceneController().switchScene(actionEvent, "../Pages/adminAddProduct.fxml");
+    }
 
 
     @Override

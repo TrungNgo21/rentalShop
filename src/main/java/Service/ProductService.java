@@ -24,11 +24,11 @@ public class ProductService implements Services<Product> {
     public String idCreation() {
         int numOfProduct = DataAccess.getAllProducts().size();
         if (numOfProduct < 10) {
-            return "C00" + numOfProduct + " - ";
+            return "I00" + numOfProduct + "-";
         } else if (numOfProduct <= 99) {
-            return "C0" + numOfProduct + " - ";
+            return "I0" + numOfProduct + "-";
         } else {
-            return "C" + numOfProduct + " - ";
+            return "I" + numOfProduct + "-";
         }
     }
 
@@ -88,7 +88,7 @@ public class ProductService implements Services<Product> {
         Collections.sort(list, new Comparator<Map.Entry<String, Product>>() {
             @Override
             public int compare(Map.Entry<String, Product> o1, Map.Entry<String, Product> o2) {
-                return (o1.getValue().getTitle().compareTo(o2.getValue().getTitle()));
+                return (o1.getValue().getTitle().toLowerCase().compareTo(o2.getValue().getTitle().toLowerCase()));
             }
         });
         HashMap<String, Product> temp = new LinkedHashMap<String, Product>();

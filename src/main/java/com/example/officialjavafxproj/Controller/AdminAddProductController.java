@@ -1,9 +1,17 @@
 package com.example.officialjavafxproj.Controller;
 
-import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Middleware.InputMiddleware;
+import Model.Account.GuestAccount;
+import Model.Order.Cart;
+import Model.Product.DVD;
+import Model.Product.Game;
+import Model.Product.MRecords;
 import Model.Product.Product;
+import Model.User.Customer;
+import Service.ProductService;
+import Service.UserCartServices;
+import Service.UserServices;
 import com.example.officialjavafxproj.Threads.UploadImageThread;
 import com.example.officialjavafxproj.Utils.FileController;
 import com.example.officialjavafxproj.Utils.SceneController;
@@ -20,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
@@ -30,7 +39,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminEditProductController implements Initializable {
+public class AdminAddProductController implements Initializable {
     @FXML
     private AnchorPane adminNavbar;
     @FXML
@@ -68,11 +77,11 @@ public class AdminEditProductController implements Initializable {
     @FXML
     private ChoiceBox<String> loanTypeChoiceBox;
 
-    private final Product product = DataAccess.getChosenProduct();
+    ObservableList<String> rentalTypeList = FXCollections.observableArrayList(Product.getRentalTypes());
+    ObservableList<String> genreTypeList = FXCollections.observableArrayList(Product.getGenres());
+    ObservableList<String> loanTypeList = FXCollections.observableArrayList(Product.getLoanTypes());
 
-    ObservableList<String> rentalTypeList = FXCollections.observableArrayList(product.getRentalTypes());
-    ObservableList<String> genreTypeList = FXCollections.observableArrayList(product.getGenres());
-    ObservableList<String> loanTypeList = FXCollections.observableArrayList(product.getLoanTypes());
+    private String imageDir;
 
     public void addNavigationBar(){
         try {
@@ -81,17 +90,11 @@ public class AdminEditProductController implements Initializable {
             e.printStackTrace();
         }
     }
-
     public void setChoiceBox(){
         rentalTypeChoiceBox.setItems(rentalTypeList);
         genreTypeChoiceBox.setItems(genreTypeList);
         loanTypeChoiceBox.setItems(loanTypeList);
     }
-
-    private String newImageDir;
-
-
-
     public void onFieldReleased() {
         InputMiddleware middleware = new InputMiddleware();
         String productName = nameTextField.getText();
@@ -99,9 +102,11 @@ public class AdminEditProductController implements Initializable {
         String numOfCopies = copiesTextField.getText();
         String publishedYear = publishedYearTextField.getText();
 
-        boolean isValid = (!productName.trim().isEmpty() && middleware.isPositive(productPrice) && middleware.isPositive(numOfCopies) && middleware.isPositive(publishedYear));
+
+        boolean isValid = (!productName.trim().isEmpty() && middleware.isPositive(productPrice) && middleware.isPositive(numOfCopies) && middleware.isPositive(publishedYear) && genreTypeChoiceBox.getValue() != null && rentalTypeChoiceBox.getValue() != null && loanTypeChoiceBox.getValue() != null);
 
         saveButton.setDisable(!isValid);
+
 
         if(productName.trim().isEmpty()){
             nameWarningMessage.setText("You must not leave this field empty");
@@ -125,6 +130,8 @@ public class AdminEditProductController implements Initializable {
             publishedYearWarningMessage.setText("You must not leave this field empty");
         } else if (!middleware.isValidNumber(publishedYear)) {
             publishedYearWarningMessage.setText("The published year must be a number");
+        } else if (publishedYear.length() != 4) {
+            publishedYearWarningMessage.setText("The year is not valid");
         } else if (!middleware.isPositive(publishedYear)) {
             publishedYearWarningMessage.setText("The published year must be positive");
         }
@@ -142,16 +149,37 @@ public class AdminEditProductController implements Initializable {
             copiesWarningMessage.setText("");
         }
     }
+    public void setDisableButton(MouseEvent mouseEvent){
+        if(rentalTypeChoiceBox.getValue() == null || genreTypeChoiceBox.getValue() == null || loanTypeChoiceBox.getValue() == null ){
+            saveButton.setDisable(true);
+        }
+        else {
+            saveButton.setDisable(false);
+        }
+    }
+
+    public void onResetToBegin() {
+        nameTextField.setText("");
+        priceTextField.setText("");
+        copiesTextField.setText("");
+        publishedYearTextField.setText("");
+        rentalTypeChoiceBox.setValue(null);
+        genreTypeChoiceBox.setValue(null);
+        loanTypeChoiceBox.setValue(null);
+    }
+    public void back(ActionEvent actionEvent) throws IOException{
+        new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
+    }
     public void onUploadImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().clear();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg", "*.gif", "*.jpg"));
         File file = fileChooser.showOpenDialog(null);
-        if (file != null) {
+        if(file != null){
             imageMessage.setText(file.getAbsolutePath());
             String ext = FileController.getFileExtension(new File(imageMessage.getText()));
-            newImageDir = new FileLocation().getImageDir() + product.getImageLocation() + "Backup" + "." + ext;
-            File targetFile = new File(newImageDir);
+            imageDir = new FileLocation().getImageDir() + "." + ext;
+            File targetFile = new File(imageDir);
             UploadImageThread uploadThread = UploadImageThread
                     .builder()
                     .targetFile(targetFile)
@@ -165,7 +193,7 @@ public class AdminEditProductController implements Initializable {
             try {
                 imageThread.join();
                 try {
-                    Image uploadProductImage = new Image(new FileInputStream(newImageDir), 400, 400, false, false);
+                    Image uploadProductImage = new Image(new FileInputStream(imageDir), 400, 400, false, false);
                     productImage.setImage(uploadProductImage);
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
@@ -173,90 +201,75 @@ public class AdminEditProductController implements Initializable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-        } else {
+        }else{
             imageMessage.setText("No file chosen");
         }
-        System.out.println(newImageDir);
     }
-    public void onSaveInformation(ActionEvent actionEvent){
-        product.setTitle(nameTextField.getText());
-        product.setRentalFee(Double.parseDouble(priceTextField.getText()));
-        product.setNumOfCopies(Integer.parseInt(copiesTextField.getText()));
-        product.setGenre(genreTypeChoiceBox.getValue());
-        product.setLoanType(loanTypeChoiceBox.getValue());
-        product.setRentalType(rentalTypeChoiceBox.getValue());
-        product.setPublishedYear(publishedYearTextField.getText());
-        if(!imageMessage.getText().equals("")){
-            if(!imageMessage.getText().equals("No file chosen")){
-                File renameFile = new File(new FileLocation().getImageDir() + product.getImageLocation());
-                String ext = FileController.getFileExtension(renameFile);
-                renameFile = new File(new FileLocation().getImageDir() + "Product/" + product.getId() + "." + ext);
-                File file = new File(newImageDir);
-                FileController.deleteFile(renameFile);
-                product.setImageLocation("Product/" + product.getId()  + "." + ext);
-                FileController.renameFile(file, renameFile);
+    public void onSaveInformation(ActionEvent actionEvent) throws InterruptedException {
+        String productTitle = nameTextField.getText();
+        double productRentalFee = Double.parseDouble(priceTextField.getText());
+        int productCopies = Integer.parseInt(copiesTextField.getText());
+        String productGenre = genreTypeChoiceBox.getValue();
+        String productLoanType = loanTypeChoiceBox.getValue();
+        String productRentalType = rentalTypeChoiceBox.getValue();
+        String publishedYear = publishedYearTextField.getText();
+        String targetFileDir = "";
+        String ext = FileController.getFileExtension(new File(imageMessage.getText()));
+        File targetFile = new File( new FileLocation().getImageDir() + "Product/" + new ProductService().idCreation() + publishedYear + "."  + ext);
+
+        if(imageMessage.getText().equals("No file chosen") || imageMessage.getText().equals("")){
+            targetFileDir = "Product/default.png";
+        }else{
+            targetFileDir = "Product/" + new ProductService().idCreation() + publishedYear + "." + ext;
+        }
+        ProductService productService =  new ProductService();
+        //        UploadImageThread uploadThread = new UploadImageThread(targetFile, new File(imageMessage.getText()), 400, 400);
+        UploadImageThread uploadThread = UploadImageThread
+                .builder()
+                .targetFile(targetFile)
+                .uploadedFile(new File(imageMessage.getText()))
+                .finalHeight(400)
+                .finalWidth(400)
+                .build();
+
+
+        Thread imageThread = new Thread(uploadThread);
+            try{
+                imageThread.start();
+                if(productRentalType.equals("DVD")) {
+                    productService.add(new DVD(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                } else if (productRentalType.equals("GAME")) {
+                    productService.add(new Game(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                }
+                else {
+                    productService.add(new MRecords(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                }
+                imageThread.join();
+                ToastBuilder.builder()
+                        .withTitle("Add Message")
+                        .withMessage("Add Successfully!!!")
+                        .withMode(Notifications.SUCCESS)
+                        .show();
+                new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
+            }catch (Error err){
+                ToastBuilder.builder()
+                        .withTitle("Add Message")
+                        .withMessage(err.getMessage())
+                        .withMode(Notifications.ERROR)
+                        .show();
+                imageThread.join();
+                FileController.deleteFile(targetFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        }
-        try {
-            new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ToastBuilder.builder()
-                .withTitle("Changed Successfully")
-                .withMessage("You information has changed successfully")
-                .withMode(Notifications.SUCCESS)
-                .show();
-
     }
 
-    public void onResetToBegin() {
-        FileLocation imageDir = new FileLocation();
-        String profileImgUrl = imageDir.getImageDir() + product.getImageLocation();
-        try {
-            Image currentUserImage = new Image(new FileInputStream(profileImgUrl), 400, 400, false, false);
-            productImage.setImage(currentUserImage);
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        nameWarningMessage.setText("");
-        priceWarningMessage.setText("");
-        copiesWarningMessage.setText("");
-        publishedYearWarningMessage.setText("");
-        nameTextField.setText(product.getTitle());
-        priceTextField.setText(String.valueOf(product.getRentalFee()));
-        copiesTextField.setText(String.valueOf(product.getNumOfCopies()));
-        publishedYearTextField.setText(product.getPublishedYear());
-        rentalTypeChoiceBox.setValue(product.getRentalType());
-        genreTypeChoiceBox.setValue(product.getGenre());
-        loanTypeChoiceBox.setValue(product.getLoanType());
-    }
-    public void loadProductDetail() {
-        FileLocation imageDir = new FileLocation();
-        String profileImgUrl = imageDir.getImageDir() + product.getImageLocation();
-        try {
-            Image currentUserImage = new Image(new FileInputStream(profileImgUrl), 400, 400, false, false);
-            productImage.setImage(currentUserImage);
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        nameTextField.setText(product.getTitle());
-        priceTextField.setText(String.valueOf(product.getRentalFee()));
-        copiesTextField.setText(String.valueOf(product.getNumOfCopies()));
-        publishedYearTextField.setText(product.getPublishedYear());
-        genreTypeChoiceBox.setValue(product.getGenre());
-        loanTypeChoiceBox.setValue(product.getLoanType());
-        rentalTypeChoiceBox.setValue(product.getRentalType());
-    }
-    public void back(ActionEvent actionEvent) throws IOException{
-        new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
-    }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
-        loadProductDetail();
         setChoiceBox();
     }
 }
