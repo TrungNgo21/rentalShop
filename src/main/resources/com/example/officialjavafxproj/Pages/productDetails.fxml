@@ -68,7 +68,7 @@
                   </Label>
                   <HBox prefHeight="55.0" prefWidth="468.0">
                      <children>
-                        <Label fx:id="productDetailTypeDisplay" prefHeight="55.0" prefWidth="110.0" style="-fx-padding: 10; -fx-wrap-text: true;" text="GAME">
+                        <Label fx:id="productDetailTypeDisplay" prefHeight="52.0" prefWidth="139.0" style="-fx-padding: 10; -fx-wrap-text: true;" text="GAME">
                            <font>
                               <Font size="16.0" />
                            </font>

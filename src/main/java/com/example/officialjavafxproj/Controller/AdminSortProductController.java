@@ -7,19 +7,14 @@ import com.example.officialjavafxproj.Controller.Component.AdminProductControlle
 import com.example.officialjavafxproj.Utils.SceneController;
 import com.example.officialjavafxproj.Utils.SearchController;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
@@ -30,10 +25,6 @@ public class AdminSortProductController implements Initializable {
     private GridPane gridPane;
     @FXML
     private VBox sortLayout;
-    @FXML
-    private RadioButton priceButton;
-    @FXML
-    private RadioButton titleButton;
     @FXML
     private TextField searchTextField;
     @FXML
@@ -50,35 +41,12 @@ public class AdminSortProductController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void setDisableButton() {
-        titleButton.setOnMouseClicked(mouseEvent -> {
-            searchTextField.setDisable(true);
-        });
-        priceButton.setOnMouseClicked(MouseEvent -> {
-            searchTextField.setDisable(true);
-        });
-    }
 
     public void resetToBegin(ActionEvent actionEvent) {
-        titleButton.setDisable(false);
-        priceButton.setDisable(false);
-        titleButton.setSelected(false);
-        priceButton.setSelected(false);
         searchTextField.setDisable(false);
         searchTextField.clear();
         DataAccess.getSortedProducts().clear();
         loadSortedProducts();
-    }
-
-    public void onFiedReleased() {
-        String search = searchTextField.getText();
-        if (!search.trim().isEmpty()) {
-            titleButton.setDisable(true);
-            priceButton.setDisable(true);
-        } else {
-            titleButton.setDisable(false);
-            priceButton.setDisable(false);
-        }
     }
 
     public void addSortedPane() {
@@ -139,22 +107,8 @@ public class AdminSortProductController implements Initializable {
         }
     }
 
-    public void setToggleGroup() {
-        ToggleGroup toggleGroup = new ToggleGroup();
-        priceButton.setToggleGroup(toggleGroup);
-        titleButton.setToggleGroup(toggleGroup);
-    }
-
     public void search(ActionEvent actionEvent) {
         String search = searchTextField.getText().trim();
-        if (priceButton.isSelected()) {
-            new ProductService().sortByPrice();
-            loadSortedProducts();
-        }
-        if (titleButton.isSelected()) {
-            new ProductService().sortByTitle();
-            loadSortedProducts();
-        }
         if (!search.trim().isEmpty()) {
             if (DataAccess.getSortedProducts().isEmpty()) {
                 SearchController.searchByIdentify(search, DataAccess.getAllProducts());
@@ -171,7 +125,5 @@ public class AdminSortProductController implements Initializable {
         addNavigationBar();
         loadSortedProducts();
         addSortedPane();
-        setToggleGroup();
-        setDisableButton();
     }
 }

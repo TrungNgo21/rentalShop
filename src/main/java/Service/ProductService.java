@@ -3,6 +3,8 @@ package Service;
 import DataAccess.DataAccess;
 import Model.Product.Product;
 import com.example.officialjavafxproj.Utils.SearchController;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 import java.util.*;
 
@@ -97,12 +99,19 @@ public class ProductService implements Services<Product> {
             temp.put(product.getKey(), product.getValue());
         }
         DataAccess.setSortedProducts(temp);
-
     }
 
     @Override
     public HashMap<String, Product> getAll() {
         return DataAccess.getAllProducts();
+    }
+
+    public ArrayList<Product> getArrayProducts(){
+        ArrayList<Product> products = new ArrayList<>();
+        for(Map.Entry<String, Product> product : getAll().entrySet()){
+            products.add(product.getValue());
+        }
+        return products;
     }
 
     public void setTargetProduct(Product currentProduct) {
@@ -125,7 +134,7 @@ public class ProductService implements Services<Product> {
         return DataAccess.getSortedProducts();
     }
 
-    public void addToSortedProducts(ArrayList<String[]> sortedOptions) {
+    public void addToSortedProducts(ArrayList<String[]> sortedOptions, ArrayList<RadioButton> orderOptions) {
         DataAccess.getSortedProducts().clear();
         ArrayList<String> deletedProductId = new ArrayList<>();
         for (int i = 0; i < sortedOptions.size(); i++) {
@@ -212,7 +221,7 @@ public class ProductService implements Services<Product> {
                 for (String deletedId : deletedProductId) {
                     getSortedProducts().remove(deletedId);
                 }
-            } else {
+            } else{
                 boolean isExisted = false;
                 int noneCounter = 0;
 
@@ -244,8 +253,14 @@ public class ProductService implements Services<Product> {
                 for (String deletedId : deletedProductId) {
                     getSortedProducts().remove(deletedId);
                 }
-
             }
         }
+        if(orderOptions.get(0).isSelected()){
+            new ProductService().sortByPrice();
+        }else{
+            new ProductService().sortByTitle();
+        }
     }
+
+
 }

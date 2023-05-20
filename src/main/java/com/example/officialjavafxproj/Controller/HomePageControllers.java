@@ -6,13 +6,17 @@ import Service.ProductService;
 import com.example.officialjavafxproj.Controller.Component.ProductComponentControllers;
 import com.example.officialjavafxproj.Controller.Component.TopProductComponentControllers;
 import com.example.officialjavafxproj.Utils.SceneController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Labeled;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,14 +42,21 @@ public class HomePageControllers implements Initializable {
 
 
     public void addNavigationBar(){
-        try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        Thread navbarRender = new Thread(() ->{
+//        });
+//        navbarRender.start();
+            try {
+                navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
     }
 
     public void addSortedPane(){
+//        Thread sortPaneRender = new Thread(() ->{
+//        });
+//        sortPaneRender.start();
         try {
             sortPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
         } catch (IOException e) {
@@ -54,6 +65,9 @@ public class HomePageControllers implements Initializable {
     }
 
     public void addProductToGridView(){
+//        Thread productRender = new Thread(()->{
+//        });
+//        productRender.start();
         int row = 1;
         int column = 0;
         for(Map.Entry<String, Product> product : new ProductService().getAll().entrySet()){
@@ -85,8 +99,20 @@ public class HomePageControllers implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        productsGridDisplay.getChildren().add(new Label("Loading...."));
+        topProductsContainer.getChildren().add(new Label("Loading...."));
+        topProductsContainer.setAlignment(Pos.CENTER_LEFT);
+        sortPane.getChildren().add(new Label("Loading...."));
+        sortPane.setAlignment(Pos.CENTER);
         addNavigationBar();
-        addSortedPane();
-        addProductToGridView();
+        Platform.runLater(()->{
+            topProductsContainer.getChildren().clear();
+            productsGridDisplay.getChildren().clear();
+            sortPane.getChildren().clear();
+            addProductToGridView();
+            addSortedPane();
+        });
+
+
     }
 }

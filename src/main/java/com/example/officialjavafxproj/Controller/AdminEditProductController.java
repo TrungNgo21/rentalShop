@@ -66,9 +66,9 @@ public class AdminEditProductController implements Initializable {
 
     private final Product product = DataAccess.getChosenProduct();
 
-    ObservableList<String> rentalTypeList = FXCollections.observableArrayList(product.getRentalTypes());
-    ObservableList<String> genreTypeList = FXCollections.observableArrayList(product.getGenres());
-    ObservableList<String> loanTypeList = FXCollections.observableArrayList(product.getLoanTypes());
+    ObservableList<String> rentalTypeList = FXCollections.observableArrayList(Product.getRentalTypes());
+    ObservableList<String> genreTypeList = FXCollections.observableArrayList(Product.getGenres());
+    ObservableList<String> loanTypeList = FXCollections.observableArrayList(Product.getLoanTypes());
 
     public void addNavigationBar(){
         try {

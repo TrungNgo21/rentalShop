@@ -45,7 +45,7 @@ public class LoginControllers {
         SceneController sceneController = new SceneController();
         if(service.login(usernameTextField.getText(), passwordField.getText())){
             if(new UserServices().getCurrentUser().getUserId().equals("ADMIN")){
-                sceneController.switchScene(event, "../Pages/adminViewProduct.fxml");
+                sceneController.switchScene(event, "../Pages/homepageAdmin.fxml");
             }
             else {
                 sceneController.switchScene(event, "../Pages/userProfile.fxml");
