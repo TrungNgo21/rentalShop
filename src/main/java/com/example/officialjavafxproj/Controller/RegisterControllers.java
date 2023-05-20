@@ -10,16 +10,14 @@ import Model.User.User;
 import Service.UserCartServices;
 import Service.UserServices;
 import com.example.officialjavafxproj.Threads.UploadImageThread;
+import com.example.officialjavafxproj.Utils.AlertBuilder;
 import com.example.officialjavafxproj.Utils.FileController;
 import com.example.officialjavafxproj.Utils.SceneController;
 import com.example.officialjavafxproj.Utils.ToastBuilder;
 import com.github.plushaze.traynotification.notification.Notifications;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -100,13 +98,13 @@ public class RegisterControllers {
                 !middleware.isValidPhoneNum(phoneNum));
 
         if(!middleware.isValidIString(15, fullName)){
-            fullNameErrorMessage.setText("Your full name must have 15 characters");
+            fullNameErrorMessage.setText("Your full name must have >= 15 characters");
         }else {
             fullNameErrorMessage.setText("");
         }
 
         if(!middleware.isValidIString(20, address)){
-            addressErrorMessage.setText("Your address must have 20 characters");
+            addressErrorMessage.setText("Your address must have >= 20 characters");
         }else {
             addressErrorMessage.setText("");
         }
@@ -118,13 +116,13 @@ public class RegisterControllers {
         }
 
         if(!middleware.isValidUsername(userName)){
-            userNameErrorMessage.setText("Your username must have 12 characters and no whitespaces");
+            userNameErrorMessage.setText("Wrong format! Right format click ! to see");
         }else {
             userNameErrorMessage.setText("");
         }
 
-        if(!middleware.isValidPassword(password)){
-            passwordErrorMessage.setText("Your password must have at least one uppercase letter, one lowercase letter, one number, one special character and 10 characters");
+        if(!middleware.isValidPassword(password) ){
+            passwordErrorMessage.setText("Wrong format! Right format click ! to see");
         }else {
             passwordErrorMessage.setText("");
         }
@@ -158,6 +156,30 @@ public class RegisterControllers {
         DataAccess.transferAllData();
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.close();
+    }
+
+    public void onUsernameInfoButton(){
+        Alert usernameInfo = AlertBuilder.builder()
+                .withType(Alert.AlertType.CONFIRMATION)
+                .withHeaderText("Username Right Format")
+                .withBodyText("- Username must have more than 12 characters\n " +
+                        "- No whitespaces accepted")
+                .build();
+        usernameInfo.show();
+    }
+
+    public void onPasswordInfoButton(){
+        Alert usernameInfo = AlertBuilder.builder()
+                .withType(Alert.AlertType.CONFIRMATION)
+                .withHeaderText("Password Right Format")
+                .withBodyText("- At least one uppercase letter\n" +
+                        "- At least one lowercase letter\n" +
+                        "- At least one number\n" +
+                        "- At least one special character\n" +
+                        "- Length must be 10 to 12 characters")
+                .build();
+        usernameInfo.show();
+
     }
 
     public void onRegisterButton(ActionEvent event) throws InterruptedException {
