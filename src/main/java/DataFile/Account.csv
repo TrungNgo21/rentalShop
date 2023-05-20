@@ -8,7 +8,7 @@ Acc003;GuestAccount;0;0;false;2;false;C003
 Acc0014;GuestAccount;0;0;false;2;false;C014
 Acc002;GuestAccount;0;0;false;2;false;C002
 Acc0013;VIPAccount;10;6;true;9999;false;C013
-Acc001;GuestAccount;0;1;false;3;false;C001
+Acc001;GuestAccount;0;1;false;3;true;C001
 Acc0012;GuestAccount;0;0;false;2;false;C012
 Acc000;GuestAccount;0;1;false;2;false;C000
 Acc0011;GuestAccount;0;0;false;2;false;C011

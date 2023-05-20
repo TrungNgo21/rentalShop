@@ -1,13 +1,10 @@
 
-.root {
-    /*-fx-font-family: "Arial";*/
-}
-
 .input_field {
     -fx-background-color: transparent;
     -fx-border-color: #ccc;
-    -fx-border-width: 0 0 2 0;
+    -fx-border-width: 2;
     -fx-text-fill: #fff;
+    -fx-border-radius: 5;
 }
 
 .color_font {
