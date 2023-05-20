@@ -28,6 +28,7 @@ public class LineChartControllers implements Initializable {
                 .withMaxWidth(400)
                 .withMaxHeight(300)
                 .withData(ChartDataController.getChartRevenueData(new RevenueService().getAllRevenue()))
+                .withTitle("Shop's Revenue")
                 .build();
         lineChartDisplay.getChildren().add(lineChart);
     }

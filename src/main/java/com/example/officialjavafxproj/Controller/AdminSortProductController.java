@@ -45,7 +45,6 @@ public class AdminSortProductController implements Initializable {
     public void resetToBegin(ActionEvent actionEvent) {
         searchTextField.setDisable(false);
         searchTextField.clear();
-        DataAccess.getSortedProducts().clear();
         loadSortedProducts();
     }
 

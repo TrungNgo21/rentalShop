@@ -49,13 +49,18 @@ public class BarchartBuilder {
         return this;
     }
 
-    public BarchartBuilder withProductData(ArrayList<String[]> data, String[] groups){
-        for(String group : groups){
+    public BarchartBuilder withTitle(String title){
+        barChart.setTitle(title);
+        return this;
+    }
+
+    public BarchartBuilder withProductData(ArrayList<String[]> data, String[] genres){
+        for(String genre : genres){
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             for(String[] dataElement : data){
-                if(dataElement[2].equals(group)){
-                    series.setName(dataElement[2]);
-                    series.getData().add(new XYChart.Data<>(dataElement[0], Double.parseDouble(dataElement[1]), dataElement[2]));
+                if(dataElement[0].equals(genre)){
+                    series.setName(dataElement[0]);
+                    series.getData().add(new XYChart.Data<>(dataElement[2], Double.parseDouble(dataElement[1]), dataElement[0]));
                 }
             }
             barChart.getData().add(series);
