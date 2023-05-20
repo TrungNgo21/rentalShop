@@ -97,20 +97,32 @@ public class AdminViewUserControllers implements Initializable {
     public void addAccountType() {
         accountType.getItems().addAll(userType);
     }
-    public void setDefaultGridView() {
-        gridPane.getChildren().clear();
-        DataAccess.setSortedUsers(DataAccess.getAllUsers());
-        System.out.println("Hello");
-        addUserToGridView();
-    }
     public void addUserToGridView() {
         gridPane.getChildren().clear();
         int column = 0;
         int row = 0;
         if (new AdminService().getSortedCustomer().size() == 0) {
-            Label temp = new Label();
-            temp.setText("No Users matched your requirement");
-            gridPane.getChildren().add(temp);
+            for (Map.Entry<String, User> user : new AdminService().getAll().entrySet()) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
+                    HBox userItem = fxmlLoader.load();
+                    AdminUserControllers adminUserController = fxmlLoader.getController();
+                    if(user.getValue().getUserId().equals("ADMIN")){
+                        continue;
+                    }
+                    adminUserController.loadDisplayUser((Customer) user.getValue());
+                    if(column == 1){
+                        column = 0;
+                        row++;
+                    }
+                    gridPane.setHgap(10);
+                    gridPane.setVgap(10);
+                    gridPane.add(userItem, column, row++);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
         else {
             for (Map.Entry<String, User> user : new AdminService().getSortedCustomer().entrySet()) {
@@ -162,9 +174,6 @@ public class AdminViewUserControllers implements Initializable {
 
         if(searchUser.getText().trim().isEmpty()) {
             DataAccess.setSortedUsers(filteredUser);
-//            for(Map.Entry<String, User> tmp : DataAccess.getSortedUsers().entrySet()) {
-//                System.out.println(tmp.getValue());
-//            }
             sortUsers();
             addUserToGridView();
         }
@@ -215,16 +224,11 @@ public class AdminViewUserControllers implements Initializable {
             temp = adminService.getAll();
             DataAccess.setSortedUsers(temp);
             filteredUser.putAll(temp);
-            for(Map.Entry<String, User> tmo : filteredUser.entrySet()) {
-
-            }
         }
         else if(type.equals("VIP Account")) {
             temp = adminService.filterAccountType("VIPAccount");
             DataAccess.setSortedUsers(temp);
             filteredUser.putAll(temp);
-            for(Map.Entry<String, User> tmo : filteredUser.entrySet()) {
-            }
         }
         else if(type.equals("Guest Account")) {
             temp = adminService.filterAccountType("GuestAccount");
@@ -255,7 +259,6 @@ public class AdminViewUserControllers implements Initializable {
         addNavigationBar();
         setDisable();
         resetDisable();
-//        setDefaultGridView();
         resetSearchButtonDisable();
         resetSearchDisable();
         addAccountType();
