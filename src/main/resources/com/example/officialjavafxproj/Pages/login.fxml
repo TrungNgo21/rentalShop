@@ -19,7 +19,7 @@
    <center>
       <AnchorPane prefHeight="400.0" prefWidth="387.0" style="-fx-background-color: #232830;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="9.0" layoutY="68.0" prefHeight="33.0" prefWidth="350.0" styleClass="color_font" stylesheets="@../styles.css" text="Welcome! Please login to continue !">
+            <Label layoutX="9.0" layoutY="68.0" prefHeight="33.0" prefWidth="350.0" styleClass="color_font" stylesheets="@../styles.css" text="Welcome! Please login to continue ">
                <font>
                   <Font size="20.0" />
                </font>

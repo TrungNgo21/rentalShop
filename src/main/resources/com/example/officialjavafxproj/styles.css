@@ -1,4 +1,6 @@
-
+.welcome_panel{
+    -fx-background-color: rgba(0,0,0,0.8);
+}
 .input_field {
     -fx-background-color: transparent;
     -fx-border-color: #ccc;
@@ -47,6 +49,12 @@
     -fx-cursor: hand;
     -fx-font-family: Arial;
     -fx-font-weight: bolder;
+}
+
+.button__primary{
+    -fx-font-family: Arial;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
 }
 
 .button__info:hover,
