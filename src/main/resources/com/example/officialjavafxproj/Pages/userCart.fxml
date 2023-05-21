@@ -46,7 +46,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <ScrollPane prefHeight="520.0" prefWidth="580.0">
+                  <ScrollPane prefHeight="520.0" prefWidth="580.0" stylesheets="@../styles.css">
                      <content>
                         <VBox fx:id="cartItemsDisplay" alignment="TOP_CENTER" prefHeight="520.0" prefWidth="550.0" spacing="10.0" />
                      </content>
@@ -135,9 +135,7 @@
                                     <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Button fx:id="checkoutButton" mnemonicParsing="false" onAction="#onCheckoutButton" prefHeight="36.0" prefWidth="201.0" text="Checkout" />
-                              <Label prefHeight="52.0" prefWidth="258.0" text="Your account can only borrow up to 2 items" />
-                              <Label prefHeight="52.0" prefWidth="258.0" text="Your account can only borrow up to 2 items" />
+                              <Button fx:id="checkoutButton" mnemonicParsing="false" onAction="#onCheckoutButton" prefHeight="36.0" prefWidth="201.0" styleClass="button__primary" stylesheets="@../styles.css" text="Checkout" />
                            </children>
                         </VBox>
                      </children>

@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="1280.0" style="-fx-background-color: #212326;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.AdminNavbarControllers">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="1280.0" style="-fx-background-color: #212326;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.AdminNavbarControllers">
     <children>
         <HBox layoutX="10.0" layoutY="13.0" prefHeight="80.0" prefWidth="640.0">
             <children>
@@ -35,13 +35,12 @@
                         <Insets left="20.0" top="26.0" />
                     </HBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="113.0" text="View Orders">
+                <Button mnemonicParsing="false" onAction="#onViewOrdersButton" prefHeight="27.0" prefWidth="113.0" text="View Orders">
                     <HBox.margin>
                         <Insets left="20.0" top="26.0" />
                     </HBox.margin>
                 </Button>
                 <Button mnemonicParsing="false" onAction="#onViewProductButton" prefHeight="27.0" prefWidth="113.0" text="ViewProduct">
-
                     <HBox.margin>
                         <Insets left="20.0" top="26.0" />
                     </HBox.margin>

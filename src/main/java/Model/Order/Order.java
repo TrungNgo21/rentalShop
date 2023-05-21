@@ -1,7 +1,11 @@
 package Model.Order;
 
+import DataAccess.DataAccess;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class Order {
     private String orderId;
@@ -27,6 +31,19 @@ public class Order {
         return userId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Double.compare(order.totalPrice, totalPrice) == 0 && Objects.equals(orderId, order.orderId) && Objects.equals(userId, order.userId) && Objects.equals(orders, order.orders) && Objects.equals(orderDate, order.orderDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, userId, orders, orderDate, totalPrice);
+    }
+
     public LocalDate getOrderDate(){
         return orderDate;
     }
@@ -42,4 +59,5 @@ public class Order {
     public void addOrderDetailsToOrder(OrderDetail detail){
         orders.add(detail);
     }
+
 }

@@ -34,7 +34,7 @@ public class ProductComponentControllers {
     public void loadProductItemData(Product product){
         String imageDir = new FileLocation().getImageDir() + product.getImageLocation();
         try {
-            Image productImage = new Image(new FileInputStream(imageDir), 200, 220, false, false);
+            Image productImage = new Image(new FileInputStream(imageDir), 202, 208, false, false);
             productImageView.setImage(productImage);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

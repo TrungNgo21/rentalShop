@@ -40,7 +40,7 @@
     <right>
         <VBox alignment="CENTER" prefHeight="712.0" prefWidth="240.0" BorderPane.alignment="CENTER" />
     </right>
-   <top>
-      <AnchorPane fx:id="adminNavbar" prefHeight="126.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
-   </top>
+    <top>
+        <AnchorPane fx:id="adminNavbar" prefHeight="126.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
+    </top>
 </BorderPane>

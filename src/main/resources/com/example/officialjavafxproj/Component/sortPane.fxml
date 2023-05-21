@@ -57,9 +57,9 @@
             </VBox>
          </children>
       </VBox>
-      <VBox prefHeight="224.0" prefWidth="300.0" style="-fx-padding: 10;">
+      <VBox prefHeight="187.0" prefWidth="300.0" style="-fx-padding: 10;">
          <children>
-            <Label prefHeight="50.0" prefWidth="280.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Genres">
+            <Label prefHeight="35.0" prefWidth="280.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Genres">
                <font>
                   <Font size="18.0" />
                </font>
@@ -93,9 +93,9 @@
             </VBox>
          </children>
       </VBox>
-      <VBox prefHeight="102.0" prefWidth="300.0" style="-fx-padding: 10;">
+      <VBox prefHeight="95.0" prefWidth="300.0" style="-fx-padding: 10;">
          <children>
-            <Label prefHeight="50.0" prefWidth="280.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Rental Duration">
+            <Label prefHeight="36.0" prefWidth="280.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Rental Duration">
                <font>
                   <Font size="18.0" />
                </font>
@@ -116,9 +116,9 @@
             </HBox>
          </children>
       </VBox>
-      <VBox prefHeight="108.0" prefWidth="300.0" style="-fx-padding: 10;">
+      <VBox prefHeight="78.0" prefWidth="300.0" style="-fx-padding: 10;">
          <children>
-            <Label prefHeight="50.0" prefWidth="280.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Availability">
+            <Label prefHeight="34.0" prefWidth="280.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Availability">
                <font>
                   <Font size="18.0" />
                </font>
@@ -139,9 +139,9 @@
             </HBox>
          </children>
       </VBox>
-      <VBox prefHeight="108.0" prefWidth="300.0" style="-fx-padding: 10;">
+      <VBox prefHeight="88.0" prefWidth="300.0" style="-fx-padding: 10;">
          <children>
-            <Label prefHeight="50.0" prefWidth="280.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Sort Order">
+            <Label prefHeight="36.0" prefWidth="280.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Sort Order">
                <font>
                   <Font size="18.0" />
                </font>

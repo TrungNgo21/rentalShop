@@ -22,34 +22,34 @@
          <children>
             <VBox prefHeight="516.0" prefWidth="1051.0">
                <children>
-                  <Label prefHeight="50.0" prefWidth="1053.0" style="-fx-padding: 12px; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;" text="Top Recommended">
+                  <Label prefHeight="50.0" prefWidth="1053.0" style="-fx-padding: 5; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;" text="Top Recommended">
                      <font>
                         <Font name="Arial Bold" size="24.0" />
                      </font>
                   </Label>
-                  <ScrollPane prefHeight="229.0" prefWidth="1051.0">
+                  <ScrollPane prefHeight="229.0" prefWidth="1051.0" stylesheets="@../styles.css">
                      <VBox.margin>
-                        <Insets top="12.0" />
+                        <Insets top="7.0" />
                      </VBox.margin>
                      <content>
-                        <HBox fx:id="topProductsContainer" alignment="CENTER_LEFT" prefHeight="208.0" prefWidth="1461.0" spacing="10.0" style="-fx-padding: 5px;" />
+                        <HBox fx:id="topProductsContainer" alignment="CENTER_LEFT" prefHeight="208.0" prefWidth="1461.0" spacing="10.0" style="-fx-padding: 20;" />
                      </content>
                   </ScrollPane>
                </children>
             </VBox>
-            <VBox prefHeight="657.0" prefWidth="1051.0">
+            <VBox alignment="TOP_CENTER" prefHeight="657.0" prefWidth="1051.0">
                <children>
-                  <Label prefHeight="50.0" prefWidth="1053.0" style="-fx-padding: 12px; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;" text="Catalog of the Store">
+                  <Label prefHeight="50.0" prefWidth="1053.0" style="-fx-padding: 5; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;" text="Catalog of the Store">
                      <font>
                         <Font name="Arial Bold" size="24.0" />
                      </font>
                   </Label>
-                  <ScrollPane prefHeight="600.0" prefWidth="1051.0">
+                  <ScrollPane prefHeight="600.0" prefWidth="1051.0" stylesheets="@../styles.css">
                      <VBox.margin>
-                        <Insets top="12.0" />
+                        <Insets top="5.0" />
                      </VBox.margin>
                      <content>
-                        <GridPane fx:id="productsGridDisplay" style="-fx-padding: 20px;">
+                        <GridPane fx:id="productsGridDisplay" style="-fx-padding: 10px;">
 <!--                          <rowConstraints>-->
 <!--                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />-->
 <!--                          </rowConstraints>-->

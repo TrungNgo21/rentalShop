@@ -47,7 +47,7 @@ public class CartComponentControllers {
     public void loadCartItemData(OrderDetail details){
         String imageDir = new FileLocation().getImageDir() + details.getBoughtItem().getImageLocation();
         try {
-            Image productImage = new Image(new FileInputStream(imageDir), 200, 175, false, false);
+            Image productImage = new Image(new FileInputStream(imageDir), 200, 170, false, false);
             productCartImage.setImage(productImage);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -66,7 +66,7 @@ public class CartComponentControllers {
                 downButton.setDisable(false);
             }
             if(Integer.parseInt(newValue) > details.getBoughtItem().getNumOfCopies()){
-                warningMessage.setText("Out of Stock");
+                warningMessage.setText("Out of Stock !!!");
             }else{
                 warningMessage.setText("");
             }

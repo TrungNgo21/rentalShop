@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
@@ -61,6 +62,21 @@ public class UserOrderIdControllers implements Initializable {
                     HBox cartItem = fxmlLoader.load();
                     OrderItemControllers orderItemControllers = fxmlLoader.getController();
                     orderItemControllers.loadAllOrderItemData(detail);
+                    if(detail.getBoughtItem().getLoanType().equals("1-WEEK")){
+                        if(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(7).compareTo(LocalDate.now()) < 0){
+                            orderItemControllers.setDueStatus("LATE");
+                        }else{
+                            orderItemControllers.setDueStatus("OK");
+                        }
+                        orderItemControllers.setDueDate(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(7).toString());
+                    }else{
+                        if(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(2).compareTo(LocalDate.now()) < 0){
+                            orderItemControllers.setDueStatus("LATE");
+                        }else{
+                            orderItemControllers.setDueStatus("OK");
+                        }
+                        orderItemControllers.setDueDate(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(2).toString());
+                    }
                     orderItemsDisplay.getChildren().add(cartItem);
                 } catch (IOException e) {
                     System.out.println("hihihi");

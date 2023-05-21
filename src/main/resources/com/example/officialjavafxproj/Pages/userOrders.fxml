@@ -49,9 +49,12 @@
                                 </Label>
                             </children>
                         </AnchorPane>
-                        <ScrollPane prefHeight="520.0" prefWidth="687.0">
+                        <ScrollPane prefHeight="520.0" prefWidth="687.0" stylesheets="@../styles.css">
                             <content>
-                                <VBox fx:id="ordersDisplay" alignment="TOP_CENTER" prefHeight="520.0" prefWidth="865.0" spacing="10.0" />
+                                <VBox fx:id="ordersDisplay" alignment="TOP_CENTER" prefHeight="520.0" prefWidth="865.0" spacing="20.0">
+                           <padding>
+                              <Insets left="20.0" top="20.0" />
+                           </padding></VBox>
                             </content>
                             <VBox.margin>
                                 <Insets top="10.0" />

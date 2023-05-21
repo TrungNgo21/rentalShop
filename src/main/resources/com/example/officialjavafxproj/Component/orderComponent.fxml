@@ -13,7 +13,10 @@
          <children>
             <HBox prefHeight="40.0" prefWidth="296.0">
                <children>
-                  <Label fx:id="orderStatus" alignment="CENTER" prefHeight="45.0" prefWidth="133.0" style="-fx-border-color: #ccc; -fx-border-width: 2; -fx-border-radius: 20;" text="New" />
+                  <Label fx:id="orderStatus" alignment="CENTER" prefHeight="45.0" prefWidth="133.0" style="-fx-border-color: #ccc; -fx-border-width: 2; -fx-border-radius: 20;" text="Warning">
+                     <font>
+                        <Font name="Arial Bold" size="14.0" />
+                     </font></Label>
                   <Label fx:id="orderDate" alignment="CENTER" prefHeight="50.0" prefWidth="195.0" text="27/11/2022">
                      <font>
                         <Font name="Arial Bold Italic" size="16.0" />

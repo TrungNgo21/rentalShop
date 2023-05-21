@@ -19,11 +19,19 @@ public class AdminNavbarControllers {
         new SceneController().switchScene(event, "../Pages/login.fxml");
     }
 
+
+    public void onHomeButton(ActionEvent event) throws IOException {
+        new SceneController().switchScene(event, "../Pages/adminViewCustomers.fxml");
+    }
     public void onViewProductButton(ActionEvent event) throws IOException{
         new SceneController().switchScene(event, "../Pages/adminViewProduct.fxml");
     }
     public void onViewUsersButton(ActionEvent actionEvent) throws IOException{
         new SceneController().switchScene(actionEvent, "../Pages/adminViewCustomers.fxml");
+    }
+
+    public void onViewOrdersButton(ActionEvent actionEvent) throws IOException{
+        new SceneController().switchScene(actionEvent, "../Pages/adminViewOrders.fxml");
     }
 
     public void onHomepageButton(ActionEvent actionEvent) throws IOException{

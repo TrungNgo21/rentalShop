@@ -31,7 +31,6 @@ public class DataAccess {
 
     private static HashMap<String, Product> sortedProducts = new HashMap<>();
 
-
     private static final ArrayList<String[]> sortedOptions = new ArrayList<>();
     private static final HashMap<String, Account> accounts = new HashMap<>();
 
@@ -162,7 +161,7 @@ public class DataAccess {
             Order order = new Order(orderData[0], orderData[1], LocalDate.parse(orderData[2], new DateMiddleware().dateParser()), Double.parseDouble(orderData[3]));
             orders.add(order);
         }
-    }
+    }   
 
     private static void loadAllCartsNoDetail() {
         ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getCartFileDir());
@@ -406,11 +405,18 @@ public class DataAccess {
     public static HashMap<String, Product> getSortedProducts(){
         return sortedProducts;
     }
-    public static void setSortedProducts(HashMap<String, Product> sortedProducts) {DataAccess.sortedProducts = sortedProducts;}
+//    public static void setSortedProducts(HashMap<String, Product> sortedProducts) {DataAccess.sortedProducts = sortedProducts;}
 
     public static void addToSortedProducts(Product product){
         sortedProducts.put(product.getId(), product);
     }
+
+    public static void setSortedProducts(HashMap<String, Product> sortProducts) {
+        sortedProducts = sortProducts;
+    }
+
+    public static HashMap<String, User> getGetSortedUsers() {return sortedUsers;}
+
     public static void setSortedUsers(HashMap<String, User> sortedUser) {
         DataAccess.sortedUsers = sortedUser;
     }

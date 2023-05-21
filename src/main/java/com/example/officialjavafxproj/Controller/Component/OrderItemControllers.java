@@ -32,31 +32,48 @@ public class OrderItemControllers {
 
     @FXML
     private Label productOrderTitleDisplay;
-
     @FXML
     private Label productOrderYearDisplay;
-
     @FXML
     private Label productOrderPriceDisplay;
-
     @FXML
     private Label productOrderGenreDisplay;
-
     @FXML
     private Label productOrderRentalDisplay;
-
     @FXML
     private Label productOrderQuantityDisplay;
-
     @FXML
     private ImageView productOrderImage;
+    @FXML
+    private Label itemDueDisplay;
+
+    @FXML
+    private Label itemStatusDisplay;
 
     private OrderDetail order;
+
+    public void setDueDate(String date){
+        itemDueDisplay.setText(date);
+        if(itemStatusDisplay.getText().equals("OK")){
+            itemDueDisplay.setStyle("-fx-text-fill: #54B435");
+        }else{
+            itemDueDisplay.setStyle("-fx-text-fill: #E76161");
+        }
+    }
+
+    public void setDueStatus(String status){
+        itemStatusDisplay.setText(status);
+        if(status.equals("OK")){
+            itemStatusDisplay.setStyle("-fx-text-fill: #54B435");
+        }else{
+            itemStatusDisplay.setStyle("-fx-text-fill: #E76161");
+        }
+    }
 
     public void loadAllOrderItemData(OrderDetail detail){
         String imageDir = new FileLocation().getImageDir() + detail.getBoughtItem().getImageLocation();
         try {
-            Image productImage = new Image(new FileInputStream(imageDir), 200, 175, false, false);
+            Image productImage = new Image(new FileInputStream(imageDir), 200, 205, false, false);
             productOrderImage.setImage(productImage);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
