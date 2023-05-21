@@ -15,4 +15,12 @@ public class AlertButtonController {
         buttonTypes.addAll(cashButton, creditButton, cancel);
         return buttonTypes;
     }
+    public static ObservableList<ButtonType> getSaveButtonTypes(){
+        ButtonType continueButton = new ButtonType("Continue adding");
+        ButtonType saveButton = new ButtonType("Save");
+
+        ObservableList<ButtonType> buttonTypes = FXCollections.observableArrayList();
+        buttonTypes.addAll(continueButton, saveButton);
+        return buttonTypes;
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.officialjavafxproj.Controller;
 
+import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Middleware.InputMiddleware;
 import Model.Account.GuestAccount;
@@ -13,19 +14,14 @@ import Service.ProductService;
 import Service.UserCartServices;
 import Service.UserServices;
 import com.example.officialjavafxproj.Threads.UploadImageThread;
-import com.example.officialjavafxproj.Utils.FileController;
-import com.example.officialjavafxproj.Utils.SceneController;
-import com.example.officialjavafxproj.Utils.ToastBuilder;
+import com.example.officialjavafxproj.Utils.*;
 import com.github.plushaze.traynotification.notification.Notifications;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -37,6 +33,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AdminAddProductController implements Initializable {
@@ -83,18 +82,20 @@ public class AdminAddProductController implements Initializable {
 
     private String imageDir;
 
-    public void addNavigationBar(){
+    public void addNavigationBar() {
         try {
             adminNavbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void setChoiceBox(){
+
+    public void setChoiceBox() {
         rentalTypeChoiceBox.setItems(rentalTypeList);
         genreTypeChoiceBox.setItems(genreTypeList);
         loanTypeChoiceBox.setItems(loanTypeList);
     }
+
     public void onFieldReleased() {
         InputMiddleware middleware = new InputMiddleware();
         String productName = nameTextField.getText();
@@ -108,25 +109,21 @@ public class AdminAddProductController implements Initializable {
         saveButton.setDisable(!isValid);
 
 
-        if(productName.trim().isEmpty()){
+        if (productName.trim().isEmpty()) {
             nameWarningMessage.setText("You must not leave this field empty");
-        }
-        else {
+        } else {
             nameWarningMessage.setText("");
         }
-        if(productPrice.trim().isEmpty()){
+        if (productPrice.trim().isEmpty()) {
             priceWarningMessage.setText("You must not leave this field empty");
-        }
-        else if(!middleware.isValidNumber(productPrice)){
+        } else if (!middleware.isValidNumber(productPrice)) {
             priceWarningMessage.setText("The price must be a number");
-        }
-        else if(!middleware.isPositive(productPrice)){
+        } else if (!middleware.isPositive(productPrice)) {
             priceWarningMessage.setText("The price must be positive");
-        }
-        else {
+        } else {
             priceWarningMessage.setText("");
         }
-        if(publishedYear.trim().isEmpty()){
+        if (publishedYear.trim().isEmpty()) {
             publishedYearWarningMessage.setText("You must not leave this field empty");
         } else if (!middleware.isValidNumber(publishedYear)) {
             publishedYearWarningMessage.setText("The published year must be a number");
@@ -134,26 +131,24 @@ public class AdminAddProductController implements Initializable {
             publishedYearWarningMessage.setText("The year is not valid");
         } else if (!middleware.isPositive(publishedYear)) {
             publishedYearWarningMessage.setText("The published year must be positive");
-        }
-        else {
+        } else {
             publishedYearWarningMessage.setText("");
         }
-        if(numOfCopies.trim().isEmpty()){
+        if (numOfCopies.trim().isEmpty()) {
             copiesWarningMessage.setText("You must not leave this field empty");
         } else if (!middleware.isValidNumber(numOfCopies)) {
             copiesWarningMessage.setText("Num of copies must be a number");
-        } else if(!middleware.isPositive(numOfCopies)){
+        } else if (!middleware.isPositive(numOfCopies)) {
             copiesWarningMessage.setText("Num of copies must be positive");
-        }
-        else {
+        } else {
             copiesWarningMessage.setText("");
         }
     }
-    public void setDisableButton(MouseEvent mouseEvent){
-        if(rentalTypeChoiceBox.getValue() == null || genreTypeChoiceBox.getValue() == null || loanTypeChoiceBox.getValue() == null ){
+
+    public void setDisableButton(MouseEvent mouseEvent) {
+        if (rentalTypeChoiceBox.getValue() == null || genreTypeChoiceBox.getValue() == null || loanTypeChoiceBox.getValue() == null) {
             saveButton.setDisable(true);
-        }
-        else {
+        } else {
             saveButton.setDisable(false);
         }
     }
@@ -167,15 +162,17 @@ public class AdminAddProductController implements Initializable {
         genreTypeChoiceBox.setValue(null);
         loanTypeChoiceBox.setValue(null);
     }
-    public void back(ActionEvent actionEvent) throws IOException{
+
+    public void back(ActionEvent actionEvent) throws IOException {
         new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
     }
+
     public void onUploadImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().clear();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg", "*.gif", "*.jpg"));
         File file = fileChooser.showOpenDialog(null);
-        if(file != null){
+        if (file != null) {
             imageMessage.setText(file.getAbsolutePath());
             String ext = FileController.getFileExtension(new File(imageMessage.getText()));
             imageDir = new FileLocation().getImageDir() + "." + ext;
@@ -201,10 +198,11 @@ public class AdminAddProductController implements Initializable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             imageMessage.setText("No file chosen");
         }
     }
+
     public void onSaveInformation(ActionEvent actionEvent) throws InterruptedException {
         String productTitle = nameTextField.getText();
         double productRentalFee = Double.parseDouble(priceTextField.getText());
@@ -215,14 +213,14 @@ public class AdminAddProductController implements Initializable {
         String publishedYear = publishedYearTextField.getText();
         String targetFileDir = "";
         String ext = FileController.getFileExtension(new File(imageMessage.getText()));
-        File targetFile = new File( new FileLocation().getImageDir() + "Product/" + new ProductService().idCreation() + publishedYear + "."  + ext);
+        File targetFile = new File(new FileLocation().getImageDir() + "Product/" + new ProductService().idCreation() + publishedYear + "." + ext);
 
-        if(imageMessage.getText().equals("No file chosen") || imageMessage.getText().equals("")){
+        if (imageMessage.getText().equals("No file chosen") || imageMessage.getText().equals("")) {
             targetFileDir = "Product/default.png";
-        }else{
+        } else {
             targetFileDir = "Product/" + new ProductService().idCreation() + publishedYear + "." + ext;
         }
-        ProductService productService =  new ProductService();
+        ProductService productService = new ProductService();
         //        UploadImageThread uploadThread = new UploadImageThread(targetFile, new File(imageMessage.getText()), 400, 400);
         UploadImageThread uploadThread = UploadImageThread
                 .builder()
@@ -234,37 +232,54 @@ public class AdminAddProductController implements Initializable {
 
 
         Thread imageThread = new Thread(uploadThread);
-            try{
-                imageThread.start();
-                if(productRentalType.equals("DVD")) {
-                    productService.add(new DVD(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
-                } else if (productRentalType.equals("GAME")) {
-                    productService.add(new Game(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
-                }
-                else {
-                    productService.add(new MRecords(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
-                }
-                imageThread.join();
-                ToastBuilder.builder()
-                        .withTitle("Add Message")
-                        .withMessage("Add Successfully!!!")
-                        .withMode(Notifications.SUCCESS)
-                        .show();
-                new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
-            }catch (Error err){
-                ToastBuilder.builder()
-                        .withTitle("Add Message")
-                        .withMessage(err.getMessage())
-                        .withMode(Notifications.ERROR)
-                        .show();
-                imageThread.join();
-                FileController.deleteFile(targetFile);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        boolean isDuplicated = false;
+        for (Map.Entry<String, Product> product : DataAccess.getAllProducts().entrySet()) {
+            if (product.getValue().getTitle().equals(productTitle)) {
+                isDuplicated = true;
             }
+        }
+        if (isDuplicated == true) {
+            Alert saveAlert = AlertBuilder.builder()
+                    .withType(Alert.AlertType.WARNING)
+                    .withBodyText("The title is existed, do you want to add")
+                    .withHeaderText("Save warning")
+                    .withButtonList(AlertButtonController.getSaveButtonTypes())
+                    .build();
+            ObservableList<ButtonType> saveButtons = saveAlert.getButtonTypes();
+            Optional<ButtonType> choice = saveAlert.showAndWait();
+            if (choice.get() == saveButtons.get(0)) {
+                saveAlert.close();
+            } else {
+                try {
+                    imageThread.start();
+                    if (productRentalType.equals("DVD")) {
+                        productService.add(new DVD(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                    } else if (productRentalType.equals("GAME")) {
+                        productService.add(new Game(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                    } else {
+                        productService.add(new MRecords(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                    }
+                    imageThread.join();
+                    ToastBuilder.builder()
+                            .withTitle("Add Message")
+                            .withMessage("Add Successfully!!!")
+                            .withMode(Notifications.SUCCESS)
+                            .show();
+                    new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
+                } catch (Error err) {
+                    ToastBuilder.builder()
+                            .withTitle("Add Message")
+                            .withMessage(err.getMessage())
+                            .withMode(Notifications.ERROR)
+                            .show();
+                    imageThread.join();
+                    FileController.deleteFile(targetFile);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
-
-
 
 
     @Override

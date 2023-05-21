@@ -129,19 +129,19 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="rentalTypeChoiceBox" onMouseReleased="#onFieldReleased" prefHeight="27.0" prefWidth="135.0" />
+                        <ChoiceBox fx:id="rentalTypeChoiceBox" prefHeight="27.0" prefWidth="135.0" />
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="84.0" text="GenreType">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="genreTypeChoiceBox" onMouseReleased="#onFieldReleased" prefWidth="150.0" />
+                        <ChoiceBox fx:id="genreTypeChoiceBox" prefWidth="150.0" />
                         <Label alignment="CENTER" prefHeight="26.0" prefWidth="77.0" text="LoanType">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="loanTypeChoiceBox" onMouseReleased="#onFieldReleased" prefHeight="27.0" prefWidth="144.0" />
+                        <ChoiceBox fx:id="loanTypeChoiceBox" prefHeight="27.0" prefWidth="144.0" />
                      </children>
                   </HBox>
                     </children>
