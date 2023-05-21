@@ -146,8 +146,8 @@ public class UserCartControllers implements Initializable {
                 }
                 if(choice.get() == cartButtons.get(1)){
                     userServices.getCurrentUser().setBalance(userServices.getCurrentUser().getBalance() - Double.parseDouble(totalPriceDisplay.getText()));
-                    userServices.getCurrentUser().getAccount().setRentalThreshold(userServices.getCurrentUser().getAccount().getRentalThreshold() - orderDetailCartService.getAll().size());
                 }
+                userServices.getCurrentUser().getAccount().setRentalThreshold(userServices.getCurrentUser().getAccount().getRentalThreshold() - orderDetailCartService.getAll().size());
                 for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
                     orderDetailCartService.delete(details.getValue());
                 }

@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.SortPageControllers">
    <top>
@@ -20,7 +21,10 @@
          <children>
             <Label fx:id="sortLabelDisplay" prefHeight="60.0" prefWidth="916.0">
                <graphic>
-                  <Label prefHeight="47.0" prefWidth="910.0" text="Result: " />
+                  <Label prefHeight="47.0" prefWidth="910.0" text="Result: ">
+                     <font>
+                        <Font name="Arial Bold" size="22.0" />
+                     </font></Label>
                </graphic>
             </Label>
             <ScrollPane prefHeight="670.0" prefWidth="910.0" stylesheets="@../styles.css">
