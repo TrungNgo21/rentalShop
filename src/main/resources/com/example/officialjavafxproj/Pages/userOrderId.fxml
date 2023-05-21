@@ -30,7 +30,7 @@
                     <children>
                         <AnchorPane prefHeight="63.0" prefWidth="566.0">
                             <children>
-                                <Label fx:id="orderIdDisplay" prefHeight="44.0" prefWidth="882.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0  2 0;" text="O00">
+                                <Label fx:id="orderIdDisplay" prefHeight="44.0" prefWidth="882.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0  2 0;">
                                     <font>
                                         <Font name="Arial Bold" size="20.0" />
                                     </font>
@@ -56,7 +56,7 @@
                                 </Label>
                             </children>
                         </AnchorPane>
-                        <ScrollPane prefHeight="520.0" prefWidth="687.0">
+                        <ScrollPane prefHeight="520.0" prefWidth="687.0" stylesheets="@../styles.css">
                             <content>
                                 <VBox fx:id="orderItemsDisplay" alignment="TOP_CENTER" prefHeight="520.0" prefWidth="865.0" spacing="10.0" />
                             </content>

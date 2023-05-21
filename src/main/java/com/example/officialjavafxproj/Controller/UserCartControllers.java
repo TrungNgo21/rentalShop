@@ -1,24 +1,27 @@
 package com.example.officialjavafxproj.Controller;
 
 import DataAccess.DataAccess;
+import Middleware.DateMiddleware;
 import Middleware.OrderMiddleware;
 import Model.Account.GuestAccount;
 import Model.Account.VIPAccount;
 import Model.Order.Order;
 import Model.Order.OrderDetail;
-import Service.OrderCustomerService;
-import Service.OrderDetailCartService;
-import Service.ProductService;
-import Service.UserServices;
+import Service.*;
 import com.example.officialjavafxproj.Controller.Component.CartComponentControllers;
+import com.example.officialjavafxproj.Utils.AlertBuilder;
+import com.example.officialjavafxproj.Utils.AlertButtonController;
 import com.example.officialjavafxproj.Utils.SceneController;
 import com.example.officialjavafxproj.Utils.ToastBuilder;
 import com.github.plushaze.traynotification.notification.Notifications;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -26,8 +29,10 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UserCartControllers implements Initializable {
@@ -76,6 +81,8 @@ public class UserCartControllers implements Initializable {
             }
         }
 
+
+
         if(userServices.getCurrentUser().getAccount() instanceof GuestAccount){
             if(userServices.getCurrentUser().getAccount().getRentalThreshold() < orderDetailCartService.getAll().size()){
                 ToastBuilder.builder()
@@ -102,12 +109,22 @@ public class UserCartControllers implements Initializable {
                     .withMode(Notifications.ERROR)
                     .show();
         }else{
-            if(userServices.getCurrentUser().getBalance() < Double.parseDouble(totalPriceDisplay.getText())){
+            Alert cartConfirmation = AlertBuilder.builder()
+                    .withType(Alert.AlertType.CONFIRMATION)
+                    .withBodyText("Your order costs totally: " + totalPriceDisplay.getText() + "$")
+                    .withHeaderText("Cart Confirmation!")
+                    .withButtonList(AlertButtonController.getCartButtonTypes())
+                    .build();
+            ObservableList<ButtonType> cartButtons = cartConfirmation.getButtonTypes();
+            Optional<ButtonType> choice = cartConfirmation.showAndWait();
+            if(userServices.getCurrentUser().getBalance() < Double.parseDouble(totalPriceDisplay.getText()) && choice.get() == cartButtons.get(1)){
                 ToastBuilder.builder()
                         .withTitle("Insufficient Money")
                         .withMode(Notifications.ERROR)
                         .withMessage("You cannot make this purchase!")
                         .show();
+            }else if(choice.get() == cartButtons.get(2)){
+                System.out.println("cancel");
             }else{
                 ToastBuilder.builder()
                         .withTitle("Order Successfully")
@@ -127,15 +144,42 @@ public class UserCartControllers implements Initializable {
                         detail.getBoughtItem().setStatus("BORROWED");
                     }
                 }
-                userServices.getCurrentUser().setBalance(userServices.getCurrentUser().getBalance() - Double.parseDouble(totalPriceDisplay.getText()));
-                userServices.getCurrentUser().getAccount().setRentalThreshold(userServices.getCurrentUser().getAccount().getRentalThreshold() - orderDetailCartService.getAll().size());
-                new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+                if(choice.get() == cartButtons.get(1)){
+                    userServices.getCurrentUser().setBalance(userServices.getCurrentUser().getBalance() - Double.parseDouble(totalPriceDisplay.getText()));
+                    userServices.getCurrentUser().getAccount().setRentalThreshold(userServices.getCurrentUser().getAccount().getRentalThreshold() - orderDetailCartService.getAll().size());
+                }
                 for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
                     orderDetailCartService.delete(details.getValue());
                 }
+                new RevenueService().addToRevenue(madeOrder.getOrderDate(), madeOrder.getTotalPrice());
+                new SceneController().switchScene(event, "../Pages/userOrders.fxml");
             }
+//            ToastBuilder.builder()
+//                    .withTitle("Order Successfully")
+//                    .withMode(Notifications.SUCCESS)
+//                    .withMessage("Your purchase is proceeded")
+//                    .show();
+//            for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
+//                details.getValue().setCartId("NaN");
+//                details.getValue().setOrderDetailId(new OrderDetailCartService().idCreation());
+//                details.getValue().setOrderId(madeOrder.getOrderId());
+//                madeOrder.addOrderDetailsToOrder(details.getValue());
+//            }
+//            new OrderCustomerService(new DataAccess(), new OrderMiddleware()).add(madeOrder);
+//            for(OrderDetail detail : madeOrder.getOrders()){
+//                detail.getBoughtItem().setNumOfCopies(detail.getBoughtItem().getNumOfCopies() - detail.getQuantity());
+//                if(detail.getBoughtItem().getNumOfCopies() == 0){
+//                    detail.getBoughtItem().setStatus("BORROWED");
+//                }
+//            }
+//            new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+//            orderDetailCartService.getAll().clear();
+////                    for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
+////                        orderDetailCartService.delete(details.getValue());
+////                    }
+//
+//        }
         }
-
     }
 
     public void addNavigationBar() {

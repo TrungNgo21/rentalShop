@@ -14,6 +14,7 @@ import Model.User.Customer;
 import Model.User.User;
 import FileLocation.FileLocation;
 import Service.UserServices;
+import com.example.officialjavafxproj.Utils.DateComparator;
 
 
 import java.io.BufferedReader;
@@ -21,10 +22,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class DataAccess {
     private static final HashMap<String, User> users = new HashMap<>();
@@ -33,9 +31,10 @@ public class DataAccess {
 
     private static HashMap<String, Product> sortedProducts = new HashMap<>();
 
-
     private static final ArrayList<String[]> sortedOptions = new ArrayList<>();
     private static final HashMap<String, Account> accounts = new HashMap<>();
+
+    private static HashMap<LocalDate, Double> revenueDaily = new HashMap<>();
 
     private static final ArrayList<Cart> carts = new ArrayList<>();
     private static final HashMap<String, Product> products = new HashMap<>();
@@ -71,6 +70,26 @@ public class DataAccess {
         return null;
     }
 
+
+    private static void loadRevenueAdmin(){
+        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getRevenueDir());
+        for(String[] revenueData : Objects.requireNonNull(dataFile)){
+            revenueDaily.put(LocalDate.parse(revenueData[0], new DateMiddleware().dateParser()), Double.parseDouble(revenueData[1]));
+        }
+    }
+
+    private static void transferRevenueAdmin(){
+        try {
+            FileWriter writer = new FileWriter(new FileLocation().getRevenueDir(), false);
+            for (Map.Entry<LocalDate, Double> revenue : revenueDaily.entrySet()) {
+                writer.write(new DateMiddleware().dateAfterFormat(revenue.getKey()) + ";"
+                        + revenue.getValue() + "\n");
+            }
+            writer.close();
+        } catch (IOException err) {
+            err.printStackTrace();
+        }
+    }
 
     private static void loadAllUsersNoAccounts() {
         ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getUserFileDir());
@@ -142,7 +161,7 @@ public class DataAccess {
             Order order = new Order(orderData[0], orderData[1], LocalDate.parse(orderData[2], new DateMiddleware().dateParser()), Double.parseDouble(orderData[3]));
             orders.add(order);
         }
-    }
+    }   
 
     private static void loadAllCartsNoDetail() {
         ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getCartFileDir());
@@ -242,7 +261,6 @@ public class DataAccess {
                         for (OrderDetail detail : order.getOrders()) {
                             writer.write(detail.getOrderDetailId() + ";"
                                     + order.getOrderId() + ";"
-                                    + "NaN" + ";"
                                     + detail.getBoughtItem().getId() + ";"
                                     + detail.getQuantity() + "\n");
                         }
@@ -251,7 +269,6 @@ public class DataAccess {
                 if(user.getValue().getCart() != null){
                     for (OrderDetail detail : user.getValue().getCart().getShoppingItems()) {
                         writer.write(detail.getOrderDetailId() + ";"
-                                + "NaN" + ";"
                                 + user.getValue().getCart().getCartId() + ";"
                                 + detail.getBoughtItem().getId() + ";"
                                 + detail.getQuantity() + "\n");
@@ -299,6 +316,7 @@ public class DataAccess {
 
     public static void loadAllData() {
         loadAllCartsNoDetail();
+        loadRevenueAdmin();
         loadAllUsersNoAccounts();
         loadAllAccounts();
         loadAllProducts();
@@ -315,6 +333,7 @@ public class DataAccess {
         transferAllOrderDetails();
         transferAllCarts();
         transferAllOrders();
+        transferRevenueAdmin();
     }
 
 
@@ -384,11 +403,18 @@ public class DataAccess {
     public static HashMap<String, Product> getSortedProducts(){
         return sortedProducts;
     }
-    public static void setSortedProducts(HashMap<String, Product> sortedProducts) {DataAccess.sortedProducts = sortedProducts;}
+//    public static void setSortedProducts(HashMap<String, Product> sortedProducts) {DataAccess.sortedProducts = sortedProducts;}
 
     public static void addToSortedProducts(Product product){
         sortedProducts.put(product.getId(), product);
     }
+
+    public static void setSortedProducts(HashMap<String, Product> sortProducts) {
+        sortedProducts = sortProducts;
+    }
+
+    public static HashMap<String, User> getGetSortedUsers() {return sortedUsers;}
+
     public static void setSortedUsers(HashMap<String, User> sortedUser) {
         DataAccess.sortedUsers = sortedUser;
     }
@@ -396,4 +422,28 @@ public class DataAccess {
 
     public static User getSelectedCustomer() {return selectedCustomer;}
     public static void setSelectedCustomer(User user) {DataAccess.selectedCustomer = user;}
+
+    public static void addRevenue(LocalDate date, double totalPrice){
+        if(!revenueDaily.containsKey(date)){
+            revenueDaily.put(date, totalPrice);
+        }else{
+            revenueDaily.put(date, revenueDaily.get(date) + totalPrice);
+
+        }
+    }
+
+    public static TreeMap<LocalDate, Double> getRevenueDaily() {
+        DateComparator dateComparator = new DateComparator();
+        TreeMap<LocalDate, Double> sortedRevenue = new TreeMap<>(dateComparator);
+        sortedRevenue.putAll(revenueDaily);
+        return sortedRevenue;
+    }
+
+    public static double getTotalRevenue(){
+        double total = 0;
+        for(Map.Entry<LocalDate, Double> revenue : revenueDaily.entrySet()){
+            total += revenue.getValue();
+        }
+        return total;
+    }
 }

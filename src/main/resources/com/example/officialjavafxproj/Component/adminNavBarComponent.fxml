@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -30,17 +23,17 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Home">
+                <Button mnemonicParsing="false" onAction="#onHomepageButton" prefHeight="25.0" prefWidth="81.0" text="Home">
                     <HBox.margin>
                         <Insets left="30.0" top="26.0" />
                     </HBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#onViewUserButton" prefHeight="27.0" prefWidth="108.0" text="View Users">
+                <Button mnemonicParsing="false" onAction="#onViewUsersButton" prefHeight="27.0" prefWidth="108.0" text="View Users">
                     <HBox.margin>
                         <Insets left="20.0" top="26.0" />
                     </HBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="113.0" text="View Orders">
+                <Button mnemonicParsing="false" onAction="#onViewOrdersButton" prefHeight="27.0" prefWidth="113.0" text="View Orders">
                     <HBox.margin>
                         <Insets left="20.0" top="26.0" />
                     </HBox.margin>
@@ -53,7 +46,7 @@
             </children>
         </HBox>
         <Button layoutX="1195.0" layoutY="39.0" mnemonicParsing="false" onAction="#onLogoutButton" prefHeight="25.0" prefWidth="81.0" text="Logout" AnchorPane.rightAnchor="50.0" />
-        <Button layoutX="799.0" layoutY="34.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="391.0" style="-fx-background-color: transparent;">
+        <Button layoutX="799.0" layoutY="34.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="291.0" style="-fx-background-color: transparent;">
             <graphic>
                 <Label fx:id="userNameDisplay" prefHeight="30.0" prefWidth="196.0" style="-fx-border-color: #ffffff; -fx-border-width: 0 0 2 0;" text="Admin" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                     <graphic>

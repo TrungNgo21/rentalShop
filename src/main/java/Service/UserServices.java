@@ -52,7 +52,7 @@ public class UserServices implements Services<User> {
 
     @Override
     public HashMap<String, User> getAll() {
-        return null;
+        return DataAccess.getAllUsers();
     }
 
     public boolean login(String username, String password){

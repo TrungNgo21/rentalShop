@@ -35,7 +35,6 @@ public class NavbarControllers implements Initializable {
     public void onGoToCartButton(ActionEvent event) throws IOException{
         new SceneController().switchScene(event, "../Pages/userCart.fxml");
     }
-
     public void onGoToOrders(ActionEvent event) throws IOException {
         new SceneController().switchScene(event, "../Pages/userOrders.fxml");
     }
@@ -50,7 +49,7 @@ public class NavbarControllers implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadUserName();
-//        loadNoCartItem();
+        loadNoCartItem();
     }
 
 }

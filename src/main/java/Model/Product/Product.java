@@ -3,10 +3,10 @@ package Model.Product;
 import java.util.Arrays;
 
 public abstract class Product {
-    private final String[] loanTypes = {"2-DAY", "1-WEEK"};
-    private final String[] rentalTypes = {"RECORD", "DVD", "GAME"};
-    private final String[] rentalStatus = {"BORROWED", "AVAILABLE"};
-    private final String[] genres = {"ACTION", "HORROR", "DRAMA", "COMEDY"};
+    private static final String[] loanTypes = {"2-DAY", "1-WEEK"};
+    private static final String[] rentalTypes = {"RECORD", "DVD", "GAME"};
+    private static final String[] rentalStatus = {"BORROWED", "AVAILABLE"};
+    private static final String[] genres = {"ACTION", "HORROR", "DRAMA", "COMEDY"};
     private String id;
     private String title;
     private String rentalType;
@@ -32,12 +32,6 @@ public abstract class Product {
         this.status = status;
         this.imageLocation = imageLocation;
     }
-
-    public String[] getLoanTypes() {return loanTypes;}
-
-    public String[] getRentalTypes() {return rentalTypes;}
-
-    public String[] getGenres() {return genres;}
 
     public String getPublishedYear() {
         return publishedYear;
@@ -121,5 +115,21 @@ public abstract class Product {
                 ", status='" + status + '\'' +
                 ", imageLocation='" + imageLocation + '\'' +
                 '}';
+    }
+
+    public static String[] getLoanTypes() {
+        return loanTypes;
+    }
+
+    public static String[] getRentalTypes() {
+        return rentalTypes;
+    }
+
+    public static String[] getRentalStatus() {
+        return rentalStatus;
+    }
+
+    public static String[] getGenres() {
+        return genres;
     }
 }

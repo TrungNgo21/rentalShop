@@ -1,21 +1,32 @@
 package com.example.officialjavafxproj.Controller;
 
 import DataAccess.DataAccess;
+import FileLocation.FileLocation;
 import Service.UserServices;
 import com.example.officialjavafxproj.Utils.SceneController;
 import com.example.officialjavafxproj.Utils.ToastBuilder;
 import com.github.plushaze.traynotification.notification.Notifications;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginControllers {
+public class LoginControllers implements Initializable {
+
+    @FXML
+    private ImageView loginPanel;
     @FXML
     private BorderPane borderPane;
     @FXML
@@ -45,7 +56,7 @@ public class LoginControllers {
         SceneController sceneController = new SceneController();
         if(service.login(usernameTextField.getText(), passwordField.getText())){
             if(new UserServices().getCurrentUser().getUserId().equals("ADMIN")){
-                sceneController.switchScene(event, "../Pages/adminViewProduct.fxml");
+                sceneController.switchScene(event, "../Pages/homepageAdmin.fxml");
             }
             else {
                 sceneController.switchScene(event, "../Pages/userProfile.fxml");
@@ -74,5 +85,19 @@ public class LoginControllers {
         DataAccess.transferAllData();
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.close();
+    }
+
+    public void loadPanelImage(){
+        try {
+            Image image = new Image(new FileInputStream(new FileLocation().getImageDir() + "/Public/headerIcon.jpg"), 240, 400, false, false);
+            loginPanel.setImage(image);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadPanelImage();
     }
 }

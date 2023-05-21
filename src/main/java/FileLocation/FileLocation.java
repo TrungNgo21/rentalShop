@@ -5,6 +5,7 @@ public class FileLocation {
 
     private final String workingDir = System.getProperty("user.dir");
 
+    private final String revenueDir = "src/main/java/DataFile/StoreRevenue.csv";
     private final String imageDir = "src/main/resources/com/example/officialjavafxproj/Image/";
 
     private final String AdminFileDir = "src/main/java/DataFile/Admin.csv";
@@ -45,6 +46,10 @@ public class FileLocation {
 
     public String getWorkingDir() {
         return workingDir;
+    }
+
+    public String getRevenueDir() {
+        return revenueDir;
     }
 
     public String getImageDir() {
