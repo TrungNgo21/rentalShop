@@ -80,8 +80,8 @@ public class HomePageControllers implements Initializable {
                     column = 0;
                     ++row;
                 }
-                productsGridDisplay.setHgap(10);
-                productsGridDisplay.setVgap(10);
+                productsGridDisplay.setHgap(15);
+                productsGridDisplay.setVgap(15);
                 productsGridDisplay.add(productItem, column++, row);
             } catch (IOException e) {
                 throw new RuntimeException(e);

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
@@ -9,25 +11,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="165.0" maxWidth="370.0" onMouseClicked="#onProductClicked" prefHeight="165.0" prefWidth="370.0" style="-fx-border-color: #ccc; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.TopProductComponentControllers">
+<AnchorPane maxHeight="235.0" maxWidth="374.0" onMouseClicked="#onProductClicked" prefHeight="149.0" prefWidth="374.0" style="-fx-border-color: #000; -fx-border-width: 2; -fx-border-radius: 15;" stylesheets="@../component.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.TopProductComponentControllers">
    <children>
-      <HBox prefHeight="165.0" prefWidth="370.0">
+      <HBox alignment="CENTER" prefHeight="149.0" prefWidth="370.0" stylesheets="@../component.css">
          <children>
             <ImageView fx:id="productViewDisplay" fitHeight="140.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
-                  <Insets left="12.0" right="10.0" top="16.5" />
+                  <Insets left="12.0" right="10.0" top="15.0" />
                </HBox.margin>
             </ImageView>
             <VBox prefHeight="165.0" prefWidth="220.0">
                <children>
-                  <Label fx:id="productTitleDisplay" prefHeight="89.0" prefWidth="208.0" style="-fx-wrap-text: true;" text="Seikiro: HHahaahaaahahha">
+                  <Label fx:id="productTitleDisplay" prefHeight="89.0" prefWidth="208.0" style="-fx-wrap-text: true;" text="Seikiro: HHahaahaaahahha" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="productPriceDisplay" prefHeight="41.0" prefWidth="208.0" text="99999">
+                  <Label fx:id="productPriceDisplay" prefHeight="41.0" prefWidth="208.0" text="99999" textFill="WHITE">
                      <graphic>
-                        <Label text="Price: $">
+                        <Label text="Price: $" textFill="WHITE">
                            <font>
                               <Font name="Arial Bold Italic" size="16.0" />
                            </font>
@@ -39,13 +41,13 @@
                   </Label>
                   <HBox prefHeight="41.0" prefWidth="208.0">
                      <children>
-                        <Label fx:id="productStatusDisplay" prefHeight="35.0" prefWidth="100.0" text="AVAILABLE">
+                        <Label fx:id="productStatusDisplay" prefHeight="35.0" prefWidth="100.0" text="AVAILABLE" textFill="WHITE">
                            <font>
                               <Font name="Arial Bold Italic" size="16.0" />
                            </font>
                         </Label>
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Label fx:id="productLoanDisplay" prefHeight="35.0" prefWidth="100.0" text="1-WEEK">
+                        <Label fx:id="productLoanDisplay" prefHeight="35.0" prefWidth="100.0" text="1-WEEK" textFill="WHITE">
                            <font>
                               <Font name="Arial Bold Italic" size="16.0" />
                            </font>
@@ -55,6 +57,16 @@
                </children>
             </VBox>
          </children>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </HBox>
    </children>
+   <styleClass>
+      <String fx:value="shadow" />
+      <String fx:value="rounded_box" />
+   </styleClass>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </AnchorPane>
