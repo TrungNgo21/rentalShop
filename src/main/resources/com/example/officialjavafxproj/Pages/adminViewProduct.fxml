@@ -26,7 +26,7 @@
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#addProductButton" prefHeight="48.0" prefWidth="151.0" text="Add Product" />
                </children>
             </HBox>
-                <ScrollPane prefHeight="614.0" prefWidth="701.0">
+                <ScrollPane prefHeight="614.0" prefWidth="701.0" stylesheets="@../styles.css">
                     <content>
                         <GridPane fx:id="gridPane" prefHeight="40.0" prefWidth="257.0" style="-fx-padding: 20px;" />
                     </content>
