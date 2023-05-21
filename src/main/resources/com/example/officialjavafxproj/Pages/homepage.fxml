@@ -27,7 +27,7 @@
                         <Font name="Arial Bold" size="24.0" />
                      </font>
                   </Label>
-                  <ScrollPane prefHeight="229.0" prefWidth="1051.0">
+                  <ScrollPane prefHeight="229.0" prefWidth="1051.0" stylesheets="@../styles.css">
                      <VBox.margin>
                         <Insets top="12.0" />
                      </VBox.margin>
@@ -44,7 +44,7 @@
                         <Font name="Arial Bold" size="24.0" />
                      </font>
                   </Label>
-                  <ScrollPane prefHeight="600.0" prefWidth="1051.0">
+                  <ScrollPane prefHeight="600.0" prefWidth="1051.0" stylesheets="@../styles.css">
                      <VBox.margin>
                         <Insets top="12.0" />
                      </VBox.margin>
