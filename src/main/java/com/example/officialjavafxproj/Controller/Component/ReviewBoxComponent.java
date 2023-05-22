@@ -39,7 +39,6 @@ public class ReviewBoxComponent implements Initializable {
                         ReviewComponent reviewComponent = reviewsLoader.getController();
                         reviewComponent.loadReviewElement(feedback);
                         reviewDisplay.getChildren().add(review);
-
                     }
                 }
             }
