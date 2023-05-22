@@ -8,7 +8,7 @@
 
 <VBox prefHeight="273.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.ReviewBoxComponent">
     <children>
-        <Label prefHeight="35.0" prefWidth="345.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Comments: ">
+        <Label fx:id="commentsNumDisplay" prefHeight="35.0" prefWidth="345.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="3">
             <font>
                 <Font name="Arial Bold" size="15.0" />
             </font>
@@ -18,6 +18,16 @@
             <padding>
                 <Insets left="5.0" />
             </padding>
+         <graphic>
+            <Label prefHeight="35.0" prefWidth="95.0" text="Comments: ">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+         </graphic>
         </Label>
         <ScrollPane prefHeight="238.0" prefWidth="344.0" stylesheets="@../styles.css">
             <content>

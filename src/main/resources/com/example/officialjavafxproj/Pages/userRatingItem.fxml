@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.UserRatingControllers">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.UserRatingControllers">
    <top>
       <AnchorPane fx:id="navbarPane" prefHeight="80.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
    </top>
@@ -32,17 +32,36 @@
                      <children>
                         <VBox prefHeight="273.0" prefWidth="325.0">
                            <children>
-                              <Label prefHeight="35.0" prefWidth="345.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Ratings: ">
-                                 <font>
-                                    <Font name="Arial Bold" size="15.0" />
-                                 </font>
+                              <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="325.0">
+                                 <children>
+                                    <Label prefHeight="34.0" prefWidth="225.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="Ratings:">
+                                       <font>
+                                          <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="averageStarDisplay" prefHeight="34.0" prefWidth="80.0" style="-fx-border-color: #ccc; -fx-border-width: 0 0 2 0;" text="4.5">
+                                       <font>
+                                          <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="5.0" />
+                                       </padding>
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../Image/Public/star-removebg-preview.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                 </children>
                                  <VBox.margin>
-                                    <Insets right="10.0" top="16.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
-                                 <padding>
-                                    <Insets left="5.0" />
-                                 </padding>
-                              </Label>
+                              </HBox>
                               <AnchorPane fx:id="ratingChartDisplay" prefHeight="238.0" prefWidth="325.0" />
                            </children>
                         </VBox>
@@ -155,7 +174,7 @@
                                     <ChoiceBox fx:id="ratingSelection" prefWidth="150.0" />
                                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../Image/Public/star.png" />
+                                          <Image url="@../Image/Public/star-removebg-preview.png" />
                                        </image>
                                        <HBox.margin>
                                           <Insets left="10.0" />
@@ -170,7 +189,7 @@
                                           <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="commentsTextField" prefHeight="114.0" prefWidth="247.0" />
+                                    <TextField fx:id="commentsTextField" alignment="TOP_LEFT" prefHeight="114.0" prefWidth="247.0" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="69.0" prefWidth="527.0" style="-fx-background-color: transparent;">
@@ -193,6 +212,9 @@
                </HBox.margin>
             </VBox>
          </children>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
       </HBox>
    </center>
 

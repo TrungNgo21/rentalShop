@@ -71,6 +71,10 @@ public class ProductDetailsControllers implements Initializable {
     @FXML
     private Button addToCartButton;
 
+
+    @FXML
+    private Label averageStarDisplay;
+
     public void addNavigationBar(){
         try {
             navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
@@ -83,7 +87,7 @@ public class ProductDetailsControllers implements Initializable {
         Product currentProduct = new ProductService().getTargetProduct();
         String imageDir = new FileLocation().getImageDir() + currentProduct.getImageLocation();
         try {
-            Image productImage = new Image(new FileInputStream(imageDir), 400, 200, false, false);
+            Image productImage = new Image(new FileInputStream(imageDir), 350, 200, false, false);
             productDetailImage.setImage(productImage);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -95,6 +99,7 @@ public class ProductDetailsControllers implements Initializable {
         productDetailGenreDisplay.setText(currentProduct.getGenre());
         productDetailLoanTypeDisplay.setText(currentProduct.getLoanType());
         productDetailStockDisplay.setText(String.valueOf(currentProduct.getNumOfCopies()));
+        averageStarDisplay.setText(String.format("%.1f", new FeedbackService().getAverageRatings(new ProductService().getTargetProduct().getId())));
         productDetailQuantityDisplay.setText("2");
         productDetailQuantityDisplay.textProperty().addListener((observable, oldValue, newValue) ->{
             if(newValue.equals(productDetailStockDisplay.getText())){

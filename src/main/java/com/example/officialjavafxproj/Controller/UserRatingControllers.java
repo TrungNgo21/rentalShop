@@ -66,6 +66,9 @@ public class UserRatingControllers implements Initializable {
     private Label productDetailYearDisplay;
 
     @FXML
+    private Label averageStarDisplay;
+
+    @FXML
     private ChoiceBox<Integer> ratingSelection;
 
     @FXML
@@ -118,6 +121,7 @@ public class UserRatingControllers implements Initializable {
         productDetailGenreDisplay.setText(currentProduct.getGenre());
         productDetailLoanTypeDisplay.setText(currentProduct.getLoanType());
         productDetailStockDisplay.setText(String.valueOf(currentProduct.getNumOfCopies()));
+        averageStarDisplay.setText(String.format("%.1f", new FeedbackService().getAverageRatings(new ProductService().getTargetProduct().getId())));
     }
 
     public void addReviewBox(){
