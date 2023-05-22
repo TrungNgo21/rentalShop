@@ -142,7 +142,7 @@ public class AdminService implements Services<User> {
         DataAccess.getSortedUsers().clear();
         DataAccess.setSortedUsers(temp);
     }
-    public static User getSelectedUser(){
+    public  User getSelectedUser(){
         return DataAccess.getSelectedCustomer();
     }
 
