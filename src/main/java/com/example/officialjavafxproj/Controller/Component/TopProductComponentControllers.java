@@ -2,6 +2,7 @@ package com.example.officialjavafxproj.Controller.Component;
 
 import FileLocation.FileLocation;
 import Model.Product.Product;
+import Service.FeedbackService;
 import Service.ProductService;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.fxml.FXML;
@@ -14,12 +15,17 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static java.lang.Double.NaN;
+
 public class TopProductComponentControllers {
 
     @FXML
     private AnchorPane topProductPane;
     @FXML
     private Label productTitleDisplay;
+
+    @FXML
+    private Label averageRatingDisplay;
     @FXML
     private Label productPriceDisplay;
 
@@ -35,6 +41,7 @@ public class TopProductComponentControllers {
 
 
     public void loadTopProductData(Product product){
+        double rating = new FeedbackService().getAverageRatings(product.getId());
         String imageDir = new FileLocation().getImageDir() + product.getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 140, 140, false, false);
@@ -46,6 +53,7 @@ public class TopProductComponentControllers {
         productPriceDisplay.setText(String.valueOf(product.getRentalFee()));
         productStatusDisplay.setText(product.getStatus());
         productLoanDisplay.setText(product.getLoanType());
+        averageRatingDisplay.setText(!Double.isNaN(rating) ? String.format("%.1f", rating) : "0");
         productId = product.getId();
 
     }

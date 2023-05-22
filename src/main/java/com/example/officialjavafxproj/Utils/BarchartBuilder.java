@@ -60,6 +60,7 @@ public class BarchartBuilder {
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             for(String[] dataElement : data){
                 if(dataElement[0].equals(genre)){
+                    series.setName(dataElement[0]);
                     series.getData().add(new XYChart.Data<>(dataElement[2], Double.parseDouble(dataElement[1]), dataElement[0]));
                 }
             }

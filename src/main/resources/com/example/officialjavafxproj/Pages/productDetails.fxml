@@ -175,10 +175,13 @@
                   </VBox>
                </children>
                <HBox.margin>
-                  <Insets top="20.0" />
+                  <Insets top="25.0" />
                </HBox.margin>
             </VBox>
          </children>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
       </HBox>
    </center>
 

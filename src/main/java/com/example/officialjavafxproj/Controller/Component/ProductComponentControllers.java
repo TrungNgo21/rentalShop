@@ -2,6 +2,7 @@ package com.example.officialjavafxproj.Controller.Component;
 
 import FileLocation.FileLocation;
 import Model.Product.Product;
+import Service.FeedbackService;
 import Service.ProductService;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.fxml.FXML;
@@ -17,6 +18,9 @@ public class ProductComponentControllers {
 
     @FXML
     private ImageView productImageView;
+
+    @FXML
+    private Label averageRatingDisplay;
     @FXML
     private Label productTitleDisplay;
     @FXML
@@ -32,6 +36,7 @@ public class ProductComponentControllers {
     private String productId;
 
     public void loadProductItemData(Product product){
+        double rating = new FeedbackService().getAverageRatings(product.getId());
         String imageDir = new FileLocation().getImageDir() + product.getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 202, 208, false, false);
@@ -43,6 +48,7 @@ public class ProductComponentControllers {
         productPriceDisplay.setText(String.valueOf(product.getRentalFee()));
         productLoanDisplay.setText(product.getLoanType());
         productStatusDisplay.setText(product.getStatus());
+        averageRatingDisplay.setText(!Double.isNaN(rating) ? String.format("%.1f", rating) : "0");
         productId = product.getId();
 
     }
