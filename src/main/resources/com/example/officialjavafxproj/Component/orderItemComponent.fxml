@@ -9,11 +9,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="600.0" style="-fx-border-color: #ccc; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.OrderItemControllers">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="209.0" prefWidth="600.0" style="-fx-border-color: #ccc; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.OrderItemControllers">
    <children>
-      <ImageView fx:id="productOrderImage" fitHeight="175.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="productOrderImage" fitHeight="205.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <VBox alignment="TOP_RIGHT" prefHeight="176.0" prefWidth="403.0" style="-fx-padding: 5;">
          <children>
+            <HBox prefHeight="40.0" prefWidth="386.0">
+               <children>
+                  <Label fx:id="itemDueDisplay" prefHeight="36.0" prefWidth="221.0" text="27/05/2022">
+                     <graphic>
+                        <Label alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="40.0" text="Due: ">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </graphic>
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="itemStatusDisplay" prefHeight="36.0" prefWidth="238.0">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <HBox prefHeight="62.0" prefWidth="352.0">
                <children>
                   <Label fx:id="productOrderTitleDisplay" prefHeight="62.0" prefWidth="451.0" style="-fx-wrap-text: true;" text="Sekiro: Shadow Die Twice">
@@ -78,7 +99,7 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                      <graphic>
-                        <Label fx:id="productCartTitleDisplay21111" prefHeight="37.0" prefWidth="95.0" style="-fx-wrap-text: true;" text="\$">
+                        <Label prefHeight="37.0" prefWidth="95.0" style="-fx-wrap-text: true;" text="\$">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>

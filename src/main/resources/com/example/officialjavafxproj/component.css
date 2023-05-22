@@ -12,3 +12,13 @@
     -fx-background-radius: 15;
     -fx-background-color: linear-gradient(to right, rgba(12,19,79,0.9), #146C94 );
 }
+
+.rounded_box__v3{
+    -fx-background-radius: 15;
+    -fx-background-color: linear-gradient(to left, rgba(12,19,79,0.9), #146C94 );
+}
+
+.rounded_box__v4{
+    -fx-background-radius: 15;
+    -fx-background-color: linear-gradient(to right, rgba(35,40,48,0.7), #34303D );
+}

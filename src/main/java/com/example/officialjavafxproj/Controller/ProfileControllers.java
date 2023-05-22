@@ -103,7 +103,7 @@ public class ProfileControllers implements Initializable {
             }else{
                 VIPAccount currentUserAccount = (VIPAccount) currentCustomer.getAccount();
                 accountPointsDisplay.setText(String.valueOf(currentUserAccount.getPoints()));
-                noFreeToBorrowDisplay.setText(currentUserAccount.getPoints() >= 100 ? "1" : "Points must be over 100 to borrow free");
+                noFreeToBorrowDisplay.setText(currentUserAccount.getPoints() > 100 ? "1" : "Points must > 100");
             }
         }
     }

@@ -59,4 +59,5 @@ public class Order {
     public void addOrderDetailsToOrder(OrderDetail detail){
         orders.add(detail);
     }
+
 }

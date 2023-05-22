@@ -131,7 +131,7 @@ public class ProductDetailsControllers implements Initializable {
                     .withMode(Notifications.SUCCESS)
                     .show();
         }
-        new SceneController().switchScene(event, "../Pages/userCart.fxml");
+        new SceneController().switchScene(event, "../Pages/homepage.fxml");
 
     }
 

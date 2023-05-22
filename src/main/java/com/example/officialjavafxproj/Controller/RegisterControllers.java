@@ -160,7 +160,7 @@ public class RegisterControllers {
 
     public void onUsernameInfoButton(){
         Alert usernameInfo = AlertBuilder.builder()
-                .withType(Alert.AlertType.CONFIRMATION)
+                .withType(Alert.AlertType.INFORMATION)
                 .withHeaderText("Username Right Format")
                 .withBodyText("- Username must have more than 12 characters\n " +
                         "- No whitespaces accepted")
@@ -170,7 +170,7 @@ public class RegisterControllers {
 
     public void onPasswordInfoButton(){
         Alert usernameInfo = AlertBuilder.builder()
-                .withType(Alert.AlertType.CONFIRMATION)
+                .withType(Alert.AlertType.INFORMATION)
                 .withHeaderText("Password Right Format")
                 .withBodyText("- At least one uppercase letter\n" +
                         "- At least one lowercase letter\n" +
