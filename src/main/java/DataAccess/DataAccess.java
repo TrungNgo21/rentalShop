@@ -2,6 +2,7 @@ package DataAccess;
 
 import Middleware.DateMiddleware;
 import Model.Account.*;
+import Model.Form.Feedback;
 import Model.Order.Cart;
 import Model.Order.Order;
 import Model.Order.OrderDetail;
@@ -13,6 +14,7 @@ import Model.User.Admin;
 import Model.User.Customer;
 import Model.User.User;
 import FileLocation.FileLocation;
+import Service.FeedbackService;
 import Service.UserServices;
 import com.example.officialjavafxproj.Utils.DateComparator;
 
@@ -37,6 +39,8 @@ public class DataAccess {
     private static HashMap<LocalDate, Double> revenueDaily = new HashMap<>();
 
     private static final ArrayList<Cart> carts = new ArrayList<>();
+
+    private static final ArrayList<Feedback> feedbacks = new ArrayList<>();
     private static final HashMap<String, Product> products = new HashMap<>();
 
     private static final ArrayList<OrderDetail> orderDetails = new ArrayList<>();
@@ -89,6 +93,41 @@ public class DataAccess {
         } catch (IOException err) {
             err.printStackTrace();
         }
+    }
+
+    private static void loadAllProductFeedback(){
+        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getProductFeedbackDir());
+        for(Map.Entry<String, Product> product : products.entrySet()){
+            for(String[] feedbackData : Objects.requireNonNull(dataFile)){
+                Feedback feedback = Feedback.builder()
+                        .withCustomerId(feedbackData[0])
+                        .withProductId(feedbackData[1])
+                        .withRating(Integer.parseInt(feedbackData[2]))
+                        .withFeedbackContent(feedbackData[3])
+                        .withReviewDate(LocalDate.parse(feedbackData[4], new DateMiddleware().dateParser()))
+                        .build();
+                if(product.getKey().equals(feedbackData[1])){
+                    product.getValue().addFeedback(feedback);
+                }
+            }
+        }
+
+        for(Map.Entry<String, User> user : users.entrySet()){
+            for(String[] feedbackData : Objects.requireNonNull(dataFile)){
+                Feedback feedback = Feedback.builder()
+                        .withCustomerId(feedbackData[0])
+                        .withProductId(feedbackData[1])
+                        .withRating(Integer.parseInt(feedbackData[2]))
+                        .withFeedbackContent(feedbackData[3])
+                        .withReviewDate(LocalDate.parse(feedbackData[4], new DateMiddleware().dateParser()))
+                        .build();
+                if(user.getKey().equals(feedbackData[0])){
+                    user.getValue().addReview(feedback);
+                    feedbacks.add(feedback);
+                }
+            }
+        }
+
     }
 
     private static void loadAllUsersNoAccounts() {
@@ -252,6 +291,27 @@ public class DataAccess {
         }
     }
 
+    private static void transferAllProductFeedback(){
+        try {
+            FileWriter writer = new FileWriter(new FileLocation().getProductFeedbackDir(), false);
+            for (Map.Entry<String, Product> product : products.entrySet()) {
+                if(product.getValue().getItemsFeedback().size() == 0){
+                    continue;
+                }
+                for(Feedback feedback : product.getValue().getItemsFeedback()){
+                    writer.write(feedback.getCustomerId() + ";"
+                            + feedback.getProductId() + ";"
+                            + feedback.getRating() + ";"
+                            + feedback.getFeedBackContent() + ";"
+                            + new DateMiddleware().dateAfterFormat(feedback.getReviewDate()) + "\n");
+                }
+            }
+            writer.close();
+        } catch (IOException err) {
+            err.printStackTrace();
+        }
+    }
+
     private static void transferAllOrderDetails() {
         try {
             FileWriter writer = new FileWriter(new FileLocation().getOrderDetailFileDir(), false);
@@ -322,6 +382,7 @@ public class DataAccess {
         loadAllUsersNoAccounts();
         loadAllAccounts();
         loadAllProducts();
+        loadAllProductFeedback();
         loadAllOrderDetails();
         loadAllOrdersNoDetail();
         loadAllOrders();
@@ -331,6 +392,7 @@ public class DataAccess {
     public static void transferAllData() {
         transferAllUsers();
         transferAllProduct();
+        transferAllProductFeedback();
         transferAllAccounts();
         transferAllOrderDetails();
         transferAllCarts();
@@ -447,5 +509,13 @@ public class DataAccess {
             total += revenue.getValue();
         }
         return total;
+    }
+
+    public static ArrayList<Feedback> getFeedbacks(){
+        return feedbacks;
+    }
+
+    public static void addFeedback(Feedback feedback){
+        feedbacks.add(feedback);
     }
 }

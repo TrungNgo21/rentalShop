@@ -2,6 +2,7 @@ package com.example.officialjavafxproj.Utils;
 
 import Middleware.DateMiddleware;
 import Model.Account.Account;
+import Model.Form.Feedback;
 import Model.Product.Product;
 
 import java.io.BufferedReader;
@@ -54,9 +55,9 @@ public class ChartDataController {
         dataFile.add(new String[]{"RegularAccount", String.valueOf(typeNum[1])});
         dataFile.add(new String[]{"VIPAccount", String.valueOf(typeNum[2])});
 
-        for(String[] string : dataFile){
-            System.out.println(Arrays.asList(string));
-        }
+//        for(String[] string : dataFile){
+//            System.out.println(Arrays.asList(string));
+//        }
 
         return dataFile;
     }
@@ -66,6 +67,32 @@ public class ChartDataController {
        for(Map.Entry<LocalDate, Double> revenueDaily : revenue.entrySet()){
            dataFile.add(new String[]{revenueDaily.getKey().toString(), String.valueOf(revenueDaily.getValue())});
        }
+        return dataFile;
+    }
+
+    public static ArrayList<String[]> getChartRating(ArrayList<Feedback> feedbacks, String productId){
+        ArrayList<String[]> dataFile = new ArrayList<>();
+        int[] starNum = {0, 0, 0, 0, 0};
+        for(Feedback feedback : feedbacks){
+            if(feedback.getProductId().equals(productId)){
+                switch (feedback.getRating()){
+                    case 1 ->  starNum[0]++;
+                    case 2 -> starNum[1]++;
+                    case 3 ->  starNum[2]++;
+                    case 4 -> starNum[3]++;
+                    case 5 -> starNum[4]++;
+                }
+            }
+        }
+        dataFile.add(new String[]{"1", String.valueOf(starNum[0])});
+        dataFile.add(new String[]{"2", String.valueOf(starNum[1])});
+        dataFile.add(new String[]{"3", String.valueOf(starNum[2])});
+        dataFile.add(new String[]{"4", String.valueOf(starNum[3])});
+        dataFile.add(new String[]{"5", String.valueOf(starNum[4])});
+//        for(String[] string : dataFile){
+//            System.out.println(Arrays.asList(string));
+//        }
+
         return dataFile;
     }
 
