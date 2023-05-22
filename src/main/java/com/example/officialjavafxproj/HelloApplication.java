@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         DataAccess.loadAllData();
         stage.initStyle(StageStyle.UNDECORATED);
-        sceneSwitcher.setCurrentScene(stage,"../hello-view.fxml");
+        sceneSwitcher.setCurrentScene(stage,"../Pages/adminViewCustomers.fxml");
     }
 
     public static void main(String[] args) {

@@ -81,9 +81,9 @@
          </children></VBox>
    </left>
    <center>
-      <VBox prefHeight="568.0" prefWidth="771.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="503.0" prefWidth="850.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane prefHeight="571.0" prefWidth="1051.0">
+            <ScrollPane prefHeight="505.0" prefWidth="1050.0">
                <content>
                   <GridPane fx:id="gridPane" gridLinesVisible="true" prefHeight="32.0" prefWidth="31.0" style="-fx-padding: 20px;" />
                </content>
@@ -92,6 +92,6 @@
       </VBox>
    </center>
    <bottom>
-      <AnchorPane fx:id="footerPane" prefHeight="100.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="footerPane" prefHeight="117.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
