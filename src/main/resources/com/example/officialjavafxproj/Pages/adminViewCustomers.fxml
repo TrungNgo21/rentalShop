@@ -14,12 +14,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.AdminViewUserControllers">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.AdminViewUserControllers">
    <top>
       <AnchorPane fx:id="navbarPane" prefHeight="80.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
    </top>
    <left>
-      <VBox prefHeight="711.0" prefWidth="229.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="551.0" prefWidth="230.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="195.0" text="Filter By Type:">
                <font>
@@ -83,7 +83,7 @@
    <center>
       <VBox prefHeight="568.0" prefWidth="771.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane prefHeight="571.0" prefWidth="571.0">
+            <ScrollPane prefHeight="571.0" prefWidth="1051.0">
                <content>
                   <GridPane fx:id="gridPane" gridLinesVisible="true" prefHeight="32.0" prefWidth="31.0" style="-fx-padding: 20px;" />
                </content>
@@ -95,4 +95,3 @@
       <AnchorPane fx:id="footerPane" prefHeight="100.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
-
