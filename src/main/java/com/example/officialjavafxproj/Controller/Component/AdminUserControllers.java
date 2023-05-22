@@ -33,7 +33,7 @@ public class AdminUserControllers {
     private Button viewButton;
     private String userID;
 
-    public void loadDisplayUser(Customer user) {
+    public void loadDisplayUser(User user, boolean show) {
         String imageDir = new FileLocation().getImageDir() + user.getImageLocation();
         try {
             Image userImage = new Image(new FileInputStream(imageDir), 200, 175, false, false);
@@ -48,6 +48,12 @@ public class AdminUserControllers {
         userPhoneDisplay.setText(user.getPhoneNum());
         userAddressDisplay.setText(user.getAccount().getAccountType());
         userID = user.getUserId();
+        if(show) {
+            viewButton.setVisible(true);
+        }
+        else {
+            viewButton.setVisible(false);
+        }
     }
 
     public void onViewUserProfileButton(ActionEvent event) throws IOException {

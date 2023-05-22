@@ -1,10 +1,12 @@
 package com.example.officialjavafxproj.Controller;
 
+import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Model.Account.GuestAccount;
 import Model.Account.RegularAccount;
 import Model.Account.VIPAccount;
 import Model.User.Customer;
+import Model.User.User;
 import Service.AdminService;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.event.ActionEvent;
@@ -74,7 +76,7 @@ public class AdminViewProfileControllers implements Initializable {
     public void loadUserData() {
         AdminService adminService = new AdminService();
         FileLocation imageDir = new FileLocation();
-        Customer selectedCustomer = (Customer) AdminService.getSelectedUser();
+        User selectedCustomer = DataAccess.getSelectedCustomer();
         Image selectedUserProfileImg = null;
         String profileImgUrl = imageDir.getImageDir() + selectedCustomer.getImageLocation();
         try {

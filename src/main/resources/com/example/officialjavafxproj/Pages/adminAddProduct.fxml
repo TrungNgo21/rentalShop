@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.AdminEditProductController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.AdminAddProductController">
     <children>
         <AnchorPane fx:id="adminNavbar" prefHeight="80.0" prefWidth="1280.0" />
         <HBox layoutX="143.0" layoutY="114.0" prefHeight="420.0" prefWidth="1104.0">
@@ -21,15 +21,12 @@
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                     <children>
                         <ImageView fx:id="productImage" fitHeight="338.0" fitWidth="400.0" layoutX="5.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Image/Product/I000-1999.jpg" />
-                            </image>
                         </ImageView>
                     </children>
                 </AnchorPane>
                 <VBox prefHeight="420.0" prefWidth="753.0" style="-fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5 0 0 5;">
                     <children>
-                        <Label prefHeight="71.0" prefWidth="644.0" style="-fx-border-width: 0 0 2 0; -fx-border-color: #ccc;" text="Edit Product">
+                        <Label prefHeight="71.0" prefWidth="644.0" style="-fx-border-width: 0 0 2 0; -fx-border-color: #ccc;" text="Add Product">
                             <font>
                                 <Font size="36.0" />
                             </font>
@@ -60,12 +57,12 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="561.0">
                                     <children>
-                                        <Label prefHeight="23.0" prefWidth="163.0" text="Price">
+                                        <Label prefHeight="23.0" prefWidth="155.0" text="Price">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="priceTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="451.0">
+                                        <TextField fx:id="priceTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="462.0">
                                             <HBox.margin>
                                                 <Insets />
                                             </HBox.margin>
@@ -82,12 +79,12 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="642.0">
                                     <children>
-                                        <Label prefHeight="23.0" prefWidth="166.0" text="NumOfCopies">
+                                        <Label prefHeight="23.0" prefWidth="157.0" text="NumOfCopies">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="copiesTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="445.0">
+                                        <TextField fx:id="copiesTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="460.0">
                                             <HBox.margin>
                                                 <Insets />
                                             </HBox.margin>
@@ -104,12 +101,12 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="642.0">
                            <children>
-                              <Label prefHeight="23.0" prefWidth="166.0" text="PublishedYear">
+                              <Label prefHeight="23.0" prefWidth="159.0" text="PublishedYear">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="publishedYearTextField" prefHeight="34.0" prefWidth="445.0">
+                              <TextField fx:id="publishedYearTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="458.0">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -122,28 +119,28 @@
                         <Label fx:id="publishedYearWarningMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="540.0" />
                      </children>
                   </VBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="115.0" prefWidth="675.0">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="29.0" prefWidth="83.0" text="RentalType">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <ChoiceBox fx:id="rentalTypeChoiceBox" prefHeight="27.0" prefWidth="135.0" />
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="84.0" text="GenreType">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <ChoiceBox fx:id="genreTypeChoiceBox" prefWidth="150.0" />
-                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="77.0" text="LoanType">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <ChoiceBox fx:id="loanTypeChoiceBox" prefHeight="27.0" prefWidth="144.0" />
-                     </children>
-                  </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="115.0" prefWidth="675.0">
+                            <children>
+                                <Label alignment="CENTER" prefHeight="29.0" prefWidth="83.0" text="RentalType">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <ChoiceBox fx:id="rentalTypeChoiceBox" onMouseExited="#setDisableButton" prefHeight="27.0" prefWidth="135.0" />
+                                <Label alignment="CENTER" prefHeight="17.0" prefWidth="84.0" text="GenreType">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <ChoiceBox fx:id="genreTypeChoiceBox" onMouseExited="#setDisableButton" prefWidth="150.0" />
+                                <Label alignment="CENTER" prefHeight="26.0" prefWidth="77.0" text="LoanType">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <ChoiceBox fx:id="loanTypeChoiceBox" onMouseExited="#setDisableButton" prefHeight="27.0" prefWidth="144.0" />
+                            </children>
+                        </HBox>
                     </children>
                     <padding>
                         <Insets left="5.0" right="5.0" />
@@ -165,7 +162,7 @@
                     <children>
                         <Button fx:id="resetToBeginButton" alignment="CENTER" layoutX="626.0" layoutY="19.0" mnemonicParsing="false" onAction="#onResetToBegin" prefHeight="26.0" prefWidth="134.0" text="Reset To Begin" />
                         <Button fx:id="saveButton" alignment="CENTER" layoutX="469.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSaveInformation" prefHeight="26.0" prefWidth="134.0" text="Save" />
-                  <Button fx:id="backButton" layoutX="300.0" layoutY="19.0" mnemonicParsing="false" onAction="#back" prefHeight="27.0" prefWidth="134.0" text="Back" />
+                        <Button fx:id="backButton" layoutX="300.0" layoutY="19.0" mnemonicParsing="false" onAction="#back" prefHeight="27.0" prefWidth="134.0" text="Back" />
                     </children>
                 </AnchorPane>
             </children>

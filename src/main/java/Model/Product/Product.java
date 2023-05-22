@@ -38,6 +38,18 @@ public abstract class Product {
         this.imageLocation = imageLocation;
     }
 
+
+    public void setPublishedYear(String publishedYear) {
+        this.publishedYear = publishedYear;
+    }
+
+    public static String[] getLoanTypes() {return loanTypes;}
+
+    public static String[] getRentalTypes() {return rentalTypes;}
+
+    public static String[] getGenres() {return genres;}
+
+
     public String getPublishedYear() {
         return publishedYear;
     }
@@ -130,19 +142,5 @@ public abstract class Product {
                 '}';
     }
 
-    public static String[] getLoanTypes() {
-        return loanTypes;
-    }
 
-    public static String[] getRentalTypes() {
-        return rentalTypes;
-    }
-
-    public static String[] getRentalStatus() {
-        return rentalStatus;
-    }
-
-    public static String[] getGenres() {
-        return genres;
-    }
 }
