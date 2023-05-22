@@ -1,5 +1,8 @@
 package Model.Product;
 
+import Model.Form.Feedback;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class Product {
@@ -19,6 +22,8 @@ public abstract class Product {
 
     private int stock;
     private String imageLocation;
+
+    private ArrayList<Feedback> itemsFeedback = new ArrayList<>();
 
     public Product(String id, String title, String rentalType, String genre, String publishedYear, int numOfCopies, double rentalFee, String loanType, String status, String imageLocation) {
         this.id = id;
@@ -108,6 +113,14 @@ public abstract class Product {
     public void setLoanType(String loanType) {this.loanType = loanType;}
 
     public void setImageLocation(String imageLocation) {this.imageLocation = imageLocation;}
+
+    public void addFeedback(Feedback feedback){
+        this.itemsFeedback.add(feedback);
+    }
+
+    public ArrayList<Feedback> getItemsFeedback() {
+        return itemsFeedback;
+    }
 
     @Override
     public String toString() {

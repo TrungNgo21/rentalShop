@@ -126,14 +126,6 @@
                   </Label>
                   <HBox alignment="CENTER_RIGHT" prefHeight="43.0" prefWidth="388.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#deleteProduct" prefHeight="40.0" prefWidth="92.0" text="Delete">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                        </Button>
                         <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#editProduct" prefHeight="39.0" prefWidth="127.0" text="Edit Product">
                            <HBox.margin>
                               <Insets right="20.0" />
@@ -144,6 +136,22 @@
                            <font>
                               <Font size="16.0" />
                            </font>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#deleteProduct" prefHeight="40.0" prefWidth="92.0" text="Delete">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#back" prefHeight="39.0" prefWidth="105.0" text="Back">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
                         </Button>
                      </children>
                   </HBox>

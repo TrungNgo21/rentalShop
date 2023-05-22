@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,6 +28,12 @@ import java.util.ResourceBundle;
 public class ProductDetailsControllers implements Initializable {
     @FXML
     private AnchorPane navbarPane;
+
+    @FXML
+    private VBox reviewBoxDisplay;
+
+    @FXML
+    private AnchorPane ratingChartDisplay;
 
     @FXML
     private ImageView productDetailImage;
@@ -76,7 +83,7 @@ public class ProductDetailsControllers implements Initializable {
         Product currentProduct = new ProductService().getTargetProduct();
         String imageDir = new FileLocation().getImageDir() + currentProduct.getImageLocation();
         try {
-            Image productImage = new Image(new FileInputStream(imageDir), 350, 280, false, false);
+            Image productImage = new Image(new FileInputStream(imageDir), 400, 200, false, false);
             productDetailImage.setImage(productImage);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -101,6 +108,21 @@ public class ProductDetailsControllers implements Initializable {
                 decreaseButton.setDisable(false);
             }
         });
+    }
+
+    public void addReviewBox(){
+        try {
+            reviewBoxDisplay.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/reviewBoxComponent.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void addRatingChart(){
+        try {
+            ratingChartDisplay.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/starChartComponent.fxml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void onAddToCartButton(ActionEvent event) throws IOException{
@@ -135,6 +157,10 @@ public class ProductDetailsControllers implements Initializable {
 
     }
 
+    public void onRateItemButton(ActionEvent actionEvent) throws IOException{
+        new SceneController().switchScene(actionEvent, "../Pages/userRatingItem.fxml");
+    }
+
     public void onCheckCartButton(ActionEvent event) throws IOException{
         new SceneController().switchScene(event, "../Pages/userCart.fxml");
     }
@@ -163,5 +189,7 @@ public class ProductDetailsControllers implements Initializable {
         loadProductDetailData();
         setIncreaseButton();
         setAddToCartButton();
+        addRatingChart();
+        addReviewBox();
     }
 }

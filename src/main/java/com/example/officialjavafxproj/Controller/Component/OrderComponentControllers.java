@@ -35,7 +35,7 @@ public class OrderComponentControllers {
     private ImageView orderImage;
 
     public void loadOrderData(Order order){
-        String imageDir = new FileLocation().getImageDir() + "Public/1.png";
+        String imageDir = new FileLocation().getImageDir() + "Public/orderIcon.png";
         try {
             Image image = new Image(new FileInputStream(imageDir), 200, 145, false, false);
             orderImage.setImage(image);

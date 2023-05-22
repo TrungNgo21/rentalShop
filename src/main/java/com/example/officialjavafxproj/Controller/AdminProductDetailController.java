@@ -93,6 +93,9 @@ public class AdminProductDetailController implements Initializable {
                 .withMode(Notifications.SUCCESS)
                 .show();
     }
+    public void back(ActionEvent actionEvent) throws IOException {
+        new SceneController().switchScene(actionEvent,"../Pages/adminViewProduct.fxml");
+    }
 
 
     @Override

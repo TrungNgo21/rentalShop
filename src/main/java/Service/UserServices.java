@@ -47,7 +47,7 @@ public class UserServices implements Services<User> {
 
     @Override
     public User getOne(String userId) {
-        return null;
+        return DataAccess.getAllUsers().get(userId);
     }
 
     @Override
