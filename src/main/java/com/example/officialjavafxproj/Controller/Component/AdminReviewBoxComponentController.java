@@ -25,7 +25,7 @@ public class AdminReviewBoxComponentController implements Initializable {
                 for (Feedback feedback : user.getValue().getReviews()) {
                     if (feedback.getProductId().equals(new ProductService().getTargetProduct().getId())) {
                         FXMLLoader reviewsLoader = new FXMLLoader();
-                        reviewsLoader.setLocation(getClass().getResource("../../Component/adminReviewChartComponent.fxml"));
+                        reviewsLoader.setLocation(getClass().getResource("../../Component/reviewComponent.fxml"));
                         VBox review = reviewsLoader.load();
                         ReviewComponent reviewComponent = reviewsLoader.getController();
                         reviewComponent.loadReviewElement(feedback);
