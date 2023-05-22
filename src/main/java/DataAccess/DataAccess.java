@@ -37,7 +37,7 @@ public class DataAccess {
     private static HashMap<LocalDate, Double> revenueDaily = new HashMap<>();
 
     private static final ArrayList<Cart> carts = new ArrayList<>();
-    private static HashMap<String, Product> products = new HashMap<>();
+    private static final HashMap<String, Product> products = new HashMap<>();
 
     private static final ArrayList<OrderDetail> orderDetails = new ArrayList<>();
 
@@ -413,10 +413,6 @@ public class DataAccess {
 
     public static void setSortedProducts(HashMap<String, Product> sortProducts) {
         sortedProducts = sortProducts;
-    }
-
-    public static void setProducts(HashMap<String, Product> productsList) {
-        products = productsList;
     }
 
     public static HashMap<String, User> getGetSortedUsers() {return sortedUsers;}
