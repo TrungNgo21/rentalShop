@@ -52,7 +52,7 @@ public class AdminViewOrderController implements Initializable {
 
     private void addOrder(HashMap<String, Order> orderList) {
         int column = 0;
-        int row = 1;
+        int row = 0;
         gridPane.getChildren().clear();
         for(Map.Entry<String, Order> order: orderList.entrySet()) {
             try {
@@ -62,13 +62,13 @@ public class AdminViewOrderController implements Initializable {
                 AdminOrderController adminOrderController = loader.getController();
                 adminOrderController.loadDisplayOrder(order.getValue());
                 DataAccess.getAllOrders().add(order.getValue());
-                if(column == 1) {
-                    column = 0;
-                    row++;
-                }
                 gridPane.setHgap(10);
                 gridPane.setVgap(10);
-                gridPane.add(userItem,column,row++);
+                if(column == 0) {
+                    gridPane.add(userItem, column++, row);
+                } else {
+                    gridPane.add(userItem, column--, row++);
+                }
             }
             catch (Exception e){
                 throw new RuntimeException(e);
@@ -79,7 +79,7 @@ public class AdminViewOrderController implements Initializable {
     @FXML
     private void onSearchOrderButton() {
         int column = 0;
-        int row = 1;
+        int row = 0;
         gridPane.getChildren().clear();
         for(Map.Entry<String, Order> order: new OrderAdminService(new DataAccess()).getAll().entrySet()) {
             if(searchOrder.getText().equals(order.getKey())) {
@@ -90,13 +90,9 @@ public class AdminViewOrderController implements Initializable {
                     AdminOrderController adminOrderController = loader.getController();
                     adminOrderController.loadDisplayOrder(order.getValue());
                     DataAccess.getAllOrders().add(order.getValue());
-                    if (column == 1) {
-                        column = 0;
-                        row++;
-                    }
                     gridPane.setHgap(10);
                     gridPane.setVgap(10);
-                    gridPane.add(userItem, column, row++);
+                    gridPane.add(userItem,column,row++);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
