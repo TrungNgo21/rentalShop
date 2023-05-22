@@ -126,7 +126,15 @@
                   </Label>
                   <HBox alignment="CENTER_RIGHT" prefHeight="43.0" prefWidth="388.0">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#editProduct" prefHeight="39.0" prefWidth="127.0" text="Edit Product">
+                        <Button mnemonicParsing="false" onAction="#viewRating" prefHeight="60.0" prefWidth="107.0" text="View Rating">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#editProduct" prefHeight="40.0" prefWidth="115.0" text="Edit Product">
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>

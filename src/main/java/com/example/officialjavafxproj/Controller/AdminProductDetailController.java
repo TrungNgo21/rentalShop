@@ -96,6 +96,11 @@ public class AdminProductDetailController implements Initializable {
     public void back(ActionEvent actionEvent) throws IOException {
         new SceneController().switchScene(actionEvent,"../Pages/adminViewProduct.fxml");
     }
+    public void viewRating(ActionEvent actionEvent) throws IOException{
+        Product currentProduct = new ProductService().getTargetProduct();
+        new ProductService().setTargetProduct(currentProduct);
+        new SceneController().switchScene(actionEvent,"../Pages/adminProductViewRating.fxml");
+    }
 
 
     @Override
