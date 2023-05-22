@@ -1,5 +1,6 @@
 package com.example.officialjavafxproj.Controller.Component;
 
+import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Model.Product.Product;
 import Service.ProductService;
@@ -67,7 +68,4 @@ public class AdminProductController {
         productService.setTargetProduct(currentProduct);
         new SceneController().switchScene(mouseEvent,"../Pages/adminProductDetail.fxml");
     }
-
-
-
 }

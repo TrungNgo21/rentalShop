@@ -57,7 +57,7 @@ public class AdminViewProductController implements Initializable {
             int row = 0;
             ProductService productService = new ProductService();
             gridPane.getChildren().clear();
-            for(Map.Entry<String, Product> product : DataAccess.getAllProducts().entrySet()){
+            for(Map.Entry<String, Product> product : productService.getAll().entrySet()){
                 try {
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("../Component/adminViewProductComponent.fxml"));

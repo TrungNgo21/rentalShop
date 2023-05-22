@@ -253,11 +253,11 @@ public class AdminAddProductController implements Initializable {
                 try {
                     imageThread.start();
                     if (productRentalType.equals("DVD")) {
-                        productService.add(new DVD(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                        productService.add(new DVD(productService.idCreation() + publishedYear, productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
                     } else if (productRentalType.equals("GAME")) {
-                        productService.add(new Game(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                        productService.add(new Game(productService.idCreation() + publishedYear, productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
                     } else {
-                        productService.add(new MRecords(productService.idCreation(), productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                        productService.add(new MRecords(productService.idCreation() + publishedYear, productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
                     }
                     imageThread.join();
                     ToastBuilder.builder()
@@ -277,6 +277,35 @@ public class AdminAddProductController implements Initializable {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        }
+        else {
+            try {
+                imageThread.start();
+                if (productRentalType.equals("DVD")) {
+                    productService.add(new DVD(productService.idCreation() + publishedYear, productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                } else if (productRentalType.equals("GAME")) {
+                    productService.add(new Game(productService.idCreation() + publishedYear, productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                } else {
+                    productService.add(new MRecords(productService.idCreation() + publishedYear, productTitle, productRentalType, productGenre, publishedYear, productCopies, productRentalFee, productLoanType, "AVAILABLE", targetFileDir));
+                }
+                imageThread.join();
+                ToastBuilder.builder()
+                        .withTitle("Add Message")
+                        .withMessage("Add Successfully!!!")
+                        .withMode(Notifications.SUCCESS)
+                        .show();
+                new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
+            } catch (Error err) {
+                ToastBuilder.builder()
+                        .withTitle("Add Message")
+                        .withMessage(err.getMessage())
+                        .withMode(Notifications.ERROR)
+                        .show();
+                imageThread.join();
+                FileController.deleteFile(targetFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

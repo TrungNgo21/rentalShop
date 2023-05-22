@@ -57,12 +57,12 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="561.0">
                                     <children>
-                                        <Label prefHeight="23.0" prefWidth="163.0" text="Price">
+                                        <Label prefHeight="23.0" prefWidth="155.0" text="Price">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="priceTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="451.0">
+                                        <TextField fx:id="priceTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="462.0">
                                             <HBox.margin>
                                                 <Insets />
                                             </HBox.margin>
@@ -79,12 +79,12 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="642.0">
                                     <children>
-                                        <Label prefHeight="23.0" prefWidth="166.0" text="NumOfCopies">
+                                        <Label prefHeight="23.0" prefWidth="157.0" text="NumOfCopies">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="copiesTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="445.0">
+                                        <TextField fx:id="copiesTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="460.0">
                                             <HBox.margin>
                                                 <Insets />
                                             </HBox.margin>
@@ -101,12 +101,12 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="642.0">
                            <children>
-                              <Label prefHeight="23.0" prefWidth="166.0" text="PublishedYear">
+                              <Label prefHeight="23.0" prefWidth="159.0" text="PublishedYear">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="publishedYearTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="445.0">
+                              <TextField fx:id="publishedYearTextField" onKeyReleased="#onFieldReleased" prefHeight="34.0" prefWidth="458.0">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>

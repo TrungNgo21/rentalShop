@@ -1,9 +1,12 @@
 package com.example.officialjavafxproj.Controller;
 
+import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Model.Product.Product;
 import Service.ProductService;
 import com.example.officialjavafxproj.Utils.SceneController;
+import com.example.officialjavafxproj.Utils.ToastBuilder;
+import com.github.plushaze.traynotification.notification.Notifications;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class AdminProductDetailController implements Initializable {
@@ -78,6 +82,16 @@ public class AdminProductDetailController implements Initializable {
         Product currentProduct = new ProductService().getTargetProduct();
         new ProductService().setTargetProduct(currentProduct);
         new SceneController().switchScene(actionEvent, "../Pages/adminEditProduct.fxml");
+    }
+    public void deleteProduct(ActionEvent actionEvent) throws IOException{
+        Product currentProduct = new ProductService().getTargetProduct();
+        new ProductService().delete(currentProduct);
+        new SceneController().switchScene(actionEvent,"../Pages/adminViewProduct.fxml");
+        ToastBuilder.builder()
+                .withTitle("Delete Successfully")
+                .withMessage("The product has been deleted successfully")
+                .withMode(Notifications.SUCCESS)
+                .show();
     }
 
 
