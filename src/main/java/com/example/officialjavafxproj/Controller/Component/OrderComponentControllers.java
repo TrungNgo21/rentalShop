@@ -37,7 +37,7 @@ public class OrderComponentControllers {
     public void loadOrderData(Order order){
         String imageDir = new FileLocation().getImageDir() + "Public/1.png";
         try {
-            Image image = new Image(new FileInputStream(imageDir), 200, 156, false, false);
+            Image image = new Image(new FileInputStream(imageDir), 200, 145, false, false);
             orderImage.setImage(image);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

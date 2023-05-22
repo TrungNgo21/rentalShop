@@ -111,14 +111,14 @@ public class AdminViewUserControllers implements Initializable {
                     if(user.getValue().getUserId().equals("ADMIN")){
                         continue;
                     }
-                    adminUserController.loadDisplayUser((Customer) user.getValue());
-                    if(column == 1){
-                        column = 0;
-                        row++;
-                    }
-                    gridPane.setHgap(10);
+                    adminUserController.loadDisplayUser(user.getValue(), false);
+                    gridPane.setHgap(20);
                     gridPane.setVgap(10);
-                    gridPane.add(userItem, column, row++);
+                    if(column == 0) {
+                        gridPane.add(userItem, column++, row);
+                    } else {
+                        gridPane.add(userItem, column--, row++);
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -134,14 +134,14 @@ public class AdminViewUserControllers implements Initializable {
                     if(user.getValue().getUserId().equals("ADMIN")){
                         continue;
                     }
-                    adminUserController.loadDisplayUser((Customer) user.getValue());
-                    if(column == 1){
-                        column = 0;
-                        row++;
-                    }
-                    gridPane.setHgap(10);
+                    adminUserController.loadDisplayUser(user.getValue(), true);
+                    gridPane.setHgap(20);
                     gridPane.setVgap(10);
-                    gridPane.add(userItem, column, row++);
+                    if(column == 0) {
+                        gridPane.add(userItem, column++, row);
+                    } else {
+                        gridPane.add(userItem, column--, row++);
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
