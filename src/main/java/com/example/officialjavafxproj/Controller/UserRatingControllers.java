@@ -13,10 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -74,6 +71,9 @@ public class UserRatingControllers implements Initializable {
     @FXML
     private AnchorPane ratingChartDisplay;
 
+    @FXML
+    private Button postReviewButton;
+
     private Integer[] stars = {1,2,3,4,5};
 
     @FXML
@@ -83,22 +83,30 @@ public class UserRatingControllers implements Initializable {
 
     @FXML
     public void onPostButton(ActionEvent event) throws IOException{
-        Feedback feedback = Feedback.builder()
-                .withCustomerId(new UserServices().getCurrentUser().getUserId())
-                .withProductId(new ProductService().getTargetProduct().getId())
-                .withRating(ratingSelection.getValue())
-                .withFeedbackContent(commentsTextField.getText())
-                .withReviewDate(LocalDate.now())
-                .build();
-        new ProductService().getTargetProduct().addFeedback(feedback);
-        new UserServices().getCurrentUser().addReview(feedback);
-        new FeedbackService().addFeedbackToDb(feedback);
-        new SceneController().switchScene(event, "../Pages/userRatingItem.fxml");
-        ToastBuilder.builder()
-                .withMode(Notifications.SUCCESS)
-                .withTitle("Review Message")
-                .withMessage("You have posted successfully!")
-                .show();
+        if(ratingSelection.getValue() == null || commentsTextField.getText().trim().equals("")){
+            ToastBuilder.builder()
+                    .withMode(Notifications.ERROR)
+                    .withTitle("Review Message")
+                    .withMessage("You must include your ratings and comments ")
+                    .show();
+        }else{
+            Feedback feedback = Feedback.builder()
+                    .withCustomerId(new UserServices().getCurrentUser().getUserId())
+                    .withProductId(new ProductService().getTargetProduct().getId())
+                    .withRating(ratingSelection.getValue())
+                    .withFeedbackContent(commentsTextField.getText())
+                    .withReviewDate(LocalDate.now())
+                    .build();
+            new ProductService().getTargetProduct().addFeedback(feedback);
+            new UserServices().getCurrentUser().addReview(feedback);
+            new FeedbackService().addFeedbackToDb(feedback);
+            new SceneController().switchScene(event, "../Pages/userRatingItem.fxml");
+            ToastBuilder.builder()
+                    .withMode(Notifications.SUCCESS)
+                    .withTitle("Review Message")
+                    .withMessage("You have posted successfully!")
+                    .show();
+        }
 
     }
 

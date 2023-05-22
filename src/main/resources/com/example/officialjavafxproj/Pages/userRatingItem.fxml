@@ -199,7 +199,7 @@
                                           <Insets left="13.0" right="30.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button mnemonicParsing="false" onAction="#onPostButton" prefHeight="26.0" prefWidth="101.0" text="Post" />
+                                    <Button fx:id="postReviewButton" mnemonicParsing="false" onAction="#onPostButton" prefHeight="26.0" prefWidth="101.0" text="Post" />
                                  </children>
                               </HBox>
                            </children>
