@@ -57,6 +57,17 @@ public class UserCartControllers implements Initializable {
     @FXML
     private Label vipBenefitDisplay;
 
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     public void setCheckoutButton(){
@@ -244,5 +255,6 @@ public class UserCartControllers implements Initializable {
         addNavigationBar();
         loadAllCartItems();
         setCheckoutButton();
+        addFooterBar();
     }
 }

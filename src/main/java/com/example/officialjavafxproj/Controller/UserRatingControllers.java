@@ -77,6 +77,17 @@ public class UserRatingControllers implements Initializable {
     private Integer[] stars = {1,2,3,4,5};
 
     @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     public void onBackToDetailButton(ActionEvent event) throws IOException {
         new SceneController().switchScene(event, "../Pages/productDetails.fxml");
     }
@@ -165,5 +176,6 @@ public class UserRatingControllers implements Initializable {
         addNavigationBar();
         addReviewBox();
         addRatingChart();
+        addFooterBar();
     }
 }

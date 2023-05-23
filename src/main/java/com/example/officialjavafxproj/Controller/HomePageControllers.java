@@ -39,16 +39,25 @@ public class HomePageControllers implements Initializable {
     @FXML
     private GridPane productsGridDisplay;
 
+    @FXML
+    private AnchorPane footerPane;
 
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void addNavigationBar(){
-            try {
-                navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public void addSortedPane(){
         try {
@@ -108,6 +117,7 @@ public class HomePageControllers implements Initializable {
         sortPane.getChildren().add(new Label("Loading...."));
         sortPane.setAlignment(Pos.CENTER);
         addNavigationBar();
+        addFooterBar();
         Platform.runLater(()->{
             topProductsContainer.getChildren().clear();
             productsGridDisplay.getChildren().clear();

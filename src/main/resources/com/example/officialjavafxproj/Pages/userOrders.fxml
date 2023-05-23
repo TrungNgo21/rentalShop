@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.UserOrdersControllers">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.UserOrdersControllers">
     <top>
         <AnchorPane fx:id="navbarPane" prefHeight="80.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
     </top>
@@ -65,4 +65,7 @@
             </children>
         </HBox>
     </center>
+   <bottom>
+      <AnchorPane fx:id="footerPane" prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>

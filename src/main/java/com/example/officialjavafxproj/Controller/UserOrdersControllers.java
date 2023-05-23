@@ -36,6 +36,17 @@ public class UserOrdersControllers implements Initializable {
     @FXML
     private Label ordersQuantityDisplay;
 
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void addNavigationBar() {
         try {
@@ -82,5 +93,6 @@ public class UserOrdersControllers implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
         loadAllOrders();
+        addFooterBar();
     }
 }

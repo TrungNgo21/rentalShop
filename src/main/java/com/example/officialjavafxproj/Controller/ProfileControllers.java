@@ -65,6 +65,17 @@ public class ProfileControllers implements Initializable {
     @FXML
     private Label noMaximumItemsDisplay;
 
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void loadUserData(){
         UserServices userServices = new UserServices();
         FileLocation imageDir = new FileLocation();
@@ -130,5 +141,6 @@ public class ProfileControllers implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
         loadUserData();
+        addFooterBar();
     }
 }
