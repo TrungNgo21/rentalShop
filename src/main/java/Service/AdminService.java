@@ -47,27 +47,8 @@ public class AdminService implements Services<User> {
         return null;
     }
 
-    public HashMap<String, User> sortById(String type) {
-        HashMap <String, User> sortedByType =  filterAccountType(type);
-        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedByType.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
-            @Override
-            public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
-                return (o1.getValue().getUserId().compareTo(o2.getValue().getUserId()));
-            }
-        });
-        HashMap<String,User> temp = new LinkedHashMap<String,User>();
-        for (Map.Entry<String,User> user : list){
-            temp.put(user.getKey(),user.getValue());
-        }
-        return temp;
-    }
     @Override
     public HashMap<String, User> getAll() {
-//        HashMap <String, User> user = new HashMap<String, User>();
-//        for(Map.Entry<String, User> tmp : db.getAllUsers().entrySet()) {
-//            user.put(tmp.getKey(), tmp.getValue());
-//        }
         return DataAccess.getAllUsers();
     }
     // Filter the type of account users
@@ -82,20 +63,6 @@ public class AdminService implements Services<User> {
     }
 
     public void sortDecreasingOrderId() {
-//        DataAccess.getSortedUsers().clear();
-//        HashMap<String, User> sortedUSer = filterAccountType(type);
-//        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedUSer.entrySet());
-//        Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
-//            @Override
-//            public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
-//                return (o2.getValue().getUserName().compareTo(o1.getValue().getUserName()));
-//            }
-//        });
-//        HashMap<String,User> temp = new LinkedHashMap<String,User>();
-//        for (Map.Entry<String,User> user : list){
-//            temp.put(user.getKey(),user.getValue());
-//        }
-//        return temp;
         List<Map.Entry<String, User>> list = new LinkedList<Map.Entry<String, User>>(DataAccess.getSortedUsers().entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
             @Override
@@ -113,20 +80,6 @@ public class AdminService implements Services<User> {
     }
 
     public void sortIncreasingOrderId() {
-//        DataAccess.getSortedUsers().clear();
-//        HashMap<String, User> sortedUSer = filterAccountType(type);
-//        List<Map.Entry<String,User> > list = new LinkedList<Map.Entry<String,User> >(sortedUSer.entrySet());
-//        Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
-//            @Override
-//            public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
-//                return (o1.getValue().getUserName().compareTo(o2.getValue().getUserName()));
-//            }
-//        });
-//        HashMap<String,User> temp = new LinkedHashMap<String,User>();
-//        for (Map.Entry<String,User> user : list){
-//            temp.put(user.getKey(),user.getValue());
-//        }
-//        return temp;
         List<Map.Entry<String, User>> list = new LinkedList<Map.Entry<String, User>>(DataAccess.getSortedUsers().entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
             @Override

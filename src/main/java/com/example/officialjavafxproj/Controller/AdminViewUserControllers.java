@@ -97,6 +97,7 @@ public class AdminViewUserControllers implements Initializable {
     public void addAccountType() {
         accountType.getItems().addAll(userType);
     }
+
     public void addUserToGridView() {
         gridPane.getChildren().clear();
         int column = 0;
