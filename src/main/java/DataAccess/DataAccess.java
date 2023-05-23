@@ -473,7 +473,7 @@ public class DataAccess {
     public static void addToSortedProducts(Product product){
         sortedProducts.put(product.getId(), product);
     }
-
+    public static void addToSortedUsers(User user){sortedUsers.put(user.getUserId(),user);}
     public static void setSortedProducts(HashMap<String, Product> sortProducts) {
         sortedProducts = sortProducts;
     }

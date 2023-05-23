@@ -24,9 +24,9 @@
       <AnchorPane fx:id="navbarPane" prefHeight="80.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
    </top>
    <left>
-      <VBox prefHeight="551.0" prefWidth="230.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER_LEFT" prefHeight="551.0" prefWidth="230.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="195.0" text="Filter By Type:">
+            <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="195.0" text="Filter By Type:">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
@@ -34,7 +34,7 @@
                   <Insets left="12.0" top="10.0" />
                </VBox.margin>
             </Label>
-            <ChoiceBox fx:id="accountType" prefHeight="0.0" prefWidth="112.0">
+            <ChoiceBox fx:id="accountType" onMouseExited="#setDisableButton" prefHeight="34.0" prefWidth="141.0">
                <VBox.margin>
                   <Insets left="12.0" top="24.0" />
                </VBox.margin>
@@ -44,23 +44,37 @@
                   <Insets top="24.0" />
                </VBox.margin>
             </Separator>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="195.0" text="Sorted By User Id">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="222.0" text="Sorted By User Id or Name">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="increasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="Ascending Order">
+            <RadioButton fx:id="increasingOrder" mnemonicParsing="false" prefHeight="44.0" prefWidth="173.0" text="Ascending Order">
                <padding>
                   <Insets left="5.0" top="10.0" />
                </padding>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
             </RadioButton>
-            <RadioButton fx:id="decreasingOrder" mnemonicParsing="false" onAction="#sortUsers" text="Descending Order">
+            <RadioButton fx:id="decreasingOrder" mnemonicParsing="false" text="Descending Order">
                <padding>
                   <Insets bottom="10.0" left="5.0" top="10.0" />
                </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="sortByName" mnemonicParsing="false" prefHeight="44.0" prefWidth="145.0" text="SortByName">
+               <padding>
+                  <Insets bottom="10.0" left="5.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
             </RadioButton>
             <Separator prefWidth="200.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="227.0" text="Search By Username or ID">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="227.0" text="Search By UserFullName">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
@@ -68,29 +82,45 @@
                   <Insets top="10.0" />
                </padding>
             </Label>
-            <TextField fx:id="searchUser" prefHeight="0.0" prefWidth="157.0" promptText="Search By Name or ID">
+            <TextField fx:id="searchUser" prefHeight="46.0" prefWidth="230.0" promptText="Search By Name or ID">
                <VBox.margin>
                   <Insets top="24.0" />
                </VBox.margin>
             </TextField>
-            <Button fx:id="search" mnemonicParsing="false" onAction="#onSearchUserButton" prefHeight="25.0" prefWidth="87.0" text="Search">
-               <VBox.margin>
-                  <Insets left="70.0" top="24.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="deleteSearch" mnemonicParsing="false" onAction="#onDeleteSearchButton" prefHeight="25.0" prefWidth="87.0" text="Reset">
-               <VBox.margin>
-                  <Insets left="70.0" top="12.0" />
-               </VBox.margin>
-            </Button>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="search" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSearchUserButton" prefHeight="43.0" prefWidth="116.0" text="Search">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="deleteSearch" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDeleteSearchButton" prefHeight="42.0" prefWidth="107.0" text="Reset">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </HBox>
          </children></VBox>
    </left>
    <center>
       <VBox prefHeight="503.0" prefWidth="850.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane prefHeight="505.0" prefWidth="1050.0">
+            <ScrollPane prefHeight="505.0" prefWidth="1050.0" stylesheets="@../styles.css">
                <content>
-                  <GridPane fx:id="gridPane" gridLinesVisible="true" prefHeight="32.0" prefWidth="31.0" style="-fx-padding: 20px;" />
+                  <GridPane fx:id="gridPane" gridLinesVisible="true" prefHeight="40.0" prefWidth="245.0" style="-fx-padding: 20px;" />
                </content>
             </ScrollPane>
          </children>
