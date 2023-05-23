@@ -91,29 +91,7 @@ public class OrderItemControllers {
 
     public void onReturnButton(ActionEvent event) throws IOException {
         User currentUser = new UserServices().getCurrentUser();
-        if(itemStatusDisplay.getText().equals("LATE")){
-            Alert lateMessage = AlertBuilder.builder()
-                    .withType(Alert.AlertType.INFORMATION)
-                    .withHeaderText("Late Return")
-                    .withBodyText("You will be charged 10 dollars extra for being late\n This will be extract directly from you account \nIf your balance is not enough. Please come to the shop to pay")
-                    .build();
-            lateMessage.show();
-            if(currentUser.getBalance() > 10){
-                currentUser.setBalance(currentUser.getBalance() - 10);
-                ToastBuilder.builder()
-                        .withTitle("Late Penalty Charged")
-                        .withMode(Notifications.SUCCESS)
-                        .withMessage("Your account balance has down 10 dollars")
-                        .show();
 
-            }else{
-                ToastBuilder.builder()
-                        .withTitle("Late Penalty Charged")
-                        .withMode(Notifications.WARNING)
-                        .withMessage("Your account balance is not enough! Come to the shop to pay")
-                        .show();
-            }
-        }
         order.getBoughtItem().setNumOfCopies(order.getQuantity() + order.getBoughtItem().getNumOfCopies());
         order.getBoughtItem().setStatus("AVAILABLE");
         Order currentOrder = new OrderCustomerService(new DataAccess(), new OrderMiddleware()).getOne(order.getOrderId());
@@ -147,11 +125,36 @@ public class OrderItemControllers {
         }else{
             new SceneController().switchScene(event, "../Pages/userOrderId.fxml");
         }
+
+        if(itemStatusDisplay.getText().equals("LATE")){
+            Alert lateMessage = AlertBuilder.builder()
+                    .withType(Alert.AlertType.INFORMATION)
+                    .withHeaderText("Late Return")
+                    .withBodyText("You will be charged 10 dollars extra for being late\n This will be extract directly from you account \nIf your balance is not enough. Please come to the shop to pay")
+                    .build();
+            lateMessage.showAndWait();
+            if(currentUser.getBalance() > 10){
+                currentUser.setBalance(currentUser.getBalance() - 10);
+                ToastBuilder.builder()
+                        .withTitle("Late Penalty Charged")
+                        .withMode(Notifications.SUCCESS)
+                        .withMessage("Your account balance has down 10 dollars")
+                        .show();
+
+            }else{
+                ToastBuilder.builder()
+                        .withTitle("Late Penalty Charged")
+                        .withMode(Notifications.WARNING)
+                        .withMessage("Your account balance is not enough! Come to the shop to pay")
+                        .show();
+            }
+        }
         ToastBuilder.builder()
                 .withTitle("Item Returned Successfully!")
                 .withMode(Notifications.SUCCESS)
                 .withMessage("You have returned an item")
                 .show();
+
 
     }
 }

@@ -87,7 +87,7 @@
                 </HBox>
             </children>
         </VBox>
-      <ImageView fitHeight="119.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="112.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
             <Insets right="10.0" />
          </HBox.margin>
