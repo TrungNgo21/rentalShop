@@ -39,16 +39,25 @@ public class HomePageControllers implements Initializable {
     @FXML
     private GridPane productsGridDisplay;
 
+    @FXML
+    private AnchorPane footerPane;
 
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void addNavigationBar(){
-            try {
-                navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public void addSortedPane(){
         try {
@@ -61,14 +70,9 @@ public class HomePageControllers implements Initializable {
     public void addProductToGridView(){
         int row = 1;
         int column = 0;
+        int maxTopProduct = 0;
         for(Map.Entry<String, Product> product : new ProductService().getAll().entrySet()){
             try {
-                FXMLLoader fxmlLoader1 = new FXMLLoader();
-                fxmlLoader1.setLocation(getClass().getResource("../Component/topProductComponent.fxml"));
-                AnchorPane productCard = fxmlLoader1.load();
-                TopProductComponentControllers productCardController = fxmlLoader1.getController();
-                productCardController.loadTopProductData(product.getValue());
-                topProductsContainer.getChildren().add(productCard);
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../Component/productComponent.fxml"));
                 AnchorPane productItem = fxmlLoader.load();
@@ -87,6 +91,24 @@ public class HomePageControllers implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+
+
+        for(Map.Entry<Product, String> topProduct : new ProductService().getTopProducts().entrySet()){
+            try {
+                FXMLLoader fxmlLoader1 = new FXMLLoader();
+                fxmlLoader1.setLocation(getClass().getResource("../Component/topProductComponent.fxml"));
+                AnchorPane productCard = fxmlLoader1.load();
+                TopProductComponentControllers productCardController = fxmlLoader1.getController();
+                productCardController.loadTopProductData(topProduct.getKey());
+                topProductsContainer.getChildren().add(productCard);
+                if(maxTopProduct == 5){
+                    break;
+                }
+                maxTopProduct++;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -96,6 +118,7 @@ public class HomePageControllers implements Initializable {
         sortPane.getChildren().add(new Label("Loading...."));
         sortPane.setAlignment(Pos.CENTER);
         addNavigationBar();
+        addFooterBar();
         Platform.runLater(()->{
             topProductsContainer.getChildren().clear();
             productsGridDisplay.getChildren().clear();

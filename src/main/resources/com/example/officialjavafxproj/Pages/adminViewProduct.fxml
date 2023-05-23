@@ -43,4 +43,7 @@
     <top>
         <AnchorPane fx:id="adminNavbar" prefHeight="126.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
     </top>
+   <bottom>
+      <AnchorPane fx:id="footerPane" prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>

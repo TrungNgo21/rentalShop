@@ -10,7 +10,6 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class OrderAdminService extends OrderService{
-    private static Order selectedOrder;
     public OrderAdminService(DataAccess db) {
         super(db);
     }
@@ -82,7 +81,7 @@ public class OrderAdminService extends OrderService{
 
     @Override
     public Order getOne(String id) {
-        for(Order order : db.getAllOrders()){
+        for(Order order : DataAccess.getAllAdminOrders()){
             if(order.getOrderId().equals(id)){
                 return order;
             }
@@ -93,7 +92,7 @@ public class OrderAdminService extends OrderService{
     @Override
     public HashMap<String, Order> getAll() {
         HashMap<String, Order> orders = new HashMap<>();
-        for(Order order : db.getAllOrders()){
+        for(Order order : DataAccess.getAllAdminOrders()){
             orders.put(order.getOrderId(), order);
         }
         return orders;
@@ -101,15 +100,17 @@ public class OrderAdminService extends OrderService{
 
     public HashMap<String, OrderDetail> getAllOrderDetail(Order order) {
         HashMap<String, OrderDetail> orderDetailHashMap = new HashMap<>();
-        for(OrderDetail orderDetail: order.getOrders()) {
-            orderDetailHashMap.put(orderDetail.getOrderDetailId(), orderDetail);
+        for(OrderDetail orderDetail: DataAccess.getOrderAdminDetails()) {
+            if(orderDetail.getOrderId().equals(order.getOrderId())){
+                orderDetailHashMap.put(orderDetail.getOrderDetailId(), orderDetail);
+            }
         }
         return orderDetailHashMap;
     }
 
-    public Order getSelectedOrder() {return selectedOrder;}
+    public Order getSelectedOrder() {return DataAccess.getCurrentOrder();}
 
     public void setSelectedOrder(Order order) {
-        this.selectedOrder = order;
+        DataAccess.setCurrentOrder(order);
     }
 }

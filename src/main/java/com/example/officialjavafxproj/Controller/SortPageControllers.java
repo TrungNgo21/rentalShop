@@ -30,6 +30,17 @@ public class SortPageControllers implements Initializable {
     @FXML
     private GridPane sortProductDisplay;
 
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addNavigationBar(){
         try {
             navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
@@ -82,5 +93,6 @@ public class SortPageControllers implements Initializable {
         addNavigationBar();
         addSortedPane();
         loadSortedProducts();
+        addFooterBar();
     }
 }

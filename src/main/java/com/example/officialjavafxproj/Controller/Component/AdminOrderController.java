@@ -29,7 +29,7 @@ public class AdminOrderController {
         orderUserDisplay.setText(order.getUserId());
         orderDateDisplay.setText(new DateMiddleware().dateAfterFormat(order.getOrderDate()));
         orderTotalPriceDisplay.setText(order.getTotalPrice() + "");
-        this.orderID = order.getOrderId();
+        orderID = order.getOrderId();
     }
 
     public void onViewOrderButton(ActionEvent actionEvent) throws IOException {

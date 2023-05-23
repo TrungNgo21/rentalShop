@@ -74,18 +74,25 @@
                   </VBox>
                </children>
             </StackPane>
-            <ScrollPane fx:id="container" prefHeight="596.0" prefWidth="619.0" GridPane.rowSpan="2147483647" />
+            <ScrollPane fx:id="container" prefHeight="596.0" prefWidth="619.0" stylesheets="@../styles.css" GridPane.rowSpan="2147483647" />
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </GridPane>
    </center>
+   <left>
+      <AnchorPane prefHeight="632.0" prefWidth="170.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="53.0" layoutY="135.0" mnemonicParsing="false" onAction="#onUserPageBackButton" text="Back">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </left>
    <bottom>
-      <Button mnemonicParsing="false" onAction="#onUserPageBackButton" text="Back" BorderPane.alignment="BOTTOM_RIGHT">
-         <BorderPane.margin>
-            <Insets bottom="50.0" right="50.0" />
-         </BorderPane.margin>
-         <font>
-            <Font name="Arial" size="18.0" />
-         </font>
-      </Button>
+      <AnchorPane fx:id="footerPane" prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

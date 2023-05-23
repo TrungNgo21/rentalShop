@@ -71,4 +71,12 @@ public class OrderCustomerService extends OrderService {
         DataAccess.setCurrentOrder(currentOrder);
     }
 
+    public void addToGlobal(Order order){
+        DataAccess.addToOrders(order);
+    }
+
+    public void deleteFromGlobal(Order order){
+        DataAccess.getAllOrders().remove(order);
+    }
+
 }

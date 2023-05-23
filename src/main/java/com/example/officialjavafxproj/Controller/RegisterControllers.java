@@ -195,7 +195,7 @@ public class RegisterControllers {
         File targetFile = new File( new FileLocation().getImageDir() + "Users/" + new UserServices().idCreation() + "." + ext);
 
         if(imageMessage.getText().equals("No file chosen") || imageMessage.getText().equals("")){
-            targetFileDir = "Users/default.png";
+            targetFileDir = "Users/default.jpg";
         }else{
             targetFileDir = "Users/" + new UserServices().idCreation() + "." + ext;
         }

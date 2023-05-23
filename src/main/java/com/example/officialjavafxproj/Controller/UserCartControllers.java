@@ -57,6 +57,17 @@ public class UserCartControllers implements Initializable {
     @FXML
     private Label vipBenefitDisplay;
 
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     public void setCheckoutButton(){
@@ -138,6 +149,7 @@ public class UserCartControllers implements Initializable {
                     madeOrder.addOrderDetailsToOrder(details.getValue());
                 }
                 new OrderCustomerService(new DataAccess(), new OrderMiddleware()).add(madeOrder);
+                new OrderCustomerService(new DataAccess(), new OrderMiddleware()).addToGlobal(madeOrder);
                 for(OrderDetail detail : madeOrder.getOrders()){
                     detail.getBoughtItem().setNumOfCopies(detail.getBoughtItem().getNumOfCopies() - detail.getQuantity());
                     if(detail.getBoughtItem().getNumOfCopies() == 0){
@@ -244,5 +256,6 @@ public class UserCartControllers implements Initializable {
         addNavigationBar();
         loadAllCartItems();
         setCheckoutButton();
+        addFooterBar();
     }
 }

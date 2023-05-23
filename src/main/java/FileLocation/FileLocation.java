@@ -3,6 +3,9 @@ package FileLocation;
 public class FileLocation {
     private final String userFileDir = "src/main/java/DataFile/User.csv";
 
+    private final String adminOrdersDir = "src/main/java/DataFile/AdminOrders.csv";
+
+    private final String adminOrdersDetailDir = "src/main/java/DataFile/AdminOrdersDetail.csv";
     private final String productFeedbackDir = "src/main/java/DataFile/ProductFeedback.csv";
 
     private final String workingDir = System.getProperty("user.dir");
@@ -60,5 +63,13 @@ public class FileLocation {
 
     public String getImageDir() {
         return workingDir + "/" + imageDir;
+    }
+
+    public String getAdminOrdersDir() {
+        return adminOrdersDir;
+    }
+
+    public String getAdminOrdersDetailDir() {
+        return adminOrdersDetailDir;
     }
 }

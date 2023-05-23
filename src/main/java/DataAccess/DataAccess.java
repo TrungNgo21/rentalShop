@@ -17,6 +17,7 @@ import FileLocation.FileLocation;
 import Service.FeedbackService;
 import Service.UserServices;
 import com.example.officialjavafxproj.Utils.DateComparator;
+import com.example.officialjavafxproj.Utils.TopProductComparator;
 
 
 import java.io.BufferedReader;
@@ -44,8 +45,10 @@ public class DataAccess {
     private static final HashMap<String, Product> products = new HashMap<>();
 
     private static final ArrayList<OrderDetail> orderDetails = new ArrayList<>();
+    private static final ArrayList<OrderDetail> orderAdminDetails = new ArrayList<>();
 
     private static final ArrayList<Order> orders = new ArrayList<>();
+    private static final ArrayList<Order> adminOrders = new ArrayList<>();
 
     private static User currentUser;
 
@@ -194,13 +197,29 @@ public class DataAccess {
         }
     }
 
+    private static void loadAllAdminOrderDetails(){
+        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getAdminOrdersDetailDir());
+        for (String[] orderDetailData : Objects.requireNonNull(dataFile)) {
+            OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2], products.get(orderDetailData[3]), Integer.parseInt(orderDetailData[4]));
+            orderAdminDetails.add(details);
+        }
+    }
+
     private static void loadAllOrdersNoDetail() {
         ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getOrderFileDir());
         for (String[] orderData : Objects.requireNonNull(dataFile)) {
             Order order = new Order(orderData[0], orderData[1], LocalDate.parse(orderData[2], new DateMiddleware().dateParser()), Double.parseDouble(orderData[3]));
             orders.add(order);
         }
-    }   
+    }
+
+    private static void loadAllAdminOrdersNoDetail() {
+        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getAdminOrdersDir());
+        for (String[] orderData : Objects.requireNonNull(dataFile)) {
+            Order order = new Order(orderData[0], orderData[1], LocalDate.parse(orderData[2], new DateMiddleware().dateParser()), Double.parseDouble(orderData[3]));
+            adminOrders.add(order);
+        }
+    }
 
     private static void loadAllCartsNoDetail() {
         ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getCartFileDir());
@@ -218,6 +237,16 @@ public class DataAccess {
                 }
             }
             users.get(order.getUserId()).addOrderToList(order);
+        }
+    }
+
+    private static void loadAllAdminOrders(){
+        for (Order order : adminOrders){
+            for (OrderDetail details : orderAdminDetails){
+                if (order.getOrderId().equals(details.getOrderId())) {
+                    order.addOrderDetailsToOrder(details);
+                }
+            }
         }
     }
 
@@ -338,6 +367,19 @@ public class DataAccess {
                 }
             }
             writer.close();
+
+            FileWriter writerAdmin = new FileWriter(new FileLocation().getAdminOrdersDetailDir(), false);
+            for(OrderDetail orderDetail : orderAdminDetails){
+                if(!orderDetail.getOrderId().equals("NaN")){
+                    writerAdmin.write(orderDetail.getOrderDetailId() + ";"
+                            + orderDetail.getOrderId() + ";"
+                            + "NaN" + ";"
+                            + orderDetail.getBoughtItem().getId() + ";"
+                            + orderDetail.getQuantity() + "\n");
+                }
+            }
+            writerAdmin.close();
+
         } catch (IOException err) {
             err.printStackTrace();
         }
@@ -370,7 +412,16 @@ public class DataAccess {
                             + order.getTotalPrice() + "\n");
                 }
             }
+
             writer.close();
+            FileWriter writerAdmin = new FileWriter(new FileLocation().getAdminOrdersDir(), false);
+            for(Order order : adminOrders){
+                writerAdmin.write(order.getOrderId() + ";"
+                        + order.getUserId() + ";"
+                        + new DateMiddleware().dateAfterFormat(order.getOrderDate()) + ";"
+                        + order.getTotalPrice() + "\n");
+            }
+            writerAdmin.close();
         } catch (IOException err) {
             err.printStackTrace();
         }
@@ -384,8 +435,11 @@ public class DataAccess {
         loadAllProducts();
         loadAllProductFeedback();
         loadAllOrderDetails();
+        loadAllAdminOrderDetails();
+        loadAllAdminOrdersNoDetail();
         loadAllOrdersNoDetail();
         loadAllOrders();
+        loadAllAdminOrders();
         loadAllCarts();
     }
 
@@ -431,6 +485,14 @@ public class DataAccess {
 
     public static ArrayList<Order> getAllOrders() {
         return orders;
+    }
+
+    public static ArrayList<Order> getAllAdminOrders() {
+        return adminOrders;
+    }
+
+    public static ArrayList<OrderDetail> getOrderAdminDetails(){
+        return orderAdminDetails;
     }
 
     public static void setChosenProduct(Product product) {
@@ -503,6 +565,15 @@ public class DataAccess {
         return sortedRevenue;
     }
 
+    public static TreeMap<Product, String> getTopProducts(){
+        TopProductComparator topProductComparator = new TopProductComparator();
+        TreeMap<Product, String> topProducts = new TreeMap<>(topProductComparator);
+        for(Map.Entry<String, Product> product : products.entrySet()){
+            topProducts.put(product.getValue(), product.getKey());
+        }
+        return topProducts;
+    }
+
     public static double getTotalRevenue(){
         double total = 0;
         for(Map.Entry<LocalDate, Double> revenue : revenueDaily.entrySet()){
@@ -517,5 +588,9 @@ public class DataAccess {
 
     public static void addFeedback(Feedback feedback){
         feedbacks.add(feedback);
+    }
+
+    public static void addToOrders(Order order){
+        adminOrders.add(order);
     }
 }

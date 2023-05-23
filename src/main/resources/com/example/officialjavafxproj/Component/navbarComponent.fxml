@@ -19,7 +19,7 @@
                <graphic>
                   <ImageView fitHeight="70.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Image/Public/logoFinal.png" />
+                        <Image url="@../Image/Public/navbarIcon.jpg" />
                      </image>
                   </ImageView>
                </graphic>
@@ -46,12 +46,12 @@
       </HBox>
       <HBox layoutX="499.0" layoutY="3.0" prefHeight="80.0" prefWidth="306.0">
          <children>
-            <TextField prefHeight="25.0" prefWidth="249.0">
+            <TextField fx:id="searchBar" prefHeight="25.0" prefWidth="249.0" promptText="Search by item's name...">
                <HBox.margin>
                   <Insets top="26.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Search">
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#onSearchButton" prefHeight="25.0" prefWidth="82.0" styleClass="button__default" stylesheets="@../styles.css" text="GO">
                <HBox.margin>
                   <Insets top="26.0" />
                </HBox.margin>

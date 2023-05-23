@@ -75,6 +75,17 @@ public class ProductDetailsControllers implements Initializable {
     @FXML
     private Label averageStarDisplay;
 
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addNavigationBar(){
         try {
             navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
@@ -152,6 +163,7 @@ public class ProductDetailsControllers implements Initializable {
         if(!isExisted){
             OrderDetail detail = new OrderDetail(new OrderDetailCartService().idCreation(), "NaN", userCartServices.getOne("dummy").getCartId(), currentProduct, Integer.parseInt(productDetailQuantityDisplay.getText()));
             orderDetailCartService.add(detail);
+            orderDetailCartService.addToGlobal(detail);
             ToastBuilder.builder()
                     .withTitle("Cart Message")
                     .withMessage("Added To Cart Successfully")
@@ -196,5 +208,6 @@ public class ProductDetailsControllers implements Initializable {
         setAddToCartButton();
         addRatingChart();
         addReviewBox();
+        addFooterBar();
     }
 }

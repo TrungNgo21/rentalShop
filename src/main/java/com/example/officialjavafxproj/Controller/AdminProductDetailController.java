@@ -51,8 +51,16 @@ public class AdminProductDetailController implements Initializable {
     private Label productDetailStockDisplay;
     @FXML
     private Label productDetailRentalFee;
+    @FXML
+    private AnchorPane footerPane;
 
-
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void addNavigationBar(){
         try {
             navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
@@ -105,6 +113,7 @@ public class AdminProductDetailController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addFooterBar();
         loadProductDetail();
         addNavigationBar();
     }

@@ -82,4 +82,7 @@
    <right>
       <AnchorPane prefHeight="525.0" prefWidth="35.0" BorderPane.alignment="CENTER" />
    </right>
+   <bottom>
+      <AnchorPane fx:id="footerPane" prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>

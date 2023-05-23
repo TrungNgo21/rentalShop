@@ -140,6 +140,10 @@ public class ProductService implements Services<Product> {
         return DataAccess.getSortedProducts();
     }
 
+    public TreeMap<Product, String> getTopProducts(){
+        return DataAccess.getTopProducts();
+    }
+
     public void addToSortedProducts(ArrayList<String[]> sortedOptions, ArrayList<RadioButton> orderOptions) {
         DataAccess.getSortedProducts().clear();
         ArrayList<String> deletedProductId = new ArrayList<>();

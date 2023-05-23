@@ -67,6 +67,17 @@ public class EditProfileControllers implements Initializable {
 
     private User currentUser = new UserServices().getCurrentUser();
 
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void onFieldReleased() {
         InputMiddleware middleware = new InputMiddleware();
         String fullName = fullNameEditTextField.getText();
@@ -210,5 +221,6 @@ public class EditProfileControllers implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
         loadUserProfile();
+        addFooterBar();
     }
 }

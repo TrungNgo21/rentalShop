@@ -18,6 +18,9 @@ public class OrderDetailCartService implements Services<OrderDetail>{
     public void add(OrderDetail detail) {
         DataAccess.getCurrentUser().getCart().getShoppingItems().add(detail);
     }
+    public void addToGlobal(OrderDetail detail){
+        DataAccess.getOrderAdminDetails().add(detail);
+    }
 
     @Override
     public void edit(OrderDetail detail) {

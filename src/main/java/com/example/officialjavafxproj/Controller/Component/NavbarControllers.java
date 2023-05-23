@@ -1,12 +1,15 @@
 package com.example.officialjavafxproj.Controller.Component;
 
 import Service.OrderDetailCartService;
+import Service.ProductService;
 import Service.UserServices;
 import com.example.officialjavafxproj.Utils.SceneController;
+import com.example.officialjavafxproj.Utils.SearchController;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,6 +22,9 @@ public class NavbarControllers implements Initializable {
 
     @FXML
     private Label noCartItem;
+
+    @FXML
+    private TextField searchBar;
     public void onLogoutButton(ActionEvent event) throws IOException {
         new UserServices().setCurrentUser(null);
         new SceneController().switchScene(event, "../Pages/login.fxml");
@@ -37,6 +43,12 @@ public class NavbarControllers implements Initializable {
     }
     public void onGoToOrders(ActionEvent event) throws IOException {
         new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+    }
+
+    public void onSearchButton(ActionEvent event) throws IOException{
+        SearchController.searchByIdentify(searchBar.getText(), new ProductService().getAll());
+        new ProductService().setSortedProduct(SearchController.getTempContainer());
+        new SceneController().switchScene(event, "../Pages/sortPage.fxml");
     }
 
     public void loadUserName(){

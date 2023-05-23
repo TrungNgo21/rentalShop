@@ -50,9 +50,9 @@
             </Separator>
             <VBox spacing="20.0">
                <children>
-                  <RadioButton fx:id="sortByOrderID" onAction="#onOrderIDSortButton" mnemonicParsing="false" text="Sort By Order ID" />
-                  <RadioButton fx:id="sortByOrderDate" onAction="#onOrderDateSortButton" mnemonicParsing="false" text="Sort By Order Date" />
-                  <RadioButton fx:id="sortByUserID" onAction="#onUserIDSortButton" mnemonicParsing="false" text="Sort By User ID" />
+                  <RadioButton fx:id="sortByOrderID" mnemonicParsing="false" onAction="#onOrderIDSortButton" text="Sort By Order ID" />
+                  <RadioButton fx:id="sortByOrderDate" mnemonicParsing="false" onAction="#onOrderDateSortButton" text="Sort By Order Date" />
+                  <RadioButton fx:id="sortByUserID" mnemonicParsing="false" onAction="#onUserIDSortButton" text="Sort By User ID" />
                </children>
                <VBox.margin>
                   <Insets left="20.0" top="20.0" />
@@ -63,7 +63,7 @@
     <center>
         <VBox prefHeight="568.0" prefWidth="771.0" BorderPane.alignment="CENTER">
             <children>
-                <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="724.0" prefWidth="1050.0">
+                <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="724.0" prefWidth="1050.0" stylesheets="@../styles.css">
                     <content>
                         <GridPane fx:id="gridPane" gridLinesVisible="true" prefHeight="32.0" prefWidth="31.0" style="-fx-padding: 20px;" />
                     </content>
@@ -71,4 +71,7 @@
             </children>
         </VBox>
     </center>
+   <bottom>
+      <AnchorPane fx:id="footerPane" prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
