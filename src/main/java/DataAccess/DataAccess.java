@@ -17,6 +17,7 @@ import FileLocation.FileLocation;
 import Service.FeedbackService;
 import Service.UserServices;
 import com.example.officialjavafxproj.Utils.DateComparator;
+import com.example.officialjavafxproj.Utils.TopProductComparator;
 
 
 import java.io.BufferedReader;
@@ -501,6 +502,15 @@ public class DataAccess {
         TreeMap<LocalDate, Double> sortedRevenue = new TreeMap<>(dateComparator);
         sortedRevenue.putAll(revenueDaily);
         return sortedRevenue;
+    }
+
+    public static TreeMap<Product, String> getTopProducts(){
+        TopProductComparator topProductComparator = new TopProductComparator();
+        TreeMap<Product, String> topProducts = new TreeMap<>(topProductComparator);
+        for(Map.Entry<String, Product> product : products.entrySet()){
+            topProducts.put(product.getValue(), product.getKey());
+        }
+        return topProducts;
     }
 
     public static double getTotalRevenue(){

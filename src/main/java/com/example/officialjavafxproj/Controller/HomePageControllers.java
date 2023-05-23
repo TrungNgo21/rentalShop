@@ -61,14 +61,9 @@ public class HomePageControllers implements Initializable {
     public void addProductToGridView(){
         int row = 1;
         int column = 0;
+        int maxTopProduct = 0;
         for(Map.Entry<String, Product> product : new ProductService().getAll().entrySet()){
             try {
-                FXMLLoader fxmlLoader1 = new FXMLLoader();
-                fxmlLoader1.setLocation(getClass().getResource("../Component/topProductComponent.fxml"));
-                AnchorPane productCard = fxmlLoader1.load();
-                TopProductComponentControllers productCardController = fxmlLoader1.getController();
-                productCardController.loadTopProductData(product.getValue());
-                topProductsContainer.getChildren().add(productCard);
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../Component/productComponent.fxml"));
                 AnchorPane productItem = fxmlLoader.load();
@@ -83,6 +78,23 @@ public class HomePageControllers implements Initializable {
                 productsGridDisplay.setHgap(15);
                 productsGridDisplay.setVgap(15);
                 productsGridDisplay.add(productItem, column++, row);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        for(Map.Entry<Product, String> topProduct : new ProductService().getTopProducts().entrySet()){
+            try {
+                FXMLLoader fxmlLoader1 = new FXMLLoader();
+                fxmlLoader1.setLocation(getClass().getResource("../Component/topProductComponent.fxml"));
+                AnchorPane productCard = fxmlLoader1.load();
+                TopProductComponentControllers productCardController = fxmlLoader1.getController();
+                productCardController.loadTopProductData(topProduct.getKey());
+                topProductsContainer.getChildren().add(productCard);
+                maxTopProduct++;
+                if(maxTopProduct == 4){
+                    break;
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
