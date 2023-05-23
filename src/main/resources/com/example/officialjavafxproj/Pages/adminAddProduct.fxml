@@ -168,5 +168,6 @@
             </children>
         </HBox>
         <Label fx:id="imageMessage" alignment="CENTER" layoutX="183.0" layoutY="611.0" prefHeight="23.0" prefWidth="262.0" />
+      <AnchorPane fx:id="footerPane" layoutX="6.0" layoutY="634.0" prefHeight="80.0" prefWidth="1273.0" />
     </children>
 </AnchorPane>

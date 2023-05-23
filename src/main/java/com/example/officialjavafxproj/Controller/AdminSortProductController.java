@@ -33,6 +33,16 @@ public class AdminSortProductController implements Initializable {
     private Button resetButton;
     @FXML
     private AnchorPane adminNavbar;
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void addNavigationBar(){
         try {
@@ -121,6 +131,7 @@ public class AdminSortProductController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addFooterBar();
         addNavigationBar();
         loadSortedProducts();
         addSortedPane();
