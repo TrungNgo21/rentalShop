@@ -81,6 +81,16 @@ public class AdminAddProductController implements Initializable {
     ObservableList<String> loanTypeList = FXCollections.observableArrayList(Product.getLoanTypes());
 
     private String imageDir;
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void addNavigationBar() {
         try {
@@ -313,6 +323,7 @@ public class AdminAddProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addFooterBar();
         addNavigationBar();
         setChoiceBox();
     }

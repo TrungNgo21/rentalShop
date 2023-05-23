@@ -3,6 +3,7 @@ package com.example.officialjavafxproj.Controller.Component;
 import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Model.Product.Product;
+import Service.FeedbackService;
 import Service.ProductService;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.fxml.FXML;
@@ -15,9 +16,14 @@ import javafx.scene.input.MouseEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import static java.lang.Double.NaN;
+
 public class AdminProductController {
     @FXML
     private ImageView imageView;
+
+    @FXML
+    private Label averageStarDisplay;
     @FXML
     private Label productTitleDisplay;
     @FXML
@@ -36,6 +42,7 @@ public class AdminProductController {
     private String productId;
 
     public void loadProductDisplay(Product product){
+        double averageStar = new FeedbackService().getAverageRatings(product.getId());
         String imageDir = new FileLocation().getImageDir() + product.getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 200, 175, false, false);
@@ -53,6 +60,7 @@ public class AdminProductController {
         productStatus.setText(product.getStatus());
         rentalType.setText(product.getRentalType());
         genre.setText(product.getGenre());
+        averageStarDisplay.setText(!Double.isNaN(averageStar) ? String.format("%.1f", new FeedbackService().getAverageRatings(product.getId())) : "0");
         productId = product.getId();
 
     }

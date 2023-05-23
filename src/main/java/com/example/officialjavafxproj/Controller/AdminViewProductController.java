@@ -36,6 +36,16 @@ public class AdminViewProductController implements Initializable {
     private GridPane gridPane;
     @FXML
     private VBox sortLayout;
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void addNavigationBar(){
@@ -80,6 +90,7 @@ public class AdminViewProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addFooterBar();
         addNavigationBar();
         addSortedPane();
         addProductToGridView();

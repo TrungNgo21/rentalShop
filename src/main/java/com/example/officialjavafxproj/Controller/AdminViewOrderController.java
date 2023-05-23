@@ -37,6 +37,16 @@ public class AdminViewOrderController implements Initializable {
     @FXML
     private RadioButton sortByUserID;
     private OrderAdminService orderAdminService = new OrderAdminService(new DataAccess());
+    @FXML
+    private AnchorPane footerPane;
+
+    public void addFooterBar(){
+        try {
+            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void addNavigationBar() {
         try {
@@ -127,6 +137,7 @@ public class AdminViewOrderController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addFooterBar();
         setToggleGroup();
         addNavigationBar();
         addAllOrder();
