@@ -163,6 +163,7 @@ public class ProductDetailsControllers implements Initializable {
         if(!isExisted){
             OrderDetail detail = new OrderDetail(new OrderDetailCartService().idCreation(), "NaN", userCartServices.getOne("dummy").getCartId(), currentProduct, Integer.parseInt(productDetailQuantityDisplay.getText()));
             orderDetailCartService.add(detail);
+            orderDetailCartService.addToGlobal(detail);
             ToastBuilder.builder()
                     .withTitle("Cart Message")
                     .withMessage("Added To Cart Successfully")

@@ -20,8 +20,6 @@ public class AdminOrderDetailController {
     @FXML
     private Label orderDate;
     @FXML
-    private Label orderCartID;
-    @FXML
     private Label orderProductID;
     @FXML
     private Label orderQuantity;
@@ -30,7 +28,6 @@ public class AdminOrderDetailController {
     public void loadDisplayOrder(OrderDetail item, Order order) {
         orderDetailID.setText(item.getOrderDetailId());
         orderDate.setText(new DateMiddleware().dateAfterFormat(order.getOrderDate()));
-        orderCartID.setText(item.getCartId());
         orderProductID.setText(item.getBoughtItem().getId());
         orderQuantity.setText(item.getQuantity()+"");
 

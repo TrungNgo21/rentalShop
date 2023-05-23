@@ -149,6 +149,7 @@ public class UserCartControllers implements Initializable {
                     madeOrder.addOrderDetailsToOrder(details.getValue());
                 }
                 new OrderCustomerService(new DataAccess(), new OrderMiddleware()).add(madeOrder);
+                new OrderCustomerService(new DataAccess(), new OrderMiddleware()).addToGlobal(madeOrder);
                 for(OrderDetail detail : madeOrder.getOrders()){
                     detail.getBoughtItem().setNumOfCopies(detail.getBoughtItem().getNumOfCopies() - detail.getQuantity());
                     if(detail.getBoughtItem().getNumOfCopies() == 0){
