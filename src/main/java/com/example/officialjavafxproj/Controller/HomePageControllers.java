@@ -92,6 +92,7 @@ public class HomePageControllers implements Initializable {
             }
         }
 
+
         for(Map.Entry<Product, String> topProduct : new ProductService().getTopProducts().entrySet()){
             try {
                 FXMLLoader fxmlLoader1 = new FXMLLoader();
@@ -100,10 +101,10 @@ public class HomePageControllers implements Initializable {
                 TopProductComponentControllers productCardController = fxmlLoader1.getController();
                 productCardController.loadTopProductData(topProduct.getKey());
                 topProductsContainer.getChildren().add(productCard);
-                maxTopProduct++;
-                if(maxTopProduct == 4){
+                if(maxTopProduct == 5){
                     break;
                 }
+                maxTopProduct++;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

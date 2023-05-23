@@ -201,6 +201,9 @@
                                     </Button>
                                     <Button fx:id="postReviewButton" mnemonicParsing="false" onAction="#onPostButton" prefHeight="26.0" prefWidth="101.0" text="Post" />
                                  </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
                               </HBox>
                            </children>
                         </VBox>

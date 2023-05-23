@@ -25,11 +25,12 @@ public class FeedbackService {
     public double getAverageRatings(String itemId){
         double total = 0;
         double totalFeedbacks = 0;
-        for(Feedback feedback : getAllReviews()){
-            if(feedback.getProductId().equals(itemId)){
+        if(new ProductService().getOne(itemId).getItemsFeedback().size() == 0){
+            return 0;
+        }
+        for(Feedback feedback : new ProductService().getOne(itemId).getItemsFeedback()){
                 total += feedback.getRating();
                 totalFeedbacks++;
-            }
         }
         return total/totalFeedbacks;
     }
