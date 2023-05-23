@@ -6,9 +6,15 @@ import java.util.regex.Pattern;
 public class InputMiddleware {
     private final String passwordPatternStr = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-[{}]:;',?/*~$^+=<>]).{8,12}$";
     private final String digitPatternStr = "^\\d+$";
-    private final String negativePatternStr = "^-[1-9]\\d*|0$";
+
+
+    public static final String doubleNegativeStr = "^(-([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*))|0?\\.0+|0$";
+
+    public static final String doublePositiveStr = "^[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+|0$";
+    private final Pattern negativeDoublePattern = Pattern.compile(doubleNegativeStr);
+
+    private final Pattern doublePositivePattern = Pattern.compile(doublePositiveStr);
     private final String whiteSpacePatternStr = "\\s+";
-    private final Pattern negativePattern = Pattern.compile(negativePatternStr);
     private final Pattern passPattern = Pattern.compile(passwordPatternStr);
     private final Pattern digitPattern = Pattern.compile(digitPatternStr);
 
@@ -42,7 +48,7 @@ public class InputMiddleware {
             return false;
         }
         Matcher matcher = digitPattern.matcher(num);
-        Matcher matcher1 = negativePattern.matcher(num);
+        Matcher matcher1 = doublePositivePattern.matcher(num);
         if(!matcher.matches() && !matcher1.matches()){
             return false;
         }
@@ -50,9 +56,10 @@ public class InputMiddleware {
         return Double.parseDouble(num) > 0;
     }
     public boolean isValidNumber(String num){
-        Matcher matcher = negativePattern.matcher(num);
+        Matcher matcher = negativeDoublePattern.matcher(num);
+        Matcher matcher2 = doublePositivePattern.matcher(num);
         Matcher matcher1 = digitPattern.matcher(num);
-        return matcher.matches() || matcher1.matches();
+        return matcher.matches() || matcher1.matches() || matcher2.matches();
     }
 
 

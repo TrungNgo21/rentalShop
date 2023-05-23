@@ -2,6 +2,7 @@ package Model.User;
 
 import DataAccess.DataAccess;
 import Model.Account.Account;
+import Model.Form.Feedback;
 import Model.Order.Cart;
 import Model.Order.Order;
 import Service.UserCartServices;
@@ -20,6 +21,8 @@ public abstract class User {
     private Account account;
 
     private ArrayList<Order> rentalList = new ArrayList<>();
+
+    private ArrayList<Feedback> reviews = new ArrayList<>();
 
     private Cart cart;
 
@@ -123,6 +126,14 @@ public abstract class User {
 
     public void setImageLocation(String imageLocation) {
         this.imageLocation = imageLocation;
+    }
+
+    public void addReview(Feedback feedback){
+        this.reviews.add(feedback);
+    }
+
+    public ArrayList<Feedback> getReviews() {
+        return reviews;
     }
 
     @Override

@@ -141,6 +141,11 @@ public class EditProfileControllers implements Initializable {
 
     }
 
+    public void onToProfileButton(ActionEvent actionEvent) throws IOException{
+        new SceneController().switchScene(actionEvent, "../Pages/userProfile.fxml");
+    }
+
+
     public void onUploadImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().clear();

@@ -26,7 +26,7 @@ public class HomepageAdminControllers implements Initializable {
     public void addNavigationBar(){
         navbarPane.getChildren().clear();
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
+            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

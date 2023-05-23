@@ -48,11 +48,15 @@ public class AdminEditProductController implements Initializable {
     @FXML
     private TextField copiesTextField;
     @FXML
+    private TextField publishedYearTextField;
+    @FXML
     private Label nameWarningMessage;
     @FXML
     private Label priceWarningMessage;
     @FXML
     private Label copiesWarningMessage;
+    @FXML
+    private Label publishedYearWarningMessage;
     @FXML
     private Label imageMessage;
     @FXML
@@ -93,8 +97,9 @@ public class AdminEditProductController implements Initializable {
         String productName = nameTextField.getText();
         String productPrice = priceTextField.getText();
         String numOfCopies = copiesTextField.getText();
+        String publishedYear = publishedYearTextField.getText();
 
-        boolean isValid = (!productName.trim().isEmpty() && middleware.isPositive(productPrice) && middleware.isPositive(numOfCopies));
+        boolean isValid = (!productName.trim().isEmpty() && middleware.isPositive(productPrice) && middleware.isPositive(numOfCopies) && middleware.isPositive(publishedYear));
 
         saveButton.setDisable(!isValid);
 
@@ -116,9 +121,16 @@ public class AdminEditProductController implements Initializable {
         else {
             priceWarningMessage.setText("");
         }
-        System.out.println(middleware.isValidNumber(productPrice));
-        System.out.println(productPrice);
-        System.out.println(middleware.isPositive(productPrice));
+        if(publishedYear.trim().isEmpty()){
+            publishedYearWarningMessage.setText("You must not leave this field empty");
+        } else if (!middleware.isValidNumber(publishedYear)) {
+            publishedYearWarningMessage.setText("The published year must be a number");
+        } else if (!middleware.isPositive(publishedYear)) {
+            publishedYearWarningMessage.setText("The published year must be positive");
+        }
+        else {
+            publishedYearWarningMessage.setText("");
+        }
         if(numOfCopies.trim().isEmpty()){
             copiesWarningMessage.setText("You must not leave this field empty");
         } else if (!middleware.isValidNumber(numOfCopies)) {
@@ -129,8 +141,6 @@ public class AdminEditProductController implements Initializable {
         else {
             copiesWarningMessage.setText("");
         }
-
-
     }
     public void onUploadImage() {
         FileChooser fileChooser = new FileChooser();
@@ -167,6 +177,7 @@ public class AdminEditProductController implements Initializable {
         } else {
             imageMessage.setText("No file chosen");
         }
+        System.out.println(newImageDir);
     }
     public void onSaveInformation(ActionEvent actionEvent){
         product.setTitle(nameTextField.getText());
@@ -175,6 +186,7 @@ public class AdminEditProductController implements Initializable {
         product.setGenre(genreTypeChoiceBox.getValue());
         product.setLoanType(loanTypeChoiceBox.getValue());
         product.setRentalType(rentalTypeChoiceBox.getValue());
+        product.setPublishedYear(publishedYearTextField.getText());
         if(!imageMessage.getText().equals("")){
             if(!imageMessage.getText().equals("No file chosen")){
                 File renameFile = new File(new FileLocation().getImageDir() + product.getImageLocation());
@@ -182,7 +194,7 @@ public class AdminEditProductController implements Initializable {
                 renameFile = new File(new FileLocation().getImageDir() + "Product/" + product.getId() + "." + ext);
                 File file = new File(newImageDir);
                 FileController.deleteFile(renameFile);
-                product.setImageLocation("Product/" + product.getId() + "." + ext);
+                product.setImageLocation("Product/" + product.getId()  + "." + ext);
                 FileController.renameFile(file, renameFile);
             }
         }
@@ -208,9 +220,14 @@ public class AdminEditProductController implements Initializable {
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
+        nameWarningMessage.setText("");
+        priceWarningMessage.setText("");
+        copiesWarningMessage.setText("");
+        publishedYearWarningMessage.setText("");
         nameTextField.setText(product.getTitle());
         priceTextField.setText(String.valueOf(product.getRentalFee()));
         copiesTextField.setText(String.valueOf(product.getNumOfCopies()));
+        publishedYearTextField.setText(product.getPublishedYear());
         rentalTypeChoiceBox.setValue(product.getRentalType());
         genreTypeChoiceBox.setValue(product.getGenre());
         loanTypeChoiceBox.setValue(product.getLoanType());
@@ -227,6 +244,7 @@ public class AdminEditProductController implements Initializable {
         nameTextField.setText(product.getTitle());
         priceTextField.setText(String.valueOf(product.getRentalFee()));
         copiesTextField.setText(String.valueOf(product.getNumOfCopies()));
+        publishedYearTextField.setText(product.getPublishedYear());
         genreTypeChoiceBox.setValue(product.getGenre());
         loanTypeChoiceBox.setValue(product.getLoanType());
         rentalTypeChoiceBox.setValue(product.getRentalType());

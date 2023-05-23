@@ -1,5 +1,6 @@
 package com.example.officialjavafxproj.Controller.Component;
 
+import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Model.Product.Product;
 import Service.ProductService;
@@ -61,7 +62,10 @@ public class AdminProductController {
         productService.setTargetProduct(currentProduct);
         new SceneController().switchScene(mouseEvent,"../Pages/adminEditProduct.fxml");
     }
-
-
-
+    public void viewProductDetail(MouseEvent mouseEvent) throws IOException {
+        ProductService productService = new ProductService();
+        Product currentProduct = productService.getOne(productId);
+        productService.setTargetProduct(currentProduct);
+        new SceneController().switchScene(mouseEvent,"../Pages/adminProductDetail.fxml");
+    }
 }

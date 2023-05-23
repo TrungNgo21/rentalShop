@@ -1,13 +1,14 @@
 package com.example.officialjavafxproj.Utils;
 
-import Model.Product.Product;
-import Service.ProductService;
-import com.example.officialjavafxproj.Controller.Component.BarChartControllers;
+import com.sun.javafx.charts.Legend;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -66,6 +67,31 @@ public class BarchartBuilder {
             barChart.getData().add(series);
         }
         return this;
+    }
+
+    public BarchartBuilder withRatingData(ArrayList<String[]> data){
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Star");
+        for(String[] dataElement : data){
+            series.getData().add(new XYChart.Data<>(dataElement[0], Integer.parseInt(dataElement[1])));
+        }
+        barChart.getData().add(series);
+        return this;
+    }
+
+    public BarchartBuilder withBarColorAll(String color, int barsNum){
+        for (int i = 0; i < barsNum; i++) {
+            for(Node n:barChart.lookupAll(".default-color" + i + ".chart-bar")) {
+                n.setStyle("-fx-bar-fill: #FFB84C;");
+
+            }
+        }
+
+//        Legend legend = (Legend) barChart.lookup(".chart-legend");
+//        Legend.LegendItem legendItem = new Legend.LegendItem("Stars", new Rectangle(25,25, Color.rgb(255,184,76)));
+//        legend.getItems().setAll(legendItem);
+        return this;
+
     }
 
 
