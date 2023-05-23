@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 public class UserRatingControllers implements Initializable {
 
     @FXML
-    private TextField commentsTextField;
+    private TextArea commentsTextField;
 
     @FXML
     private VBox reviewBoxDisplay;
