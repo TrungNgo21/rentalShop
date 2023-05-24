@@ -29,14 +29,13 @@ public class AdminUserControllers {
     private Label userPhoneDisplay;
     @FXML
     private Label userAddressDisplay;
-    @FXML
-    private Button viewButton;
     private String userID;
 
-    public void loadDisplayUser(User user, boolean show) {
+
+    public void loadDisplayUser(User user) {
         String imageDir = new FileLocation().getImageDir() + user.getImageLocation();
         try {
-            Image userImage = new Image(new FileInputStream(imageDir), 200, 175, false, false);
+            Image userImage = new Image(new FileInputStream(imageDir), 200, 200, false, false);
             imageView.setImage(userImage);
 
         }
@@ -48,18 +47,12 @@ public class AdminUserControllers {
         userPhoneDisplay.setText(user.getPhoneNum());
         userAddressDisplay.setText(user.getAccount().getAccountType());
         userID = user.getUserId();
-        if(show) {
-            viewButton.setVisible(true);
-        }
-        else {
-            viewButton.setVisible(false);
-        }
     }
 
-    public void onViewUserProfileButton(ActionEvent event) throws IOException {
+    public void onViewUserProfileButton(MouseEvent mouseEvent) throws IOException {
         AdminService adminService = new AdminService();
         User selectedUser = adminService.getOne(userID);
         AdminService.setSelectedUser(selectedUser);
-        new SceneController().switchScene(event, "../Pages/adminViewProfile.fxml");
+        new SceneController().switchScene(mouseEvent, "../Pages/adminViewProfile.fxml");
     }
 }

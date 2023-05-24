@@ -199,8 +199,6 @@ public class ProductService implements Services<Product> {
                 for (String deletedId : deletedProductId) {
                     getSortedProducts().remove(deletedId);
                 }
-
-
             } else if (i == 2) {
                 boolean isExisted = false;
                 int noneCounter = 0;
@@ -271,6 +269,5 @@ public class ProductService implements Services<Product> {
             new ProductService().sortByTitle();
         }
     }
-
 
 }

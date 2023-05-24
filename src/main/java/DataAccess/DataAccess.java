@@ -534,12 +534,10 @@ public class DataAccess {
     public static void addToSortedProducts(Product product){
         sortedProducts.put(product.getId(), product);
     }
-
+    public static void addToSortedUsers(User user){sortedUsers.put(user.getUserId(),user);}
     public static void setSortedProducts(HashMap<String, Product> sortProducts) {
         sortedProducts = sortProducts;
     }
-
-    public static HashMap<String, User> getGetSortedUsers() {return sortedUsers;}
 
     public static void setSortedUsers(HashMap<String, User> sortedUser) {
         DataAccess.sortedUsers = sortedUser;
