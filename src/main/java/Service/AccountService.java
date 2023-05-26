@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class AccountService {
-    public ArrayList<Account> getAllAccounts(){
+    public static ArrayList<Account> getAllAccounts(){
         ArrayList<Account> arrayAccounts = new ArrayList<>();
         for(Map.Entry<String, Account> account : DataAccess.getAllAccounts().entrySet()){
             arrayAccounts.add(account.getValue());
@@ -15,7 +15,7 @@ public class AccountService {
         return arrayAccounts;
     }
 
-    public void updateAccounts(Account account){
+    public static void updateAccounts(Account account){
         DataAccess.getAllAccounts().put(account.getOwner().getUserId(), account);
     }
 }

@@ -27,11 +27,11 @@ public class AdminOrderDetailController {
     private ImageView image;
     public void loadDisplayOrder(OrderDetail item, Order order) {
         orderDetailID.setText(item.getOrderDetailId());
-        orderDate.setText(new DateMiddleware().dateAfterFormat(order.getOrderDate()));
+        orderDate.setText(DateMiddleware.dateAfterFormat(order.getOrderDate()));
         orderProductID.setText(item.getBoughtItem().getId());
         orderQuantity.setText(item.getQuantity()+"");
 
-        String imageDir = new FileLocation().getImageDir() + item.getBoughtItem().getImageLocation();
+        String imageDir = FileLocation.getImageDir() + item.getBoughtItem().getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 100, 74, false, false);
             image.setImage(productImage);

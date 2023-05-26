@@ -27,15 +27,15 @@ public class AdminOrderController {
     public void loadDisplayOrder(Order order) {
         orderIdDisplay.setText(order.getOrderId());
         orderUserDisplay.setText(order.getUserId());
-        orderDateDisplay.setText(new DateMiddleware().dateAfterFormat(order.getOrderDate()));
+        orderDateDisplay.setText(DateMiddleware.dateAfterFormat(order.getOrderDate()));
         orderTotalPriceDisplay.setText(order.getTotalPrice() + "");
         orderID = order.getOrderId();
     }
 
     public void onViewOrderButton(ActionEvent actionEvent) throws IOException {
-        OrderAdminService adminService = new OrderAdminService(new DataAccess());
+        OrderAdminService adminService = OrderAdminService.builder();
         Order order = adminService.getOne(orderID);
         adminService.setSelectedOrder(order);
-        new SceneController().switchScene(actionEvent, "../Pages/adminViewOrderDetail.fxml");
+        SceneController.switchScene(actionEvent, "../Pages/adminViewOrderDetail.fxml");
     }
 }

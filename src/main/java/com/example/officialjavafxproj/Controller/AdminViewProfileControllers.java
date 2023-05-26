@@ -23,12 +23,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminViewProfileControllers implements Initializable {
+public class AdminViewProfileControllers implements Initializable,UIController {
     @FXML
     private ImageView profileImage;
 
     @FXML
     private AnchorPane navbarPane;
+    @FXML
+    private AnchorPane footerPane;
+
     @FXML
     private Label customerIdDisplay;
 
@@ -64,21 +67,31 @@ public class AdminViewProfileControllers implements Initializable {
 
     @FXML
     private Label noMaximumItemsDisplay;
-
+    @Override
     public void addNavigationBar(){
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadUserData() {
-        AdminService adminService = new AdminService();
-        FileLocation imageDir = new FileLocation();
+
+    @Override
+    public void addFooterBar() {
+        try {
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void loadPageContent() {
+        AdminService adminService = AdminService.builder();
         User selectedCustomer = DataAccess.getSelectedCustomer();
         Image selectedUserProfileImg = null;
-        String profileImgUrl = imageDir.getImageDir() + selectedCustomer.getImageLocation();
+        String profileImgUrl = FileLocation.getImageDir() + selectedCustomer.getImageLocation();
         try {
             selectedUserProfileImg = new Image(new FileInputStream(profileImgUrl), 400, 400, false, false);
         } catch (FileNotFoundException e) {
@@ -113,11 +126,12 @@ public class AdminViewProfileControllers implements Initializable {
         }
     }
     public void onUserPageBackButton(ActionEvent actionEvent) throws IOException{
-        new SceneController().switchScene(actionEvent, "../Pages/adminViewCustomers.fxml");
+        SceneController.switchScene(actionEvent, "../Pages/adminViewCustomers.fxml");
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadUserData();
+        loadPageContent();
         addNavigationBar();
+        addFooterBar();
     }
 }

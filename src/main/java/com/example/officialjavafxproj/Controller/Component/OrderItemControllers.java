@@ -73,7 +73,7 @@ public class OrderItemControllers {
     }
 
     public void loadAllOrderItemData(OrderDetail detail){
-        String imageDir = new FileLocation().getImageDir() + detail.getBoughtItem().getImageLocation();
+        String imageDir = FileLocation.getImageDir() + detail.getBoughtItem().getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 200, 205, false, false);
             productOrderImage.setImage(productImage);
@@ -90,11 +90,11 @@ public class OrderItemControllers {
     }
 
     public void onReturnButton(ActionEvent event) throws IOException {
-        User currentUser = new UserServices().getCurrentUser();
+        User currentUser = UserServices.builder().getCurrentUser();
 
         order.getBoughtItem().setNumOfCopies(order.getQuantity() + order.getBoughtItem().getNumOfCopies());
         order.getBoughtItem().setStatus("AVAILABLE");
-        Order currentOrder = new OrderCustomerService(new DataAccess(), new OrderMiddleware()).getOne(order.getOrderId());
+        Order currentOrder = OrderCustomerService.builder().getOne(order.getOrderId());
         currentUser.getAccount().setNumReturnedItems(currentUser.getAccount().getNumReturnedItems() + 1);
         currentUser.getAccount().setRentalThreshold(currentUser.getAccount().getRentalThreshold() + 1);
         currentOrder.getOrders().remove(order);
@@ -120,10 +120,10 @@ public class OrderItemControllers {
 
 
         if(currentOrder.getOrders().size() == 0){
-            new OrderCustomerService(new DataAccess(), new OrderMiddleware()).delete(currentOrder);
-            new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+            OrderCustomerService.builder().delete(currentOrder);
+            SceneController.switchScene(event, "../Pages/userOrders.fxml");
         }else{
-            new SceneController().switchScene(event, "../Pages/userOrderId.fxml");
+            SceneController.switchScene(event, "../Pages/userOrderId.fxml");
         }
 
         if(itemStatusDisplay.getText().equals("LATE")){

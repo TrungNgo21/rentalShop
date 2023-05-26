@@ -26,9 +26,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Formattable;
 import java.util.ResourceBundle;
 
-public class EditProfileControllers implements Initializable {
+public class EditProfileControllers implements Initializable,UIController {
 
     @FXML
     private AnchorPane navbarPane;
@@ -65,44 +66,43 @@ public class EditProfileControllers implements Initializable {
 
     private String newImageDir;
 
-    private User currentUser = new UserServices().getCurrentUser();
+    private User currentUser = UserServices.builder().getCurrentUser();
 
     @FXML
     private AnchorPane footerPane;
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void onFieldReleased() {
-        InputMiddleware middleware = new InputMiddleware();
         String fullName = fullNameEditTextField.getText();
         String phoneNum = phoneNumEditTextField.getText();
         String address = addressEditTextField.getText();
 
-        boolean isValid = (middleware.isValidIString(20, address) &&
-                middleware.isValidIString(15, fullName) &&
-                middleware.isValidPhoneNum(phoneNum));
+        boolean isValid = (InputMiddleware.isValidIString(20, address) &&
+                InputMiddleware.isValidIString(15, fullName) &&
+                InputMiddleware.isValidPhoneNum(phoneNum));
 
         saveButton.setDisable(!isValid);
 
-        if(!middleware.isValidIString(15, fullName)){
+        if(!InputMiddleware.isValidIString(15, fullName)){
             fullNameWarningMessage.setText("Your full name must have 15 characters");
         }else {
             fullNameWarningMessage.setText("");
         }
 
-        if(!middleware.isValidIString(20, address)){
+        if(!InputMiddleware.isValidIString(20, address)){
             addressWarningMessage.setText("Your address must have 20 characters");
         }else {
             addressWarningMessage.setText("");
         }
 
-        if(!middleware.isValidPhoneNum(phoneNum)){
+        if(!InputMiddleware.isValidPhoneNum(phoneNum)){
             phoneNumWarningMessage.setText("Your phone number must have 10 DIGITS");
         }else {
             phoneNumWarningMessage.setText("");
@@ -115,9 +115,9 @@ public class EditProfileControllers implements Initializable {
         currentUser.setPhoneNum(phoneNumEditTextField.getText());
         if(!imageMessage.getText().equals("")){
             if(!imageMessage.getText().equals("No file chosen")){
-                File renameFile = new File(new FileLocation().getImageDir() + currentUser.getImageLocation());
+                File renameFile = new File(FileLocation.getImageDir() + currentUser.getImageLocation());
                 String ext = FileController.getFileExtension(renameFile);
-                renameFile = new File(new FileLocation().getImageDir() + "Users/" + currentUser.getUserId() + "." + ext);
+                renameFile = new File(FileLocation.getImageDir() + "Users/" + currentUser.getUserId() + "." + ext);
                 File file = new File(newImageDir);
                 FileController.deleteFile(renameFile);
                 currentUser.setImageLocation("Users/" + currentUser.getUserId() + "." + ext);
@@ -125,7 +125,7 @@ public class EditProfileControllers implements Initializable {
             }
         }
         try {
-            new SceneController().switchScene(event, "../Pages/userProfile.fxml");
+            SceneController.switchScene(event, "../Pages/userProfile.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -137,8 +137,7 @@ public class EditProfileControllers implements Initializable {
     }
 
     public void onResetToBegin() {
-        FileLocation imageDir = new FileLocation();
-        String profileImgUrl = imageDir.getImageDir() + currentUser.getImageLocation();
+        String profileImgUrl = FileLocation.getImageDir() + currentUser.getImageLocation();
         try {
             Image currentUserImage = new Image(new FileInputStream(profileImgUrl), 400, 400, false, false);
             profileImage.setImage(currentUserImage);
@@ -153,7 +152,7 @@ public class EditProfileControllers implements Initializable {
     }
 
     public void onToProfileButton(ActionEvent actionEvent) throws IOException{
-        new SceneController().switchScene(actionEvent, "../Pages/userProfile.fxml");
+        SceneController.switchScene(actionEvent, "../Pages/userProfile.fxml");
     }
 
 
@@ -165,7 +164,7 @@ public class EditProfileControllers implements Initializable {
         if(file != null){
             imageMessage.setText(file.getAbsolutePath());
             String ext = FileController.getFileExtension(new File(imageMessage.getText()));
-            newImageDir = new FileLocation().getImageDir() + currentUser.getImageLocation() + "Backup" + "." + ext;
+            newImageDir = FileLocation.getImageDir() + currentUser.getImageLocation() + "Backup" + "." + ext;
             File targetFile = new File( newImageDir);
             UploadImageThread uploadThread = UploadImageThread
                     .builder()
@@ -196,15 +195,14 @@ public class EditProfileControllers implements Initializable {
 
     public void addNavigationBar(){
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadUserProfile(){
-        FileLocation imageDir = new FileLocation();
-        String profileImgUrl = imageDir.getImageDir() + currentUser.getImageLocation();
+    public void loadPageContent(){
+        String profileImgUrl = FileLocation.getImageDir() + currentUser.getImageLocation();
         try {
             Image currentUserImage = new Image(new FileInputStream(profileImgUrl), 400, 400, false, false);
             profileImage.setImage(currentUserImage);
@@ -220,7 +218,7 @@ public class EditProfileControllers implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
-        loadUserProfile();
+        loadPageContent();
         addFooterBar();
     }
 }

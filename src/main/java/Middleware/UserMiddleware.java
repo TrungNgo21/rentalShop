@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserMiddleware {
-    public boolean isDuplicatedUsername(String username, HashMap<String, User> users){
+    public static boolean isDuplicatedUsername(String username, HashMap<String, User> users){
         for(Map.Entry<String, User> user : users.entrySet()){
             if(username.equals(user.getValue().getUserName())){
                 return true;
@@ -15,7 +15,7 @@ public class UserMiddleware {
         return false;
     }
 
-    public String isAuthorized(String username, String password, HashMap<String, User> users){
+    public static String isAuthorized(String username, String password, HashMap<String, User> users){
         for(Map.Entry<String, User> user : users.entrySet()){
             if(username.equals(user.getValue().getUserName())){
                 if(password.equals(user.getValue().getPassword())){

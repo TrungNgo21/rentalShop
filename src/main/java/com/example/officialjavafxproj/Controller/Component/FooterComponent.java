@@ -7,8 +7,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 public class FooterComponent {
-    @FXML
-    private Button viewInfo;
 
     public void onViewInfoButton(ActionEvent event) {
         Alert showProjectInfo = AlertBuilder.builder()

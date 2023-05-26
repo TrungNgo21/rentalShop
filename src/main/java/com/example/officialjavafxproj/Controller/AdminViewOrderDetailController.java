@@ -4,6 +4,7 @@ import DataAccess.DataAccess;
 import Model.Order.Order;
 import Model.Order.OrderDetail;
 import Service.OrderAdminService;
+import Service.OrderAdminService;
 import com.example.officialjavafxproj.Controller.Component.AdminOrderDetailController;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.event.ActionEvent;
@@ -22,7 +23,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class AdminViewOrderDetailController implements Initializable {
+public class AdminViewOrderDetailController implements Initializable,UIController {
     @FXML
     private AnchorPane navbar;
     private Order order;
@@ -37,22 +38,22 @@ public class AdminViewOrderDetailController implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private void addNavigationBar() {
+    public void addNavigationBar() {
         try {
-            navbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
+            navbar.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    private void addOrderDetail() {
-        order = new OrderAdminService(new DataAccess()).getSelectedOrder();
+    public void loadPageContent() {
+        order = OrderAdminService.builder().getSelectedOrder();
         VBox vBox = new VBox();
-        for(Map.Entry<String, OrderDetail> orderDetail: new OrderAdminService(new DataAccess()).getAllOrderDetail(order).entrySet()) {
+        for(Map.Entry<String, OrderDetail> orderDetail: OrderAdminService.builder().getAllOrderDetail(order).entrySet()) {
             try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("../Component/adminViewOrderDetailComponent.fxml"));
@@ -71,7 +72,7 @@ public class AdminViewOrderDetailController implements Initializable {
     }
 
     private void addProductTotalPrice() {
-        for(Map.Entry<String, OrderDetail> orderDetail: new OrderAdminService(new DataAccess()).getAllOrderDetail(order).entrySet()) {
+        for(Map.Entry<String, OrderDetail> orderDetail: OrderAdminService.builder().getAllOrderDetail(order).entrySet()) {
             Label product = new Label(orderDetail.getValue().getBoughtItem().getTitle());
             product.setFont(new Font("Arial", 18));
             productList.getChildren().add(product);
@@ -80,13 +81,13 @@ public class AdminViewOrderDetailController implements Initializable {
     }
 
     public void onUserPageBackButton(ActionEvent actionEvent) throws IOException{
-        new SceneController().switchScene(actionEvent, "../Pages/adminViewOrders.fxml");
+        SceneController.switchScene(actionEvent, "../Pages/adminViewOrders.fxml");
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addFooterBar();
         addNavigationBar();
-        addOrderDetail();
+        loadPageContent();
         addProductTotalPrice();
     }
 }

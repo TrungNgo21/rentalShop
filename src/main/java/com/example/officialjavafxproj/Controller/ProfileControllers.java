@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileControllers implements Initializable {
+public class ProfileControllers implements Initializable,UIController {
 
     @FXML
     private ImageView profileImage;
@@ -70,20 +70,19 @@ public class ProfileControllers implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadUserData(){
-        UserServices userServices = new UserServices();
-        FileLocation imageDir = new FileLocation();
+    public void loadPageContent(){
+        UserServices userServices = UserServices.builder();
 
         if(userServices.getCurrentUser() instanceof Customer){
             Customer currentCustomer = (Customer) userServices.getCurrentUser();
             Image currentUserProfileImg = null;
-            String profileImgUrl = imageDir.getImageDir() + currentCustomer.getImageLocation();
+            String profileImgUrl = FileLocation.getImageDir() + currentCustomer.getImageLocation();
             try {
                 currentUserProfileImg = new Image(new FileInputStream(profileImgUrl), 400, 400, false, false);
             } catch (FileNotFoundException e) {
@@ -120,18 +119,17 @@ public class ProfileControllers implements Initializable {
     }
 
     public void onEditProfile(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/editUserProfile.fxml");
+        SceneController.switchScene(event, "../Pages/editUserProfile.fxml");
     }
 
     public void onBackToShop(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/homepage.fxml");
+        SceneController.switchScene(event, "../Pages/homepage.fxml");
     }
 
     public void addNavigationBar(){
-        SceneController sceneSwitcher = new SceneController();
         navbarPane.getChildren().clear();
         try {
-            navbarPane.getChildren().add(sceneSwitcher.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,7 +138,7 @@ public class ProfileControllers implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
-        loadUserData();
+        loadPageContent();
         addFooterBar();
     }
 }

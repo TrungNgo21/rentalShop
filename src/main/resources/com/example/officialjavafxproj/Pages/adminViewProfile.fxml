@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="648.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.AdminViewProfileControllers">
+<AnchorPane prefHeight="728.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.AdminViewProfileControllers">
    <children>
       <AnchorPane fx:id="navbarPane" prefHeight="80.0" prefWidth="1280.0" />
       <HBox layoutX="84.0" layoutY="124.0" prefHeight="420.0" prefWidth="1101.0">
@@ -243,5 +243,6 @@
             </AnchorPane>
          </children>
       </HBox>
+      <AnchorPane fx:id="footerPane" layoutX="1.0" layoutY="648.0" prefHeight="80.0" prefWidth="1280.0" />
    </children>
 </AnchorPane>

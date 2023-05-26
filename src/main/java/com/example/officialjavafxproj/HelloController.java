@@ -40,13 +40,11 @@ public class HelloController implements Initializable {
 
     @FXML
     public void onLoginButton(ActionEvent event) throws IOException {
-        SceneController sceneController = new SceneController();
-        sceneController.switchScene(event, "../Pages/login.fxml");
+        SceneController.switchScene(event, "../Pages/login.fxml");
     }
 
     public void onRegisterButton(ActionEvent event) throws IOException{
-        SceneController sceneSwitcher = new SceneController();
-        sceneSwitcher.switchScene(event, "../Pages/register.fxml");
+        SceneController.switchScene(event, "../Pages/register.fxml");
     }
 
     public void onExitButton(){
@@ -57,7 +55,7 @@ public class HelloController implements Initializable {
 
     public void loadBackgroundImg(){
         try {
-            Image img = new Image(new FileInputStream(new FileLocation().getImageDir() + "/Public/headerIcon.jpg"), 600, 400, false, false);
+            Image img = new Image(new FileInputStream(FileLocation.getImageDir() + "/Public/headerIcon.jpg"), 600, 400, false, false);
             backgroundImg.setImage(img);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

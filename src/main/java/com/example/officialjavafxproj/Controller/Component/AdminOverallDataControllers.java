@@ -23,10 +23,10 @@ public class AdminOverallDataControllers implements Initializable {
     private Label todayRevenueDisplay;
 
     private void loadOverallData(){
-        totalRevenueDisplay.setText(String.valueOf(new RevenueService().getRevenue()));
-        totalCustomerDisplay.setText(String.valueOf(new UserServices().getAll().size() - 1));
-        totalItemsDisplay.setText(String.valueOf(new ProductService().getAll().size()));
-        todayRevenueDisplay.setText(String.valueOf(new DateMiddleware().dateAfterFormat(LocalDate.now()) + " " + (new RevenueService().getAllRevenue().get(LocalDate.now()) == null ? 0 : new RevenueService().getAllRevenue().get(LocalDate.now()) )));
+        totalRevenueDisplay.setText(String.valueOf(RevenueService.builder().getRevenue()));
+        totalCustomerDisplay.setText(String.valueOf(UserServices.builder().getAll().size() - 1));
+        totalItemsDisplay.setText(String.valueOf(ProductService.builder().getAll().size()));
+        todayRevenueDisplay.setText(DateMiddleware.dateAfterFormat(LocalDate.now()) + " " + (RevenueService.builder().getAllRevenue().get(LocalDate.now()) == null ? 0 : RevenueService.builder().getAllRevenue().get(LocalDate.now()) ));
     }
 
     @Override

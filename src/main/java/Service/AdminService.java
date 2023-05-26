@@ -12,21 +12,22 @@ import javax.xml.crypto.Data;
 import java.util.*;
 
 public class AdminService implements Services<User> {
-    private final DataAccess db = new DataAccess();
-    private final UserMiddleware checker = new UserMiddleware();
+
+    private AdminService(){
+
+    }
+
+    public static AdminService builder(){
+        return new AdminService();
+    }
+
     @Override
     public String idCreation() {
         return null;
     }
 
     @Override
-    public void add(User user) {
-        if(!checker.isDuplicatedUsername(user.getUserName(), DataAccess.getAllUsers())) {
-            DataAccess.getAllUsers().put(idCreation(), user);
-        }else{
-            throw new Error("Duplicate username!");
-        }
-    }
+    public void add(User user) {}
 
     @Override
     public void edit(User user) {
@@ -109,13 +110,13 @@ public class AdminService implements Services<User> {
             }
         }
         if (sortOptions.get(0).isSelected()){
-            new AdminService().sortIncreasingOrderId();
+            AdminService.builder().sortIncreasingOrderId();
         }
         else if(sortOptions.get(1).isSelected()){
-            new AdminService().sortDecreasingOrderId();
+            AdminService.builder().sortDecreasingOrderId();
         }
         else {
-            new AdminService().sortByName();
+            AdminService.builder().sortByName();
         }
     }
     @Override

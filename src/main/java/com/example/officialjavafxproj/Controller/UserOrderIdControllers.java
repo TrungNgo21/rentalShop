@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
 
-public class UserOrderIdControllers implements Initializable {
+public class UserOrderIdControllers implements Initializable,UIController {
 
     @FXML
     private AnchorPane navbarPane;
@@ -41,7 +41,7 @@ public class UserOrderIdControllers implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,14 +51,14 @@ public class UserOrderIdControllers implements Initializable {
 
     public void addNavigationBar() {
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadAllOrderItems(){
-        OrderCustomerService orderCustomerService = new OrderCustomerService(new DataAccess(), new OrderMiddleware());
+    public void loadPageContent(){
+        OrderCustomerService orderCustomerService = OrderCustomerService.builder();
         orderIdDisplay.setText(orderCustomerService.getCurrentOrder().getOrderId());
         orderItemsQuantityDisplay.setText(String.valueOf(orderCustomerService.getCurrentOrder().getOrders().size()));
         if(orderCustomerService.getCurrentOrder().getOrders().size() == 0){
@@ -99,14 +99,14 @@ public class UserOrderIdControllers implements Initializable {
     }
 
     public void onBackToOrders(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+        SceneController.switchScene(event, "../Pages/userOrders.fxml");
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
-        loadAllOrderItems();
+        loadPageContent();
         addFooterBar();
     }
 }

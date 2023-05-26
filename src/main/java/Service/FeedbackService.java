@@ -10,25 +10,24 @@ import static java.lang.Math.round;
 
 public class FeedbackService {
 
-
-    public void addFeedbackToDb(Feedback feedback){
+    public static void addFeedbackToDb(Feedback feedback){
         DataAccess.addFeedback(feedback);
     }
 
-    public ArrayList<Feedback> getAllReviews(){
+    public static ArrayList<Feedback> getAllReviews(){
 //        for(Feedback feedback : DataAccess.getFeedbacks()){
 //            System.out.println(feedback.getRating());
 //        }
         return DataAccess.getFeedbacks();
     }
 
-    public double getAverageRatings(String itemId){
+    public static double getAverageRatings(String itemId){
         double total = 0;
         double totalFeedbacks = 0;
-        if(new ProductService().getOne(itemId).getItemsFeedback().size() == 0){
+        if(ProductService.builder().getOne(itemId).getItemsFeedback().size() == 0){
             return 0;
         }
-        for(Feedback feedback : new ProductService().getOne(itemId).getItemsFeedback()){
+        for(Feedback feedback : ProductService.builder().getOne(itemId).getItemsFeedback()){
                 total += feedback.getRating();
                 totalFeedbacks++;
         }

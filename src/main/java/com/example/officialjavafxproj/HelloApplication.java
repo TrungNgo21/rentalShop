@@ -14,13 +14,12 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
-    private SceneController sceneSwitcher = new SceneController();
 
     @Override
     public void start(Stage stage) throws IOException {
         DataAccess.loadAllData();
         stage.initStyle(StageStyle.UNDECORATED);
-        sceneSwitcher.setCurrentScene(stage,"../hello-view.fxml");
+        SceneController.setCurrentScene(stage,"../hello-view.fxml");
     }
 
     public static void main(String[] args) {

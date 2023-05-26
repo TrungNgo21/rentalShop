@@ -6,8 +6,14 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class OrderDetailCartService implements Services<OrderDetail>{
-    private final DataAccess db = new DataAccess();
 
+    private OrderDetailCartService(){
+
+    }
+
+    public static OrderDetailCartService builder(){
+        return new OrderDetailCartService();
+    }
     @Override
     public String idCreation() {
         UUID uuid = UUID.randomUUID();

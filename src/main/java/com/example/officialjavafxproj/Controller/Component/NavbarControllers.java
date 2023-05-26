@@ -26,37 +26,37 @@ public class NavbarControllers implements Initializable {
     @FXML
     private TextField searchBar;
     public void onLogoutButton(ActionEvent event) throws IOException {
-        new UserServices().setCurrentUser(null);
-        new SceneController().switchScene(event, "../Pages/login.fxml");
+        UserServices.builder().setCurrentUser(null);
+        SceneController.switchScene(event, "../Pages/login.fxml");
     }
 
     public void onAccountButton(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/userProfile.fxml");
+        SceneController.switchScene(event, "../Pages/userProfile.fxml");
     }
 
     public void onHomeButton(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/homepage.fxml");
+        SceneController.switchScene(event, "../Pages/homepage.fxml");
     }
 
     public void onGoToCartButton(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/userCart.fxml");
+        SceneController.switchScene(event, "../Pages/userCart.fxml");
     }
     public void onGoToOrders(ActionEvent event) throws IOException {
-        new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+        SceneController.switchScene(event, "../Pages/userOrders.fxml");
     }
 
     public void onSearchButton(ActionEvent event) throws IOException{
-        SearchController.searchByIdentify(searchBar.getText(), new ProductService().getAll());
-        new ProductService().setSortedProduct(SearchController.getTempContainer());
-        new SceneController().switchScene(event, "../Pages/sortPage.fxml");
+        SearchController.searchByIdentify(searchBar.getText(), ProductService.builder().getAll());
+        ProductService.builder().setSortedProduct(SearchController.getTempContainer());
+        SceneController.switchScene(event, "../Pages/sortPage.fxml");
     }
 
     public void loadUserName(){
-        userNameDisplay.setText(new UserServices().getCurrentUser().getUserName());
+        userNameDisplay.setText(UserServices.builder().getCurrentUser().getUserName());
     }
 
     public void loadNoCartItem(){
-        noCartItem.setText(String.valueOf(new OrderDetailCartService().getAll().size()));
+        noCartItem.setText(String.valueOf(OrderDetailCartService.builder().getAll().size()));
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

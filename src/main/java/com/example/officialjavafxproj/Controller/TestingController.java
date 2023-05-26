@@ -22,7 +22,7 @@ public class TestingController{
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
         String ext = FileController.getFileExtension(file);
-        File targetFile = new File( new FileLocation().getImageDir() + "Public/" + "1." + ext);
+        File targetFile = new File( FileLocation.getImageDir() + "Public/" + "1." + ext);
         if(file != null){
             FileController.uploadFile(targetFile, file, 400, 400);
             messageLabel.setText(file.getAbsolutePath() + " selected");

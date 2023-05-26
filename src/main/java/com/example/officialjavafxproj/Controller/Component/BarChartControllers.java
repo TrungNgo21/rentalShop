@@ -34,7 +34,7 @@ public class BarChartControllers implements Initializable {
 //                .withXCategories(FXCollections.observableArrayList(groups))
                 .withXAxis("Rental Types")
                 .withYAxis("Number")
-                .withProductData(ChartDataController.getChartProductData(new ProductService().getArrayProducts(), groups), genres)
+                .withProductData(ChartDataController.getChartProductData(ProductService.builder().getArrayProducts(), groups), genres)
                 .withMaxWidth(400)
                 .withMaxHeight(300)
                 .withTitle("Details Products Number")

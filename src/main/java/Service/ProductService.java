@@ -18,10 +18,14 @@ import java.util.Map;
 
 public class ProductService implements Services<Product> {
 
+    private ProductService(){
+
+    }
 
 
-    private final DataAccess db = new DataAccess();
-
+    public static ProductService builder(){
+        return new ProductService();
+    }
     @Override
     public String idCreation() {
         int numOfProduct = DataAccess.getAllProducts().size();
@@ -58,17 +62,6 @@ public class ProductService implements Services<Product> {
             }
         }
         return null;
-    }
-
-    public void getStock(){
-        HashMap<String,Product> temp = new HashMap<String,Product>();
-        for(Map.Entry<String,Product> product : DataAccess.getAllProducts().entrySet()){
-            if(product.getValue().getNumOfCopies() == 0){
-                temp.put(product.getKey(),product.getValue());
-            }
-        }
-        DataAccess.setSortedProducts(temp);
-
     }
 
     public void sortByPrice() {
@@ -264,9 +257,9 @@ public class ProductService implements Services<Product> {
             }
         }
         if(orderOptions.get(0).isSelected()){
-            new ProductService().sortByPrice();
+            sortByPrice();
         }else{
-            new ProductService().sortByTitle();
+            sortByTitle();
         }
     }
 

@@ -35,7 +35,7 @@ public class OrderComponentControllers {
     private ImageView orderImage;
 
     public void loadOrderData(Order order){
-        String imageDir = new FileLocation().getImageDir() + "Public/orderIcon.png";
+        String imageDir = FileLocation.getImageDir() + "Public/orderIcon.png";
         try {
             Image image = new Image(new FileInputStream(imageDir), 200, 145, false, false);
             orderImage.setImage(image);
@@ -52,16 +52,16 @@ public class OrderComponentControllers {
 
         }
 
-        orderDate.setText(new DateMiddleware().dateAfterFormat(order.getOrderDate()));
+        orderDate.setText(DateMiddleware.dateAfterFormat(order.getOrderDate()));
         orderId.setText(order.getOrderId());
         orderTotalPrice.setText(String.valueOf(order.getTotalPrice()));
     }
 
     public void onOrderClicked(MouseEvent mouseEvent) throws IOException {
-        OrderCustomerService orderCustomerService = new OrderCustomerService(new DataAccess(), new OrderMiddleware());
+        OrderCustomerService orderCustomerService = OrderCustomerService.builder();
         Order currentOrder = orderCustomerService.getOne(orderId.getText());
         orderCustomerService.setCurrentOrder(currentOrder);
-        new SceneController().switchScene(mouseEvent, "../Pages/userOrderId.fxml");
+        SceneController.switchScene(mouseEvent, "../Pages/userOrderId.fxml");
     }
 
 

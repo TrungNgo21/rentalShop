@@ -21,13 +21,13 @@ public class RatingChartComponent implements Initializable {
 //        BarChart<String, Number> ratingChart = BarchartBuilder.builder()
 //                .withMaxHeight(250)
 //                .withMaxWidth(300)
-//                .withRatingData(ChartDataController.getChartRating(new FeedbackService().getAllReviews()))
+//                .withRatingData(ChartDataController.getChartRating(FeedbackService.getAllReviews()))
 //                .withBarColorAll("#FFB84C", 5)
 //                .build();
         BarChart<Number, String> ratingChart = HorizontalBarchartBuilder.builder()
                 .withMaxHeight(250)
                 .withMaxWidth(300)
-                .withData(ChartDataController.getChartRating(new FeedbackService().getAllReviews(), new ProductService().getTargetProduct().getId()))
+                .withData(ChartDataController.getChartRating(FeedbackService.getAllReviews(), ProductService.builder().getTargetProduct().getId()))
                 .withBarColorAll("#FFB84C", 5)
                 .build();
         chartDisplay.getChildren().add(ratingChart);
