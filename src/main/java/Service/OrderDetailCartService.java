@@ -1,6 +1,7 @@
 package Service;
 
 import DataAccess.DataAccess;
+import Model.Order.Order;
 import Model.Order.OrderDetail;
 import java.util.HashMap;
 import java.util.UUID;
@@ -26,6 +27,14 @@ public class OrderDetailCartService implements Services<OrderDetail>{
     }
     public void addToGlobal(OrderDetail detail){
         DataAccess.getOrderAdminDetails().add(detail);
+    }
+    public OrderDetail getOneAdmin(String detailId){
+        for(OrderDetail orderDetail : DataAccess.getOrderAdminDetails()){
+            if(orderDetail.getOrderDetailId().equals(detailId)){
+                return orderDetail;
+            }
+        }
+        return null;
     }
 
     @Override

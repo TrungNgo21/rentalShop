@@ -1,9 +1,10 @@
 package Model.Order;
 
 import Model.Product.Product;
-;
+;import java.time.LocalDate;
 
 public class OrderDetail {
+    private static String[] statuses = {"RETURNED", "LATE", "OK"};
     private String orderId;
 
     private String OrderDetailId;
@@ -11,6 +12,10 @@ public class OrderDetail {
     private String cartId;
     private Product boughtItem;
     private int quantity;
+
+    private LocalDate dueDate;
+
+    private String status;
 
     public OrderDetail(String orderDetailId, String orderId, String cartId, Product boughtItem, int quantity) {
         this.OrderDetailId = orderDetailId;
@@ -54,5 +59,25 @@ public class OrderDetail {
 
     public void setCartId(String cartId) {
         this.cartId = cartId;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public static String[] getStatuses() {
+        return statuses;
     }
 }

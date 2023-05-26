@@ -11,10 +11,7 @@ import Model.Order.Order;
 import Model.Order.OrderDetail;
 import Model.Product.Product;
 import Model.User.User;
-import Service.AccountService;
-import Service.OrderCustomerService;
-import Service.ProductService;
-import Service.UserServices;
+import Service.*;
 import com.example.officialjavafxproj.Utils.AlertBuilder;
 import com.example.officialjavafxproj.Utils.SceneController;
 import com.example.officialjavafxproj.Utils.ToastBuilder;
@@ -97,6 +94,7 @@ public class OrderItemControllers {
         Order currentOrder = OrderCustomerService.builder().getOne(order.getOrderId());
         currentUser.getAccount().setNumReturnedItems(currentUser.getAccount().getNumReturnedItems() + 1);
         currentUser.getAccount().setRentalThreshold(currentUser.getAccount().getRentalThreshold() + 1);
+        OrderDetailCartService.builder().getOneAdmin(order.getOrderDetailId()).setStatus(OrderDetail.getStatuses()[0]);
         currentOrder.getOrders().remove(order);
         if(currentUser.getAccount().isAllowedToPromoted()){
             if(currentUser.getAccount() instanceof GuestAccount){

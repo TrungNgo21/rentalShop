@@ -190,6 +190,8 @@ public class DataAccess {
         ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getOrderDetailFileDir());
         for (String[] orderDetailData : Objects.requireNonNull(dataFile)) {
             OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2], products.get(orderDetailData[3]), Integer.parseInt(orderDetailData[4]));
+            details.setDueDate(LocalDate.parse(orderDetailData[5], DateMiddleware.dateParser()));
+            details.setStatus(orderDetailData[6]);
             orderDetails.add(details);
         }
     }
@@ -198,6 +200,8 @@ public class DataAccess {
         ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getAdminOrdersDetailDir());
         for (String[] orderDetailData : Objects.requireNonNull(dataFile)) {
             OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2], products.get(orderDetailData[3]), Integer.parseInt(orderDetailData[4]));
+            details.setDueDate(LocalDate.parse(orderDetailData[5], DateMiddleware.dateParser()));
+            details.setStatus(orderDetailData[6]);
             orderAdminDetails.add(details);
         }
     }
@@ -349,7 +353,9 @@ public class DataAccess {
                                     + order.getOrderId() + ";"
                                     + "NaN" + ";"
                                     + detail.getBoughtItem().getId() + ";"
-                                    + detail.getQuantity() + "\n");
+                                    + detail.getQuantity() + ";"
+                                    + DateMiddleware.dateAfterFormat(detail.getDueDate()) + ";"
+                                    + detail.getStatus() + "\n");
                         }
                     }
                 }
@@ -359,7 +365,9 @@ public class DataAccess {
                                 + "NaN" + ";"
                                 + user.getValue().getCart().getCartId() + ";"
                                 + detail.getBoughtItem().getId() + ";"
-                                + detail.getQuantity() + "\n");
+                                + detail.getQuantity()+ ";"
+                                + DateMiddleware.dateAfterFormat(detail.getDueDate()) + ";"
+                                + detail.getStatus() + "\n");
                     }
                 }
             }
@@ -372,7 +380,9 @@ public class DataAccess {
                             + orderDetail.getOrderId() + ";"
                             + "NaN" + ";"
                             + orderDetail.getBoughtItem().getId() + ";"
-                            + orderDetail.getQuantity() + "\n");
+                            + orderDetail.getQuantity() + ";"
+                            + DateMiddleware.dateAfterFormat(orderDetail.getDueDate())+ ";"
+                            + orderDetail.getStatus()+ "\n");
                 }
             }
             writerAdmin.close();

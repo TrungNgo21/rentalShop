@@ -148,6 +148,13 @@ public class UserCartControllers implements Initializable,UIController {
                     details.getValue().setCartId("NaN");
                     details.getValue().setOrderDetailId(OrderDetailCartService.builder().idCreation());
                     details.getValue().setOrderId(madeOrder.getOrderId());
+                    if(details.getValue().getBoughtItem().getLoanType().equals("1-WEEK")){
+                        details.getValue().setDueDate(LocalDate.now().plusDays(7));
+                        details.getValue().setStatus(OrderDetail.getStatuses()[2]);
+                    }else{
+                        details.getValue().setDueDate(LocalDate.now().plusDays(2));
+                        details.getValue().setStatus(OrderDetail.getStatuses()[2]);
+                    }
                     madeOrder.addOrderDetailsToOrder(details.getValue());
                 }
                 OrderCustomerService.builder().add(madeOrder);

@@ -2,6 +2,7 @@ package com.example.officialjavafxproj.Controller;
 
 import DataAccess.DataAccess;
 import Middleware.OrderMiddleware;
+import Model.Order.Order;
 import Model.Order.OrderDetail;
 import Service.OrderCustomerService;
 import com.example.officialjavafxproj.Controller.Component.CartComponentControllers;
@@ -73,24 +74,32 @@ public class UserOrderIdControllers implements Initializable,UIController {
                     HBox cartItem = fxmlLoader.load();
                     OrderItemControllers orderItemControllers = fxmlLoader.getController();
                     orderItemControllers.loadAllOrderItemData(detail);
-                    if(detail.getBoughtItem().getLoanType().equals("1-WEEK")){
-                        if(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(7).compareTo(LocalDate.now()) < 0){
-                            orderItemControllers.setDueStatus("LATE");
-                        }else{
-                            orderItemControllers.setDueStatus("OK");
-                        }
-                        orderItemControllers.setDueDate(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(7).toString());
+                    if(detail.getDueDate().compareTo(LocalDate.now()) < 0){
+                        orderItemControllers.setDueStatus("LATE");
+                        detail.setStatus(OrderDetail.getStatuses()[1]);
                     }else{
-                        if(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(2).compareTo(LocalDate.now()) < 0){
-                            orderItemControllers.setDueStatus("LATE");
-                        }else{
-                            orderItemControllers.setDueStatus("OK");
-                        }
-                        orderItemControllers.setDueDate(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(2).toString());
+                        orderItemControllers.setDueStatus("OK");
                     }
+                    orderItemControllers.setDueDate(detail.getDueDate().toString());
+
+//                    if(detail.getBoughtItem().getLoanType().equals("1-WEEK")){
+//                        detail.setDueDate(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(7));
+//                        if(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(7).compareTo(LocalDate.now()) < 0){
+//
+//                        }else{
+//                        }
+//                        orderItemControllers.setDueDate(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(7).toString());
+//                    }else{
+//                        detail.setDueDate(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(2));
+//                        if(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(2).compareTo(LocalDate.now()) < 0){
+//                            orderItemControllers.setDueStatus("LATE");
+//                        }else{
+//                            orderItemControllers.setDueStatus("OK");
+//                        }
+//                        orderItemControllers.setDueDate(orderCustomerService.getCurrentOrder().getOrderDate().plusDays(2).toString());
+//                    }
                     orderItemsDisplay.getChildren().add(cartItem);
                 } catch (IOException e) {
-                    System.out.println("hihihi");
                     e.printStackTrace();
                 }
             }

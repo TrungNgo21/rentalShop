@@ -1,7 +1,7 @@
 Acc009;GuestAccount;0;0;false;2;false;C009
 Acc008;GuestAccount;0;0;false;2;false;C008
 Acc007;GuestAccount;0;0;false;2;false;C007
-Acc006;VIPAccount;110;16;true;10001;true;C006
+Acc006;VIPAccount;130;18;true;10001;false;C006
 Acc0017;GuestAccount;0;1;false;0;true;C017
 Acc005;GuestAccount;0;0;false;2;false;C005
 Acc0016;GuestAccount;0;0;false;2;false;C016

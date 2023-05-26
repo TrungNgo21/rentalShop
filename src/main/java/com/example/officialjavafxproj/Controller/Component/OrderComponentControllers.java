@@ -45,11 +45,7 @@ public class OrderComponentControllers {
         }
         for(OrderDetail detail : order.getOrders()){
             LocalDate temp;
-            if(detail.getBoughtItem().getLoanType().equals("1-WEEK")){
-                temp = order.getOrderDate().plusDays(7);
-            }else{
-                temp = order.getOrderDate().plusDays(2);
-            }
+            temp = detail.getDueDate();
             if(temp.compareTo(LocalDate.now()) < 0){
                 orderStatus.setText("Warning");
                 orderStatus.setStyle("-fx-border-color: #E57C23; -fx-text-fill: #E57C23; -fx-border-radius: 20; -fx-border-width: 2");
