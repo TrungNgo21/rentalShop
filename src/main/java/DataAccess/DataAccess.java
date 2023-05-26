@@ -328,7 +328,7 @@ public class DataAccess {
                     writer.write(feedback.getCustomerId() + ";"
                             + feedback.getProductId() + ";"
                             + feedback.getRating() + ";"
-                            + feedback.getFeedBackContent() + ";"
+                            + feedback.getFeedBackContent().replaceAll("\n", "") + ";"
                             + DateMiddleware.dateAfterFormat(feedback.getReviewDate()) + "\n");
                 }
             }

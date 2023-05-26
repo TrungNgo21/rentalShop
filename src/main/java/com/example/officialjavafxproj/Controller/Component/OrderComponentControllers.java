@@ -5,6 +5,7 @@ import FileLocation.FileLocation;
 import Middleware.DateMiddleware;
 import Middleware.OrderMiddleware;
 import Model.Order.Order;
+import Model.Order.OrderDetail;
 import Service.OrderCustomerService;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.fxml.FXML;
@@ -42,16 +43,22 @@ public class OrderComponentControllers {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        if(order.getOrderDate().compareTo(LocalDate.now()) < 0){
-            orderStatus.setText("Warning");
-            orderStatus.setStyle("-fx-border-color: #E57C23; -fx-text-fill: #E57C23; -fx-border-radius: 20; -fx-border-width: 2");
-
-        }else{
-            orderStatus.setText("Good");
-            orderStatus.setStyle("-fx-border-color: #54B435; -fx-text-fill: #54B435; -fx-border-radius: 20; -fx-border-width: 2");
-
+        for(OrderDetail detail : order.getOrders()){
+            LocalDate temp;
+            if(detail.getBoughtItem().getLoanType().equals("1-WEEK")){
+                temp = order.getOrderDate().plusDays(7);
+            }else{
+                temp = order.getOrderDate().plusDays(2);
+            }
+            if(temp.compareTo(LocalDate.now()) < 0){
+                orderStatus.setText("Warning");
+                orderStatus.setStyle("-fx-border-color: #E57C23; -fx-text-fill: #E57C23; -fx-border-radius: 20; -fx-border-width: 2");
+            }else{
+                orderStatus.setText("Good");
+                orderStatus.setStyle("-fx-border-color: #54B435; -fx-text-fill: #54B435; -fx-border-radius: 20; -fx-border-width: 2");
+            }
+            break;
         }
-
         orderDate.setText(DateMiddleware.dateAfterFormat(order.getOrderDate()));
         orderId.setText(order.getOrderId());
         orderTotalPrice.setText(String.valueOf(order.getTotalPrice()));
