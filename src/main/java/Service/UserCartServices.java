@@ -5,13 +5,18 @@ import Model.Order.Cart;
 import java.util.HashMap;
 
 public class UserCartServices implements Services<Cart>{
-    private final DataAccess db = new DataAccess();
+
+    private UserCartServices(){
+    }
+
+    public static UserCartServices builder(){
+        return new UserCartServices();
+    }
 
     @Override
     public String idCreation() {
         return "CART00" + DataAccess.getAllCarts().size();
     }
-
     @Override
     public void add(Cart userCart) {
         DataAccess.getCurrentUser().addCard(userCart);

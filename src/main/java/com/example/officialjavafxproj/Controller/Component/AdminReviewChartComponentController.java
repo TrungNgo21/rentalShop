@@ -21,7 +21,7 @@ public class AdminReviewChartComponentController implements Initializable {
         BarChart<Number, String> ratingChart = HorizontalBarchartBuilder.builder()
                 .withMaxHeight(376)
                 .withMaxWidth(325)
-                .withData(ChartDataController.getChartRating(new FeedbackService().getAllReviews(), new ProductService().getTargetProduct().getId()))
+                .withData(ChartDataController.getChartRating(FeedbackService.getAllReviews(), ProductService.builder().getTargetProduct().getId()))
                 .withBarColorAll("#FFB84C", 5)
                 .build();
         chartDisplay.getChildren().add(ratingChart);

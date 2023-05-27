@@ -13,14 +13,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SceneController {
-    private Parent root;
-    private Scene scene;
-    private Stage stage;
+    private static Parent root;
+    private static Scene scene;
+    private static Stage stage;
 
-    private double xOffset;
-    private double yOffset;
+    private static double xOffset;
+    private static double yOffset;
 
-    private void draggable(Parent root, Stage stage){
+    private static void draggable(Parent root, Stage stage){
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -38,8 +38,8 @@ public class SceneController {
         });
     }
 
-    public void switchScene(Event event, String pathToView) throws IOException {
-        root = FXMLLoader.load(getClass().getResource(pathToView));
+    public static void switchScene(Event event, String pathToView) throws IOException {
+        root = FXMLLoader.load(SceneController.class.getResource(pathToView));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         draggable(root, stage);
         scene = new Scene(root);
@@ -47,21 +47,15 @@ public class SceneController {
         stage.show();
     }
 
-    public Parent getComponentScene(Parent container, String pathToComponent) throws IOException {
+    public static Parent getComponentScene(Parent container, String pathToComponent) throws IOException {
         FXMLLoader componentLoader = new FXMLLoader();
-        componentLoader.setLocation(getClass().getResource(pathToComponent));
+        componentLoader.setLocation(SceneController.class.getResource(pathToComponent));
         container = componentLoader.load();
         return container;
     }
 
-    public Object getComponentController(String pathToComponent){
-        FXMLLoader componentLoader = new FXMLLoader();
-        componentLoader.setLocation(getClass().getResource(pathToComponent));
-        return componentLoader.getController();
-    }
-
-    public void setCurrentScene(Stage stage, String pathToView) throws IOException{
-        root = FXMLLoader.load(getClass().getResource(pathToView));
+    public static void setCurrentScene(Stage stage, String pathToView) throws IOException{
+        root = FXMLLoader.load(SceneController.class.getResource(pathToView));
         draggable(root, stage);
         scene = new Scene(root);
         stage.setScene(scene);

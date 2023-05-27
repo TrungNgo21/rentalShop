@@ -22,7 +22,7 @@ public class PieChartControllers implements Initializable {
     public void setUpBarChart(){
         PieChart pieChart = PieChartBuilder.builder()
                 .withTitle("Accounts Distribution")
-                .withAccountData(ChartDataController.getChartAccountData(new AccountService().getAllAccounts()))
+                .withAccountData(ChartDataController.getChartAccountData(AccountService.getAllAccounts()))
                 .withMaxWidth(500)
                 .withMaxHeight(300)
                 .withValueDisplay(true)

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomepageAdminControllers implements Initializable {
+public class HomepageAdminControllers implements Initializable,UIController {
 
     @FXML
     private AnchorPane navbarPane;
@@ -27,7 +27,7 @@ public class HomepageAdminControllers implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,25 +36,14 @@ public class HomepageAdminControllers implements Initializable {
     public void addNavigationBar(){
         navbarPane.getChildren().clear();
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void addOverallData(){
+    public void loadPageContent(){
         FXMLLoader overallDataLoader = new FXMLLoader(getClass().getResource("../Component/adminOverallDataComponent.fxml"));
-        try {
-            VBox dataContainer = overallDataLoader.load();
-            chartDisplay.add(dataContainer,0,0);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public void addCharts(){
         FXMLLoader barChartLoader = new FXMLLoader(getClass().getResource("../Component/barChartComponent.fxml"));
         FXMLLoader pieChartLoader = new FXMLLoader(getClass().getResource("../Component/pieChartComponent.fxml"));
         FXMLLoader lineChartLoader = new FXMLLoader(getClass().getResource("../Component/lineChartComponent.fxml"));
@@ -64,6 +53,8 @@ public class HomepageAdminControllers implements Initializable {
             AnchorPane barChart = barChartLoader.load();
             AnchorPane pieChart = pieChartLoader.load();
             AnchorPane lineChart = lineChartLoader.load();
+            VBox dataContainer = overallDataLoader.load();
+            chartDisplay.add(dataContainer,0,0);
             chartDisplay.setHgap(10);
             chartDisplay.setVgap(10);
             chartDisplay.setAlignment(Pos.CENTER);
@@ -80,7 +71,6 @@ public class HomepageAdminControllers implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addFooterBar();
         addNavigationBar();
-        addOverallData();
-        addCharts();
+        loadPageContent();
     }
 }

@@ -25,7 +25,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class ProductDetailsControllers implements Initializable {
+public class ProductDetailsControllers implements Initializable,UIController {
     @FXML
     private AnchorPane navbarPane;
 
@@ -80,7 +80,7 @@ public class ProductDetailsControllers implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,15 +88,15 @@ public class ProductDetailsControllers implements Initializable {
 
     public void addNavigationBar(){
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void loadProductDetailData(){
-        Product currentProduct = new ProductService().getTargetProduct();
-        String imageDir = new FileLocation().getImageDir() + currentProduct.getImageLocation();
+    public void loadPageContent(){
+        Product currentProduct = ProductService.builder().getTargetProduct();
+        String imageDir = FileLocation.getImageDir() + currentProduct.getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 350, 200, false, false);
             productDetailImage.setImage(productImage);
@@ -110,7 +110,7 @@ public class ProductDetailsControllers implements Initializable {
         productDetailGenreDisplay.setText(currentProduct.getGenre());
         productDetailLoanTypeDisplay.setText(currentProduct.getLoanType());
         productDetailStockDisplay.setText(String.valueOf(currentProduct.getNumOfCopies()));
-        averageStarDisplay.setText(String.format("%.1f", new FeedbackService().getAverageRatings(new ProductService().getTargetProduct().getId())));
+        averageStarDisplay.setText(String.format("%.1f", FeedbackService.getAverageRatings(ProductService.builder().getTargetProduct().getId())));
         productDetailQuantityDisplay.setText("2");
         productDetailQuantityDisplay.textProperty().addListener((observable, oldValue, newValue) ->{
             if(newValue.equals(productDetailStockDisplay.getText())){
@@ -128,14 +128,14 @@ public class ProductDetailsControllers implements Initializable {
 
     public void addReviewBox(){
         try {
-            reviewBoxDisplay.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/reviewBoxComponent.fxml"));
+            reviewBoxDisplay.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/reviewBoxComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void addRatingChart(){
         try {
-            ratingChartDisplay.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/starChartComponent.fxml"));
+            ratingChartDisplay.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/starChartComponent.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -143,9 +143,9 @@ public class ProductDetailsControllers implements Initializable {
 
     public void onAddToCartButton(ActionEvent event) throws IOException{
 
-        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
-        UserCartServices userCartServices = new UserCartServices();
-        Product currentProduct = new ProductService().getTargetProduct();
+        OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
+        UserCartServices userCartServices = UserCartServices.builder();
+        Product currentProduct = ProductService.builder().getTargetProduct();
         boolean isExisted = false;
 
         for(Map.Entry<String, OrderDetail> detail : orderDetailCartService.getAll().entrySet()){
@@ -161,24 +161,25 @@ public class ProductDetailsControllers implements Initializable {
             }
         }
         if(!isExisted){
-            OrderDetail detail = new OrderDetail(new OrderDetailCartService().idCreation(), "NaN", userCartServices.getOne("dummy").getCartId(), currentProduct, Integer.parseInt(productDetailQuantityDisplay.getText()));
+            OrderDetail detail = new OrderDetail(OrderDetailCartService.builder().idCreation(), "NaN", userCartServices.getOne("dummy").getCartId(), currentProduct, Integer.parseInt(productDetailQuantityDisplay.getText()));
             orderDetailCartService.add(detail);
+            orderDetailCartService.addToGlobal(detail);
             ToastBuilder.builder()
                     .withTitle("Cart Message")
                     .withMessage("Added To Cart Successfully")
                     .withMode(Notifications.SUCCESS)
                     .show();
         }
-        new SceneController().switchScene(event, "../Pages/homepage.fxml");
+        SceneController.switchScene(event, "../Pages/homepage.fxml");
 
     }
 
     public void onRateItemButton(ActionEvent actionEvent) throws IOException{
-        new SceneController().switchScene(actionEvent, "../Pages/userRatingItem.fxml");
+        SceneController.switchScene(actionEvent, "../Pages/userRatingItem.fxml");
     }
 
     public void onCheckCartButton(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/userCart.fxml");
+        SceneController.switchScene(event, "../Pages/userCart.fxml");
     }
 
     public void setIncreaseButton(){
@@ -202,7 +203,7 @@ public class ProductDetailsControllers implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
-        loadProductDetailData();
+        loadPageContent();
         setIncreaseButton();
         setAddToCartButton();
         addRatingChart();

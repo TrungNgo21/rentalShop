@@ -3,6 +3,7 @@ package com.example.officialjavafxproj.Controller.Component;
 import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Model.Product.Product;
+import Service.FeedbackService;
 import Service.ProductService;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.fxml.FXML;
@@ -15,9 +16,14 @@ import javafx.scene.input.MouseEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import static java.lang.Double.NaN;
+
 public class AdminProductController {
     @FXML
     private ImageView imageView;
+
+    @FXML
+    private Label averageStarDisplay;
     @FXML
     private Label productTitleDisplay;
     @FXML
@@ -36,7 +42,8 @@ public class AdminProductController {
     private String productId;
 
     public void loadProductDisplay(Product product){
-        String imageDir = new FileLocation().getImageDir() + product.getImageLocation();
+        double averageStar = FeedbackService.getAverageRatings(product.getId());
+        String imageDir = FileLocation.getImageDir() + product.getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 200, 175, false, false);
             imageView.setImage(productImage);
@@ -53,19 +60,20 @@ public class AdminProductController {
         productStatus.setText(product.getStatus());
         rentalType.setText(product.getRentalType());
         genre.setText(product.getGenre());
+        averageStarDisplay.setText(!Double.isNaN(averageStar) ? String.format("%.1f", FeedbackService.getAverageRatings(product.getId())) : "0");
         productId = product.getId();
 
     }
     public void onClick(MouseEvent mouseEvent) throws IOException {
-        ProductService productService = new ProductService();
+        ProductService productService = ProductService.builder();
         Product currentProduct = productService.getOne(productId);
         productService.setTargetProduct(currentProduct);
-        new SceneController().switchScene(mouseEvent,"../Pages/adminEditProduct.fxml");
+        SceneController.switchScene(mouseEvent,"../Pages/adminEditProduct.fxml");
     }
     public void viewProductDetail(MouseEvent mouseEvent) throws IOException {
-        ProductService productService = new ProductService();
+        ProductService productService = ProductService.builder();
         Product currentProduct = productService.getOne(productId);
         productService.setTargetProduct(currentProduct);
-        new SceneController().switchScene(mouseEvent,"../Pages/adminProductDetail.fxml");
+        SceneController.switchScene(mouseEvent,"../Pages/adminProductDetail.fxml");
     }
 }

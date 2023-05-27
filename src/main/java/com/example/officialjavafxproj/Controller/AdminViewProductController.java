@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class AdminViewProductController implements Initializable {
+public class AdminViewProductController implements Initializable,UIController {
     @FXML
     private Label label;
     @FXML
@@ -41,7 +41,7 @@ public class AdminViewProductController implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,22 +50,22 @@ public class AdminViewProductController implements Initializable {
 
     public void addNavigationBar(){
         try {
-            adminNavbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
+            adminNavbar.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void addSortedPane(){
         try {
-            sortLayout.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
+            sortLayout.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void addProductToGridView(){
+    public void loadPageContent(){
             int column = 1;
             int row = 0;
-            ProductService productService = new ProductService();
+            ProductService productService = ProductService.builder();
             gridPane.getChildren().clear();
             for(Map.Entry<String, Product> product : productService.getAll().entrySet()){
                 try {
@@ -84,7 +84,7 @@ public class AdminViewProductController implements Initializable {
             }
     }
     public void addProductButton(ActionEvent actionEvent) throws IOException{
-        new SceneController().switchScene(actionEvent, "../Pages/adminAddProduct.fxml");
+        SceneController.switchScene(actionEvent, "../Pages/adminAddProduct.fxml");
     }
 
 
@@ -93,6 +93,6 @@ public class AdminViewProductController implements Initializable {
         addFooterBar();
         addNavigationBar();
         addSortedPane();
-        addProductToGridView();
+        loadPageContent();
     }
 }

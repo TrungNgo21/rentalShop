@@ -3,6 +3,7 @@ package com.example.officialjavafxproj.Controller.Component;
 import FileLocation.FileLocation;
 import Model.Order.OrderDetail;
 import Service.OrderDetailCartService;
+import Service.ProductService;
 import com.example.officialjavafxproj.Utils.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,9 +44,11 @@ public class CartComponentControllers {
     @FXML
     private Label productCartLoanDisplay;
 
+    private OrderDetail currentOrderDetail;
 
     public void loadCartItemData(OrderDetail details){
-        String imageDir = new FileLocation().getImageDir() + details.getBoughtItem().getImageLocation();
+        currentOrderDetail = details;
+        String imageDir = FileLocation.getImageDir() + details.getBoughtItem().getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 200, 170, false, false);
             productCartImage.setImage(productImage);
@@ -73,8 +76,13 @@ public class CartComponentControllers {
         });
     }
 
+    public void onViewItemButton(ActionEvent actionEvent) throws IOException{
+        ProductService.builder().setTargetProduct(currentOrderDetail.getBoughtItem());
+        SceneController.switchScene(actionEvent, "../Pages/productDetails.fxml");
+    }
+
     public void onDownButton(ActionEvent event) throws IOException{
-        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
+        OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
         OrderDetail currentItem = orderDetailCartService.getOne(cartItemId);
         currentItem.setQuantity(currentItem.getQuantity() - 1);
         quantityDisplay.setText(String.valueOf(currentItem.getQuantity()));
@@ -82,7 +90,7 @@ public class CartComponentControllers {
     }
     public void onUpButton(ActionEvent event) throws IOException{
         downButton.setDisable(false);
-        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
+        OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
         OrderDetail currentItem = orderDetailCartService.getOne(cartItemId);
         currentItem.setQuantity(currentItem.getQuantity() + 1);
         quantityDisplay.setText(String.valueOf(currentItem.getQuantity()));
@@ -91,14 +99,14 @@ public class CartComponentControllers {
 
     }
     public void onDeleteButton(ActionEvent event) throws IOException{
-        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
+        OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
         OrderDetail currentItem = orderDetailCartService.getOne(cartItemId);
         orderDetailCartService.delete(currentItem);
-        new SceneController().switchScene(event, "../Pages/userCart.fxml");
+        SceneController.switchScene(event, "../Pages/userCart.fxml");
     }
 
     public void onUpdateButton(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/userCart.fxml");
+        SceneController.switchScene(event, "../Pages/userCart.fxml");
     }
 
     public void setDownButton(){

@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class AdminProductDetailController implements Initializable {
+public class AdminProductDetailController implements Initializable,UIController {
     @FXML
     private AnchorPane navbarPane;
 
@@ -56,21 +56,21 @@ public class AdminProductDetailController implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void addNavigationBar(){
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public void loadProductDetail(){
-        Product currentProduct = new ProductService().getTargetProduct();
-        String imageDir = new FileLocation().getImageDir() + currentProduct.getImageLocation();
+    public void loadPageContent(){
+        Product currentProduct = ProductService.builder().getTargetProduct();
+        String imageDir = FileLocation.getImageDir() + currentProduct.getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 350, 280, false, false);
             productDetailImage.setImage(productImage);
@@ -87,14 +87,14 @@ public class AdminProductDetailController implements Initializable {
         productDetailRentalFee.setText(String.valueOf(currentProduct.getRentalFee()));
     }
     public void editProduct(ActionEvent actionEvent) throws IOException{
-        Product currentProduct = new ProductService().getTargetProduct();
-        new ProductService().setTargetProduct(currentProduct);
-        new SceneController().switchScene(actionEvent, "../Pages/adminEditProduct.fxml");
+        Product currentProduct = ProductService.builder().getTargetProduct();
+        ProductService.builder().setTargetProduct(currentProduct);
+        SceneController.switchScene(actionEvent, "../Pages/adminEditProduct.fxml");
     }
     public void deleteProduct(ActionEvent actionEvent) throws IOException{
-        Product currentProduct = new ProductService().getTargetProduct();
-        new ProductService().delete(currentProduct);
-        new SceneController().switchScene(actionEvent,"../Pages/adminViewProduct.fxml");
+        Product currentProduct = ProductService.builder().getTargetProduct();
+        ProductService.builder().delete(currentProduct);
+        SceneController.switchScene(actionEvent,"../Pages/adminViewProduct.fxml");
         ToastBuilder.builder()
                 .withTitle("Delete Successfully")
                 .withMessage("The product has been deleted successfully")
@@ -102,19 +102,19 @@ public class AdminProductDetailController implements Initializable {
                 .show();
     }
     public void back(ActionEvent actionEvent) throws IOException {
-        new SceneController().switchScene(actionEvent,"../Pages/adminViewProduct.fxml");
+        SceneController.switchScene(actionEvent,"../Pages/adminViewProduct.fxml");
     }
     public void viewRating(ActionEvent actionEvent) throws IOException{
-        Product currentProduct = new ProductService().getTargetProduct();
-        new ProductService().setTargetProduct(currentProduct);
-        new SceneController().switchScene(actionEvent,"../Pages/adminProductViewRating.fxml");
+        Product currentProduct = ProductService.builder().getTargetProduct();
+        ProductService.builder().setTargetProduct(currentProduct);
+        SceneController.switchScene(actionEvent,"../Pages/adminProductViewRating.fxml");
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addFooterBar();
-        loadProductDetail();
+        loadPageContent();
         addNavigationBar();
     }
 }

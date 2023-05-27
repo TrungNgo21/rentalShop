@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AdminAddProductController implements Initializable {
+public class AdminAddProductController implements Initializable,UIController {
     @FXML
     private AnchorPane adminNavbar;
     @FXML
@@ -86,7 +86,7 @@ public class AdminAddProductController implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,10 +94,14 @@ public class AdminAddProductController implements Initializable {
 
     public void addNavigationBar() {
         try {
-            adminNavbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
+            adminNavbar.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void loadPageContent() {
     }
 
     public void setChoiceBox() {
@@ -107,14 +111,13 @@ public class AdminAddProductController implements Initializable {
     }
 
     public void onFieldReleased() {
-        InputMiddleware middleware = new InputMiddleware();
         String productName = nameTextField.getText();
         String productPrice = priceTextField.getText();
         String numOfCopies = copiesTextField.getText();
         String publishedYear = publishedYearTextField.getText();
 
 
-        boolean isValid = (!productName.trim().isEmpty() && middleware.isPositive(productPrice) && middleware.isPositive(numOfCopies) && middleware.isPositive(publishedYear) && genreTypeChoiceBox.getValue() != null && rentalTypeChoiceBox.getValue() != null && loanTypeChoiceBox.getValue() != null);
+        boolean isValid = (!productName.trim().isEmpty() && InputMiddleware.isPositive(productPrice) && InputMiddleware.isPositive(numOfCopies) && InputMiddleware.isPositive(publishedYear) && genreTypeChoiceBox.getValue() != null && rentalTypeChoiceBox.getValue() != null && loanTypeChoiceBox.getValue() != null);
 
         saveButton.setDisable(!isValid);
 
@@ -126,29 +129,29 @@ public class AdminAddProductController implements Initializable {
         }
         if (productPrice.trim().isEmpty()) {
             priceWarningMessage.setText("You must not leave this field empty");
-        } else if (!middleware.isValidNumber(productPrice)) {
+        } else if (!InputMiddleware.isValidNumber(productPrice)) {
             priceWarningMessage.setText("The price must be a number");
-        } else if (!middleware.isPositive(productPrice)) {
+        } else if (!InputMiddleware.isPositive(productPrice)) {
             priceWarningMessage.setText("The price must be positive");
         } else {
             priceWarningMessage.setText("");
         }
         if (publishedYear.trim().isEmpty()) {
             publishedYearWarningMessage.setText("You must not leave this field empty");
-        } else if (!middleware.isValidNumber(publishedYear)) {
+        } else if (!InputMiddleware.isValidNumber(publishedYear)) {
             publishedYearWarningMessage.setText("The published year must be a number");
         } else if (publishedYear.length() != 4) {
             publishedYearWarningMessage.setText("The year is not valid");
-        } else if (!middleware.isPositive(publishedYear)) {
+        } else if (!InputMiddleware.isPositive(publishedYear)) {
             publishedYearWarningMessage.setText("The published year must be positive");
         } else {
             publishedYearWarningMessage.setText("");
         }
         if (numOfCopies.trim().isEmpty()) {
             copiesWarningMessage.setText("You must not leave this field empty");
-        } else if (!middleware.isValidNumber(numOfCopies)) {
+        } else if (!InputMiddleware.isValidNumber(numOfCopies)) {
             copiesWarningMessage.setText("Num of copies must be a number");
-        } else if (!middleware.isPositive(numOfCopies)) {
+        } else if (!InputMiddleware.isPositive(numOfCopies)) {
             copiesWarningMessage.setText("Num of copies must be positive");
         } else {
             copiesWarningMessage.setText("");
@@ -174,7 +177,7 @@ public class AdminAddProductController implements Initializable {
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
-        new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
+        SceneController.switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
     }
 
     public void onUploadImage() {
@@ -185,7 +188,7 @@ public class AdminAddProductController implements Initializable {
         if (file != null) {
             imageMessage.setText(file.getAbsolutePath());
             String ext = FileController.getFileExtension(new File(imageMessage.getText()));
-            imageDir = new FileLocation().getImageDir() + "." + ext;
+            imageDir = FileLocation.getImageDir() + "." + ext;
             File targetFile = new File(imageDir);
             UploadImageThread uploadThread = UploadImageThread
                     .builder()
@@ -223,14 +226,14 @@ public class AdminAddProductController implements Initializable {
         String publishedYear = publishedYearTextField.getText();
         String targetFileDir = "";
         String ext = FileController.getFileExtension(new File(imageMessage.getText()));
-        File targetFile = new File(new FileLocation().getImageDir() + "Product/" + new ProductService().idCreation() + publishedYear + "." + ext);
+        File targetFile = new File(FileLocation.getImageDir() + "Product/" + ProductService.builder().idCreation() + publishedYear + "." + ext);
 
         if (imageMessage.getText().equals("No file chosen") || imageMessage.getText().equals("")) {
             targetFileDir = "Product/default.png";
         } else {
-            targetFileDir = "Product/" + new ProductService().idCreation() + publishedYear + "." + ext;
+            targetFileDir = "Product/" + ProductService.builder().idCreation() + publishedYear + "." + ext;
         }
-        ProductService productService = new ProductService();
+        ProductService productService = ProductService.builder();
         //        UploadImageThread uploadThread = new UploadImageThread(targetFile, new File(imageMessage.getText()), 400, 400);
         UploadImageThread uploadThread = UploadImageThread
                 .builder()
@@ -275,7 +278,7 @@ public class AdminAddProductController implements Initializable {
                             .withMessage("Add Successfully!!!")
                             .withMode(Notifications.SUCCESS)
                             .show();
-                    new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
+                    SceneController.switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
                 } catch (Error err) {
                     ToastBuilder.builder()
                             .withTitle("Add Message")
@@ -305,7 +308,7 @@ public class AdminAddProductController implements Initializable {
                         .withMessage("Add Successfully!!!")
                         .withMode(Notifications.SUCCESS)
                         .show();
-                new SceneController().switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
+                SceneController.switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
             } catch (Error err) {
                 ToastBuilder.builder()
                         .withTitle("Add Message")

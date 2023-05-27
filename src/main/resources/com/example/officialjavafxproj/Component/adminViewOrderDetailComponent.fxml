@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="179.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.AdminOrderDetailController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="179.0" prefWidth="584.0" style="-fx-border-color: #ccc; -fx-border-radius: 15; -fx-border-width: 2; -fx-background-radius: 15; -fx-background-color: white;" styleClass="shadow" stylesheets="@../component.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.officialjavafxproj.Controller.Component.AdminOrderDetailController">
    <children>
-      <Label fx:id="orderDetailID" prefHeight="27.0" prefWidth="277.0" text="#OD001">
+      <Label fx:id="orderDetailID" prefHeight="27.0" prefWidth="498.0" style="-fx-wrap-text: true;" text="#OD001">
          <graphic>
             <Label text="Order Detaill: ">
                <font>
@@ -24,19 +24,11 @@
             <Insets left="15.0" />
          </VBox.margin>
       </Label>
-      <Label text="Payment via other" textFill="#555555">
-         <VBox.margin>
-            <Insets left="20.0" top="5.0" />
-         </VBox.margin>
-         <font>
-            <Font name="Arial" size="14.0" />
-         </font>
-      </Label>
       <HBox maxWidth="-Infinity" prefHeight="171.0" prefWidth="724.0">
          <children>
             <VBox>
                <children>
-                  <VBox prefHeight="624.0" prefWidth="140.0">
+                  <VBox prefHeight="98.0" prefWidth="137.0">
                      <children>
                         <Label text="General">
                            <VBox.margin>
@@ -46,7 +38,7 @@
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Date created" textFill="#555555">
+                        <Label text="Due Date" textFill="#555555">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
@@ -66,26 +58,26 @@
                   </VBox>
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="140.0">
+            <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label text="Cart">
+                  <Label text="Status">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Cart ID">
+                  <Label text="Due Status">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="orderCartID" text="CART008">
+                  <Label fx:id="dueStatus" text="2">
                      <VBox.margin>
-                        <Insets />
+                        <Insets top="5.0" />
                      </VBox.margin>
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="140.0">
+            <VBox prefHeight="98.0" prefWidth="97.0">
                <children>
                   <Label text="Product">
                      <font>
@@ -100,7 +92,10 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="orderProductID" text="I002-1999" />
+                  <Label fx:id="orderProductID" text="I002-1999">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin></Label>
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
@@ -115,7 +110,10 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="orderQuantity" text="2" />
+                  <Label fx:id="orderQuantity" text="2">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin></Label>
                </children>
             </VBox>
             <ImageView fx:id="image" fitHeight="70.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true">
@@ -129,4 +127,7 @@
          </VBox.margin>
       </HBox>
    </children>
+   <padding>
+      <Insets left="10.0" right="10.0" top="10.0" />
+   </padding>
 </VBox>

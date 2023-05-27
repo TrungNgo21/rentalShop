@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class AdminViewOrderController implements Initializable {
+public class AdminViewOrderController implements Initializable,UIController {
     @FXML
     private AnchorPane navbar;
     @FXML
@@ -36,33 +36,37 @@ public class AdminViewOrderController implements Initializable {
     private RadioButton sortByOrderDate;
     @FXML
     private RadioButton sortByUserID;
-    private OrderAdminService orderAdminService = new OrderAdminService(new DataAccess());
     @FXML
     private AnchorPane footerPane;
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void addNavigationBar() {
+    public void addNavigationBar() {
         try {
-            navbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
+            navbar.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    @Override
+    public void loadPageContent() {
+
+    }
+
     private void addAllOrder() {
-        addOrder(new OrderAdminService(new DataAccess()).getAll());
+        addOrder(OrderAdminService.builder().getAll());
     }
 
     private void addOrder(HashMap<String, Order> orderList) {
         int column = 0;
-        int row = 1;
+        int row = 0;
         gridPane.getChildren().clear();
         for(Map.Entry<String, Order> order: orderList.entrySet()) {
             try {
@@ -71,14 +75,14 @@ public class AdminViewOrderController implements Initializable {
                 HBox userItem = loader.load();
                 AdminOrderController adminOrderController = loader.getController();
                 adminOrderController.loadDisplayOrder(order.getValue());
-                DataAccess.getAllOrders().add(order.getValue());
-                if(column == 1) {
+//                DataAccess.getAllAdminOrders().add(order.getValue());
+                if(column == 2) {
                     column = 0;
                     row++;
                 }
                 gridPane.setHgap(10);
                 gridPane.setVgap(10);
-                gridPane.add(userItem,column,row++);
+                gridPane.add(userItem,column++,row);
             }
             catch (Exception e){
                 throw new RuntimeException(e);
@@ -89,9 +93,9 @@ public class AdminViewOrderController implements Initializable {
     @FXML
     private void onSearchOrderButton() {
         int column = 0;
-        int row = 1;
+        int row = 0;
         gridPane.getChildren().clear();
-        for(Map.Entry<String, Order> order: new OrderAdminService(new DataAccess()).getAll().entrySet()) {
+        for(Map.Entry<String, Order> order: OrderAdminService.builder().getAll().entrySet()) {
             if(searchOrder.getText().equals(order.getKey())) {
                 try {
                     FXMLLoader loader = new FXMLLoader();
@@ -99,14 +103,14 @@ public class AdminViewOrderController implements Initializable {
                     HBox userItem = loader.load();
                     AdminOrderController adminOrderController = loader.getController();
                     adminOrderController.loadDisplayOrder(order.getValue());
-                    DataAccess.getAllOrders().add(order.getValue());
-                    if (column == 1) {
+//                    DataAccess.getAllOrders().add(order.getValue());
+                    if (column == 2) {
                         column = 0;
                         row++;
                     }
                     gridPane.setHgap(10);
                     gridPane.setVgap(10);
-                    gridPane.add(userItem, column, row++);
+                    gridPane.add(userItem, column++, row);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -115,17 +119,17 @@ public class AdminViewOrderController implements Initializable {
     }
     @FXML
     private void onOrderIDSortButton() {
-        addOrder(orderAdminService.getSortedOrderID());
+        addOrder(OrderAdminService.builder().getSortedOrderID());
     }
 
     @FXML
     private void onOrderDateSortButton() {
-        addOrder(orderAdminService.getSortedOrderDate());
+        addOrder(OrderAdminService.builder().getSortedOrderDate());
     }
 
     @FXML
     private void onUserIDSortButton() {
-        addOrder(orderAdminService.getSortedUserID());
+        addOrder(OrderAdminService.builder().getSortedUserID());
     }
 
     private void setToggleGroup() {

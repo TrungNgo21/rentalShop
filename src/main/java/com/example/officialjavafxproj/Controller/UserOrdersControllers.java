@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 
-public class UserOrdersControllers implements Initializable {
+public class UserOrdersControllers implements Initializable,UIController {
     @FXML
     private AnchorPane navbarPane;
 
@@ -39,9 +39,11 @@ public class UserOrdersControllers implements Initializable {
     @FXML
     private AnchorPane footerPane;
 
+    private final OrderCustomerService orderCustomerService = OrderCustomerService.builder();
+
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,19 +52,18 @@ public class UserOrdersControllers implements Initializable {
 
     public void addNavigationBar() {
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadAllOrders(){
-        OrderCustomerService orderCustomerService = new OrderCustomerService(new DataAccess(), new OrderMiddleware());
+    public void loadPageContent(){
         ordersQuantityDisplay.setText(String.valueOf(orderCustomerService.getAll().size()));
         if(orderCustomerService.getAll().size() == 0){
-            new UserServices().getCurrentUser().getAccount().setCurrentlyBorrowed(false);
+            UserServices.builder().getCurrentUser().getAccount().setCurrentlyBorrowed(false);
         }else{
-            new UserServices().getCurrentUser().getAccount().setCurrentlyBorrowed(true);
+            UserServices.builder().getCurrentUser().getAccount().setCurrentlyBorrowed(true);
 
         }
         if(orderCustomerService.getAll().size() == 0){
@@ -86,13 +87,13 @@ public class UserOrdersControllers implements Initializable {
     }
 
     public void onBackToShopping(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/homepage.fxml");
+        SceneController.switchScene(event, "../Pages/homepage.fxml");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
-        loadAllOrders();
+        loadPageContent();
         addFooterBar();
     }
 }

@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class OrderCustomerService extends OrderService {
-    public OrderCustomerService(DataAccess db, OrderMiddleware checker) {
-        super(db, checker);
+public class OrderCustomerService implements Services<Order>{
+    private OrderCustomerService(){
+    }
+
+    public static OrderCustomerService builder(){
+        return new OrderCustomerService();
     }
 
     @Override
@@ -69,6 +72,14 @@ public class OrderCustomerService extends OrderService {
 
     public void setCurrentOrder(Order currentOrder){
         DataAccess.setCurrentOrder(currentOrder);
+    }
+
+    public void addToGlobal(Order order){
+        DataAccess.addToOrders(order);
+    }
+
+    public void deleteFromGlobal(Order order){
+        DataAccess.getAllOrders().remove(order);
     }
 
 }

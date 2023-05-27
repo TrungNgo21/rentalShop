@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class SortPageControllers implements Initializable {
+public class SortPageControllers implements Initializable,UIController {
 
     @FXML
     private AnchorPane navbarPane;
@@ -35,7 +35,7 @@ public class SortPageControllers implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class SortPageControllers implements Initializable {
 
     public void addNavigationBar(){
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,27 +51,27 @@ public class SortPageControllers implements Initializable {
 
     public void addSortedPane(){
         try {
-            sortPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
+            sortPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadSortedProducts(){
+    public void loadPageContent(){
         int row = 1;
         int column = 0;
-        if(new ProductService().getSortedProducts().size() == 0){
+        if(ProductService.builder().getSortedProducts().size() == 0){
             Label temp = new Label();
             temp.setText("No Products matched your requirement");
             sortProductDisplay.getChildren().add(temp);
         }
-        for(Map.Entry<String, Product> product : new ProductService().getSortedProducts().entrySet()){
+        for(Map.Entry<String, Product> product : ProductService.builder().getSortedProducts().entrySet()){
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../Component/productComponent.fxml"));
                 AnchorPane productItem = fxmlLoader.load();
-//                AnchorPane productItem = (AnchorPane) new SceneController().getComponentScene(new AnchorPane(), "../Component/productComponent.fxml");
-//                ProductComponentControllers productItemsController = (ProductComponentControllers) new SceneController().getComponentController("../Component/productComponent.fxml");
+//                AnchorPane productItem = (AnchorPane) SceneController.getComponentScene(new AnchorPane(), "../Component/productComponent.fxml");
+//                ProductComponentControllers productItemsController = (ProductComponentControllers) SceneController.getComponentController("../Component/productComponent.fxml");
                 ProductComponentControllers productComponentControllers = fxmlLoader.getController();
                 productComponentControllers.loadProductItemData(product.getValue());
                 if(column == 4){
@@ -92,7 +92,7 @@ public class SortPageControllers implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
         addSortedPane();
-        loadSortedProducts();
+        loadPageContent();
         addFooterBar();
     }
 }

@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,10 +27,10 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class UserRatingControllers implements Initializable {
+public class UserRatingControllers implements Initializable, UIController{
 
     @FXML
-    private TextField commentsTextField;
+    private TextArea commentsTextField;
 
     @FXML
     private VBox reviewBoxDisplay;
@@ -74,6 +75,11 @@ public class UserRatingControllers implements Initializable {
     @FXML
     private Button postReviewButton;
 
+    private final UserServices userServices = UserServices.builder();
+
+    private final ProductService productService = ProductService.builder();
+
+
     private Integer[] stars = {1,2,3,4,5};
 
     @FXML
@@ -81,7 +87,7 @@ public class UserRatingControllers implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,7 +95,7 @@ public class UserRatingControllers implements Initializable {
 
     @FXML
     public void onBackToDetailButton(ActionEvent event) throws IOException {
-        new SceneController().switchScene(event, "../Pages/productDetails.fxml");
+        SceneController.switchScene(event, "../Pages/productDetails.fxml");
     }
 
     @FXML
@@ -102,16 +108,16 @@ public class UserRatingControllers implements Initializable {
                     .show();
         }else{
             Feedback feedback = Feedback.builder()
-                    .withCustomerId(new UserServices().getCurrentUser().getUserId())
-                    .withProductId(new ProductService().getTargetProduct().getId())
+                    .withCustomerId(userServices.getCurrentUser().getUserId())
+                    .withProductId(productService.getTargetProduct().getId())
                     .withRating(ratingSelection.getValue())
                     .withFeedbackContent(commentsTextField.getText())
                     .withReviewDate(LocalDate.now())
                     .build();
-            new ProductService().getTargetProduct().addFeedback(feedback);
-            new UserServices().getCurrentUser().addReview(feedback);
-            new FeedbackService().addFeedbackToDb(feedback);
-            new SceneController().switchScene(event, "../Pages/userRatingItem.fxml");
+            productService.getTargetProduct().addFeedback(feedback);
+            userServices.getCurrentUser().addReview(feedback);
+            FeedbackService.addFeedbackToDb(feedback);
+            SceneController.switchScene(event, "../Pages/userRatingItem.fxml");
             ToastBuilder.builder()
                     .withMode(Notifications.SUCCESS)
                     .withTitle("Review Message")
@@ -124,9 +130,9 @@ public class UserRatingControllers implements Initializable {
     public void setUpRatingSelection(){
         ratingSelection.getItems().addAll(stars);
     }
-    public void loadProductDetail(){
-        Product currentProduct = new ProductService().getTargetProduct();
-        String imageDir = new FileLocation().getImageDir() + currentProduct.getImageLocation();
+    public void loadPageContent(){
+        Product currentProduct = productService.getTargetProduct();
+        String imageDir = FileLocation.getImageDir() + currentProduct.getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 350, 200, false, false);
             productDetailImage.setImage(productImage);
@@ -140,19 +146,19 @@ public class UserRatingControllers implements Initializable {
         productDetailGenreDisplay.setText(currentProduct.getGenre());
         productDetailLoanTypeDisplay.setText(currentProduct.getLoanType());
         productDetailStockDisplay.setText(String.valueOf(currentProduct.getNumOfCopies()));
-        averageStarDisplay.setText(String.format("%.1f", new FeedbackService().getAverageRatings(new ProductService().getTargetProduct().getId())));
+        averageStarDisplay.setText(String.format("%.1f", FeedbackService.getAverageRatings(ProductService.builder().getTargetProduct().getId())));
     }
 
     public void addReviewBox(){
         try {
-            reviewBoxDisplay.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/reviewBoxComponent.fxml"));
+            reviewBoxDisplay.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/reviewBoxComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void addRatingChart(){
         try {
-            ratingChartDisplay.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/starChartComponent.fxml"));
+            ratingChartDisplay.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/starChartComponent.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -160,18 +166,16 @@ public class UserRatingControllers implements Initializable {
 
     public void addNavigationBar(){
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadProductDetail();
+        loadPageContent();
         setUpRatingSelection();
         addNavigationBar();
         addReviewBox();

@@ -15,26 +15,26 @@ public class AdminNavbarControllers {
 
 //    private Label noCartItem;
     public void onLogoutButton(ActionEvent event) throws IOException {
-        new UserServices().setCurrentUser(null);
-        new SceneController().switchScene(event, "../Pages/login.fxml");
+        UserServices.builder().setCurrentUser(null);
+        SceneController.switchScene(event, "../Pages/login.fxml");
     }
 
 
     public void onHomeButton(ActionEvent event) throws IOException {
-        new SceneController().switchScene(event, "../Pages/adminViewCustomers.fxml");
+        SceneController.switchScene(event, "../Pages/adminViewCustomers.fxml");
     }
     public void onViewProductButton(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/adminViewProduct.fxml");
+        SceneController.switchScene(event, "../Pages/adminViewProduct.fxml");
     }
     public void onViewUsersButton(ActionEvent actionEvent) throws IOException{
-        new SceneController().switchScene(actionEvent, "../Pages/adminViewCustomers.fxml");
+        SceneController.switchScene(actionEvent, "../Pages/adminViewCustomers.fxml");
     }
 
     public void onViewOrdersButton(ActionEvent actionEvent) throws IOException{
-        new SceneController().switchScene(actionEvent, "../Pages/adminViewOrders.fxml");
+        SceneController.switchScene(actionEvent, "../Pages/adminViewOrders.fxml");
     }
 
     public void onHomepageButton(ActionEvent actionEvent) throws IOException{
-        new SceneController().switchScene(actionEvent, "../Pages/homepageAdmin.fxml");
+        SceneController.switchScene(actionEvent, "../Pages/homepageAdmin.fxml");
     }
 }

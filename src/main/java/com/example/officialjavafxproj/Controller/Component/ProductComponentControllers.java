@@ -36,8 +36,8 @@ public class ProductComponentControllers {
     private String productId;
 
     public void loadProductItemData(Product product){
-        double rating = new FeedbackService().getAverageRatings(product.getId());
-        String imageDir = new FileLocation().getImageDir() + product.getImageLocation();
+        double rating = FeedbackService.getAverageRatings(product.getId());
+        String imageDir = FileLocation.getImageDir() + product.getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 202, 208, false, false);
             productImageView.setImage(productImage);
@@ -54,9 +54,9 @@ public class ProductComponentControllers {
     }
 
     public void onProductClicked(MouseEvent mouseEvent) throws IOException {
-        ProductService productService = new ProductService();
+        ProductService productService = ProductService.builder();
         Product currentProduct = productService.getOne(productId);
         productService.setTargetProduct(currentProduct);
-        new SceneController().switchScene(mouseEvent, "../Pages/productDetails.fxml");
+        SceneController.switchScene(mouseEvent, "../Pages/productDetails.fxml");
     }
 }

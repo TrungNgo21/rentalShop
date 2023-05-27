@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminProductViewRatingController implements Initializable {
+public class AdminProductViewRatingController implements Initializable,UIController {
     @FXML
     private AnchorPane navbarPane;
 
@@ -38,7 +38,7 @@ public class AdminProductViewRatingController implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,14 +46,14 @@ public class AdminProductViewRatingController implements Initializable {
 
     public void addNavigationBar(){
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public void loadProductDetail(){
-        Product currentProduct = new ProductService().getTargetProduct();
-        String imageDir = new FileLocation().getImageDir() + currentProduct.getImageLocation();
+    public void loadPageContent(){
+        Product currentProduct = ProductService.builder().getTargetProduct();
+        String imageDir = FileLocation.getImageDir() + currentProduct.getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 350, 280, false, false);
             productDetailImage.setImage(productImage);
@@ -64,26 +64,26 @@ public class AdminProductViewRatingController implements Initializable {
     }
     public void addReviewBox(){
         try {
-            reviewBoxDisplay.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminReviewBoxComponent.fxml"));
+            reviewBoxDisplay.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminReviewBoxComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void addRatingChart(){
         try {
-            ratingChartDisplay.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminReviewChartComponent.fxml"));
+            ratingChartDisplay.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminReviewChartComponent.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
     public void backButton(ActionEvent actionEvent) throws IOException{
-        new SceneController().switchScene(actionEvent,"../Pages/adminProductDetail.fxml");
+        SceneController.switchScene(actionEvent,"../Pages/adminProductDetail.fxml");
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addFooterBar();
         addNavigationBar();
-        loadProductDetail();
+        loadPageContent();
         addRatingChart();
         addReviewBox();
     }

@@ -20,10 +20,7 @@ import com.example.officialjavafxproj.Utils.DateComparator;
 import com.example.officialjavafxproj.Utils.TopProductComparator;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -37,7 +34,7 @@ public class DataAccess {
     private static final ArrayList<String[]> sortedOptions = new ArrayList<>();
     private static final HashMap<String, Account> accounts = new HashMap<>();
 
-    private static HashMap<LocalDate, Double> revenueDaily = new HashMap<>();
+    private static final HashMap<LocalDate, Double> revenueDaily = new HashMap<>();
 
     private static final ArrayList<Cart> carts = new ArrayList<>();
 
@@ -45,8 +42,10 @@ public class DataAccess {
     private static final HashMap<String, Product> products = new HashMap<>();
 
     private static final ArrayList<OrderDetail> orderDetails = new ArrayList<>();
+    private static final ArrayList<OrderDetail> orderAdminDetails = new ArrayList<>();
 
     private static final ArrayList<Order> orders = new ArrayList<>();
+    private static final ArrayList<Order> adminOrders = new ArrayList<>();
 
     private static User currentUser;
 
@@ -77,17 +76,17 @@ public class DataAccess {
 
 
     private static void loadRevenueAdmin(){
-        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getRevenueDir());
+        ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getRevenueDir());
         for(String[] revenueData : Objects.requireNonNull(dataFile)){
-            revenueDaily.put(LocalDate.parse(revenueData[0], new DateMiddleware().dateParser()), Double.parseDouble(revenueData[1]));
+            revenueDaily.put(LocalDate.parse(revenueData[0], DateMiddleware.dateParser()), Double.parseDouble(revenueData[1]));
         }
     }
 
     private static void transferRevenueAdmin(){
         try {
-            FileWriter writer = new FileWriter(new FileLocation().getRevenueDir(), false);
+            FileWriter writer = new FileWriter(FileLocation.getRevenueDir(), false);
             for (Map.Entry<LocalDate, Double> revenue : revenueDaily.entrySet()) {
-                writer.write(new DateMiddleware().dateAfterFormat(revenue.getKey()) + ";"
+                writer.write(DateMiddleware.dateAfterFormat(revenue.getKey()) + ";"
                         + revenue.getValue() + "\n");
             }
             writer.close();
@@ -97,7 +96,7 @@ public class DataAccess {
     }
 
     private static void loadAllProductFeedback(){
-        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getProductFeedbackDir());
+        ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getProductFeedbackDir());
         for(Map.Entry<String, Product> product : products.entrySet()){
             for(String[] feedbackData : Objects.requireNonNull(dataFile)){
                 Feedback feedback = Feedback.builder()
@@ -105,7 +104,7 @@ public class DataAccess {
                         .withProductId(feedbackData[1])
                         .withRating(Integer.parseInt(feedbackData[2]))
                         .withFeedbackContent(feedbackData[3])
-                        .withReviewDate(LocalDate.parse(feedbackData[4], new DateMiddleware().dateParser()))
+                        .withReviewDate(LocalDate.parse(feedbackData[4], DateMiddleware.dateParser()))
                         .build();
                 if(product.getKey().equals(feedbackData[1])){
                     product.getValue().addFeedback(feedback);
@@ -120,7 +119,7 @@ public class DataAccess {
                         .withProductId(feedbackData[1])
                         .withRating(Integer.parseInt(feedbackData[2]))
                         .withFeedbackContent(feedbackData[3])
-                        .withReviewDate(LocalDate.parse(feedbackData[4], new DateMiddleware().dateParser()))
+                        .withReviewDate(LocalDate.parse(feedbackData[4], DateMiddleware.dateParser()))
                         .build();
                 if(user.getKey().equals(feedbackData[0])){
                     user.getValue().addReview(feedback);
@@ -132,7 +131,7 @@ public class DataAccess {
     }
 
     private static void loadAllUsersNoAccounts() {
-        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getUserFileDir());
+        ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getUserFileDir());
         for (String[] userData : Objects.requireNonNull(dataFile)) {
             if (userData[0].equals("ADMIN")) {
                 users.put(userData[0],
@@ -145,7 +144,7 @@ public class DataAccess {
     }
 
     private static void loadAllAccounts() {
-        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getAccountFileDir());
+        ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getAccountFileDir());
         for (String[] accountData : Objects.requireNonNull(dataFile)) {
             if (Objects.equals(accountData[1], "GuestAccount")) {
                 users.get(accountData[7]).setAccount(new GuestAccount(accountData[0], accountData[1], Integer.parseInt(accountData[2]), Integer.parseInt(accountData[3]), Boolean.parseBoolean(accountData[4]), Integer.parseInt(accountData[5]), Boolean.parseBoolean(accountData[6])));
@@ -172,7 +171,7 @@ public class DataAccess {
     }
 
     private static void loadAllProducts() {
-        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getProductFileDir());
+        ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getProductFileDir());
         for (String[] productData : Objects.requireNonNull(dataFile)) {
             if (productData[2].equals("DVD")) {
                 DVD dvd = new DVD(productData[0], productData[1], productData[2], productData[3], productData[4], Integer.parseInt(productData[5]), Double.parseDouble(productData[6]), productData[7], productData[8], productData[9]);
@@ -188,23 +187,43 @@ public class DataAccess {
     }
 
     private static void loadAllOrderDetails() {
-        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getOrderDetailFileDir());
+        ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getOrderDetailFileDir());
         for (String[] orderDetailData : Objects.requireNonNull(dataFile)) {
             OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2], products.get(orderDetailData[3]), Integer.parseInt(orderDetailData[4]));
+            details.setDueDate(LocalDate.parse(orderDetailData[5], DateMiddleware.dateParser()));
+            details.setStatus(orderDetailData[6]);
             orderDetails.add(details);
         }
     }
 
+    private static void loadAllAdminOrderDetails(){
+        ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getAdminOrdersDetailDir());
+        for (String[] orderDetailData : Objects.requireNonNull(dataFile)) {
+            OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2], products.get(orderDetailData[3]), Integer.parseInt(orderDetailData[4]));
+            details.setDueDate(LocalDate.parse(orderDetailData[5], DateMiddleware.dateParser()));
+            details.setStatus(orderDetailData[6]);
+            orderAdminDetails.add(details);
+        }
+    }
+
     private static void loadAllOrdersNoDetail() {
-        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getOrderFileDir());
+        ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getOrderFileDir());
         for (String[] orderData : Objects.requireNonNull(dataFile)) {
-            Order order = new Order(orderData[0], orderData[1], LocalDate.parse(orderData[2], new DateMiddleware().dateParser()), Double.parseDouble(orderData[3]));
+            Order order = new Order(orderData[0], orderData[1], LocalDate.parse(orderData[2], DateMiddleware.dateParser()), Double.parseDouble(orderData[3]));
             orders.add(order);
         }
-    }   
+    }
+
+    private static void loadAllAdminOrdersNoDetail() {
+        ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getAdminOrdersDir());
+        for (String[] orderData : Objects.requireNonNull(dataFile)) {
+            Order order = new Order(orderData[0], orderData[1], LocalDate.parse(orderData[2], DateMiddleware.dateParser()), Double.parseDouble(orderData[3]));
+            adminOrders.add(order);
+        }
+    }
 
     private static void loadAllCartsNoDetail() {
-        ArrayList<String[]> dataFile = getDataFromFile(new FileLocation().getCartFileDir());
+        ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getCartFileDir());
         for (String[] cartData : Objects.requireNonNull(dataFile)) {
             Cart cart = new Cart(cartData[0], cartData[1]);
             carts.add(cart);
@@ -222,6 +241,16 @@ public class DataAccess {
         }
     }
 
+    private static void loadAllAdminOrders(){
+        for (Order order : adminOrders){
+            for (OrderDetail details : orderAdminDetails){
+                if (order.getOrderId().equals(details.getOrderId())) {
+                    order.addOrderDetailsToOrder(details);
+                }
+            }
+        }
+    }
+
     private static void loadAllCarts() {
         for (Cart cart : carts) {
             for (OrderDetail details : orderDetails) {
@@ -235,7 +264,7 @@ public class DataAccess {
 
     private static void transferAllUsers() {
         try {
-            FileWriter writer = new FileWriter(new FileLocation().getUserFileDir(), false);
+            FileWriter writer = new FileWriter(FileLocation.getUserFileDir(), false);
             for (Map.Entry<String, User> user : users.entrySet()) {
                 writer.write(user.getValue().getUserId() + ";"
                         + user.getValue().getUserName() + ";"
@@ -254,7 +283,7 @@ public class DataAccess {
 
     private static void transferAllAccounts() {
         try {
-            FileWriter writer = new FileWriter(new FileLocation().getAccountFileDir(), false);
+            FileWriter writer = new FileWriter(FileLocation.getAccountFileDir(), false);
             for (Map.Entry<String, User> user : users.entrySet()) {
                 writer.write(user.getValue().getAccount().getAccountId() + ";"
                         + user.getValue().getAccount().getAccountType() + ";"
@@ -273,7 +302,7 @@ public class DataAccess {
 
     private static void transferAllProduct() {
         try {
-            FileWriter writer = new FileWriter(new FileLocation().getProductFileDir(), false);
+            FileWriter writer = new FileWriter(FileLocation.getProductFileDir(), false);
             for (Map.Entry<String, Product> product : products.entrySet()) {
                 writer.write(product.getValue().getId() + ";"
                         + product.getValue().getTitle() + ";"
@@ -294,7 +323,7 @@ public class DataAccess {
 
     private static void transferAllProductFeedback(){
         try {
-            FileWriter writer = new FileWriter(new FileLocation().getProductFeedbackDir(), false);
+            FileWriter writer = new FileWriter(FileLocation.getProductFeedbackDir(), false);
             for (Map.Entry<String, Product> product : products.entrySet()) {
                 if(product.getValue().getItemsFeedback().size() == 0){
                     continue;
@@ -303,8 +332,8 @@ public class DataAccess {
                     writer.write(feedback.getCustomerId() + ";"
                             + feedback.getProductId() + ";"
                             + feedback.getRating() + ";"
-                            + feedback.getFeedBackContent() + ";"
-                            + new DateMiddleware().dateAfterFormat(feedback.getReviewDate()) + "\n");
+                            + feedback.getFeedBackContent().replaceAll("\n", "") + ";"
+                            + DateMiddleware.dateAfterFormat(feedback.getReviewDate()) + "\n");
                 }
             }
             writer.close();
@@ -315,7 +344,7 @@ public class DataAccess {
 
     private static void transferAllOrderDetails() {
         try {
-            FileWriter writer = new FileWriter(new FileLocation().getOrderDetailFileDir(), false);
+            FileWriter writer = new FileWriter(FileLocation.getOrderDetailFileDir(), false);
             for (Map.Entry<String, User> user : users.entrySet()) {
                 if(user.getValue().getRentalList() != null){
                     for (Order order : user.getValue().getRentalList()) {
@@ -324,7 +353,9 @@ public class DataAccess {
                                     + order.getOrderId() + ";"
                                     + "NaN" + ";"
                                     + detail.getBoughtItem().getId() + ";"
-                                    + detail.getQuantity() + "\n");
+                                    + detail.getQuantity() + ";"
+                                    + DateMiddleware.dateAfterFormat(detail.getDueDate()) + ";"
+                                    + detail.getStatus() + "\n");
                         }
                     }
                 }
@@ -334,11 +365,28 @@ public class DataAccess {
                                 + "NaN" + ";"
                                 + user.getValue().getCart().getCartId() + ";"
                                 + detail.getBoughtItem().getId() + ";"
-                                + detail.getQuantity() + "\n");
+                                + detail.getQuantity()+ ";"
+                                + DateMiddleware.dateAfterFormat(LocalDate.now()) + ";"
+                                + "UNDEFINED" + "\n");
                     }
                 }
             }
             writer.close();
+
+            FileWriter writerAdmin = new FileWriter(FileLocation.getAdminOrdersDetailDir(), false);
+            for(OrderDetail orderDetail : orderAdminDetails){
+                if(!orderDetail.getOrderId().equals("NaN")){
+                    writerAdmin.write(orderDetail.getOrderDetailId() + ";"
+                            + orderDetail.getOrderId() + ";"
+                            + "NaN" + ";"
+                            + orderDetail.getBoughtItem().getId() + ";"
+                            + orderDetail.getQuantity() + ";"
+                            + DateMiddleware.dateAfterFormat(orderDetail.getDueDate())+ ";"
+                            + orderDetail.getStatus()+ "\n");
+                }
+            }
+            writerAdmin.close();
+
         } catch (IOException err) {
             err.printStackTrace();
         }
@@ -346,7 +394,7 @@ public class DataAccess {
 
     private static void transferAllCarts() {
         try {
-            FileWriter writer = new FileWriter(new FileLocation().getCartFileDir(), false);
+            FileWriter writer = new FileWriter(FileLocation.getCartFileDir(), false);
             for (Map.Entry<String, User> user : users.entrySet()) {
                 if (user.getValue().getCart() == null) {
                     continue;
@@ -362,16 +410,25 @@ public class DataAccess {
 
     private static void transferAllOrders() {
         try {
-            FileWriter writer = new FileWriter(new FileLocation().getOrderFileDir(), false);
+            FileWriter writer = new FileWriter(FileLocation.getOrderFileDir(), false);
             for (Map.Entry<String, User> user : users.entrySet()) {
                 for (Order order : user.getValue().getRentalList()) {
                     writer.write(order.getOrderId() + ";"
                             + user.getValue().getUserId() + ";"
-                            + new DateMiddleware().dateAfterFormat(order.getOrderDate()) + ";"
+                            + DateMiddleware.dateAfterFormat(order.getOrderDate()) + ";"
                             + order.getTotalPrice() + "\n");
                 }
             }
+
             writer.close();
+            FileWriter writerAdmin = new FileWriter(FileLocation.getAdminOrdersDir(), false);
+            for(Order order : adminOrders){
+                writerAdmin.write(order.getOrderId() + ";"
+                        + order.getUserId() + ";"
+                        + DateMiddleware.dateAfterFormat(order.getOrderDate()) + ";"
+                        + order.getTotalPrice() + "\n");
+            }
+            writerAdmin.close();
         } catch (IOException err) {
             err.printStackTrace();
         }
@@ -385,8 +442,11 @@ public class DataAccess {
         loadAllProducts();
         loadAllProductFeedback();
         loadAllOrderDetails();
+        loadAllAdminOrderDetails();
+        loadAllAdminOrdersNoDetail();
         loadAllOrdersNoDetail();
         loadAllOrders();
+        loadAllAdminOrders();
         loadAllCarts();
     }
 
@@ -406,11 +466,11 @@ public class DataAccess {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
+    public static void setCurrentUser(User currentUser) {
         DataAccess.currentUser = currentUser;
     }
 
-    public void addAccountToList(Account account) {
+    public static void addAccountToList(Account account) {
         accounts.put(account.getAccountId(), account);
     }
 
@@ -432,6 +492,14 @@ public class DataAccess {
 
     public static ArrayList<Order> getAllOrders() {
         return orders;
+    }
+
+    public static ArrayList<Order> getAllAdminOrders() {
+        return adminOrders;
+    }
+
+    public static ArrayList<OrderDetail> getOrderAdminDetails(){
+        return orderAdminDetails;
     }
 
     public static void setChosenProduct(Product product) {
@@ -527,5 +595,9 @@ public class DataAccess {
 
     public static void addFeedback(Feedback feedback){
         feedbacks.add(feedback);
+    }
+
+    public static void addToOrders(Order order){
+        adminOrders.add(order);
     }
 }

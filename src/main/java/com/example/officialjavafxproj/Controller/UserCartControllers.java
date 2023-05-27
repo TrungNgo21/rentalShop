@@ -7,6 +7,7 @@ import Model.Account.GuestAccount;
 import Model.Account.VIPAccount;
 import Model.Order.Order;
 import Model.Order.OrderDetail;
+import Model.User.User;
 import Service.*;
 import com.example.officialjavafxproj.Controller.Component.CartComponentControllers;
 import com.example.officialjavafxproj.Utils.AlertBuilder;
@@ -14,6 +15,7 @@ import com.example.officialjavafxproj.Utils.AlertButtonController;
 import com.example.officialjavafxproj.Utils.SceneController;
 import com.example.officialjavafxproj.Utils.ToastBuilder;
 import com.github.plushaze.traynotification.notification.Notifications;
+import javafx.application.Preloader;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class UserCartControllers implements Initializable {
+public class UserCartControllers implements Initializable,UIController {
     @FXML
     private AnchorPane navbarPane;
 
@@ -62,7 +64,7 @@ public class UserCartControllers implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,16 +73,16 @@ public class UserCartControllers implements Initializable {
 
 
     public void setCheckoutButton(){
-        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
+        OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
         checkoutButton.setDisable(orderDetailCartService.getAll().isEmpty());
 
     }
     public void onCheckoutButton(ActionEvent event) throws IOException {
-        UserServices userServices = new UserServices();
+        UserServices userServices = UserServices.builder();
         boolean isOutOfStock = false;
         boolean isTwoDayItems = false;
-        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
-        Order madeOrder = new Order(new OrderCustomerService(new DataAccess(), new OrderMiddleware()).idCreation(), new UserServices().getCurrentUser().getUserId(), LocalDate.now(), Double.parseDouble(totalPriceDisplay.getText()));
+        OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
+        Order madeOrder = new Order(OrderCustomerService.builder().idCreation(), userServices.getCurrentUser().getUserId(), LocalDate.now(), Double.parseDouble(totalPriceDisplay.getText()));
         for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
             if(details.getValue().getQuantity() > details.getValue().getBoughtItem().getNumOfCopies()){
                 isOutOfStock = true;
@@ -144,11 +146,19 @@ public class UserCartControllers implements Initializable {
                         .show();
                 for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
                     details.getValue().setCartId("NaN");
-                    details.getValue().setOrderDetailId(new OrderDetailCartService().idCreation());
+                    details.getValue().setOrderDetailId(OrderDetailCartService.builder().idCreation());
                     details.getValue().setOrderId(madeOrder.getOrderId());
+                    if(details.getValue().getBoughtItem().getLoanType().equals("1-WEEK")){
+                        details.getValue().setDueDate(LocalDate.now().plusDays(7));
+                        details.getValue().setStatus(OrderDetail.getStatuses()[2]);
+                    }else{
+                        details.getValue().setDueDate(LocalDate.now().plusDays(2));
+                        details.getValue().setStatus(OrderDetail.getStatuses()[2]);
+                    }
                     madeOrder.addOrderDetailsToOrder(details.getValue());
                 }
-                new OrderCustomerService(new DataAccess(), new OrderMiddleware()).add(madeOrder);
+                OrderCustomerService.builder().add(madeOrder);
+                OrderCustomerService.builder().addToGlobal(madeOrder);
                 for(OrderDetail detail : madeOrder.getOrders()){
                     detail.getBoughtItem().setNumOfCopies(detail.getBoughtItem().getNumOfCopies() - detail.getQuantity());
                     if(detail.getBoughtItem().getNumOfCopies() == 0){
@@ -162,8 +172,8 @@ public class UserCartControllers implements Initializable {
                 for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
                     orderDetailCartService.delete(details.getValue());
                 }
-                new RevenueService().addToRevenue(madeOrder.getOrderDate(), madeOrder.getTotalPrice());
-                new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+                RevenueService.builder().addToRevenue(madeOrder.getOrderDate(), madeOrder.getTotalPrice());
+                SceneController.switchScene(event, "../Pages/userOrders.fxml");
             }
 //            ToastBuilder.builder()
 //                    .withTitle("Order Successfully")
@@ -183,7 +193,7 @@ public class UserCartControllers implements Initializable {
 //                    detail.getBoughtItem().setStatus("BORROWED");
 //                }
 //            }
-//            new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+//            SceneController.switchScene(event, "../Pages/userOrders.fxml");
 //            orderDetailCartService.getAll().clear();
 ////                    for(Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
 ////                        orderDetailCartService.delete(details.getValue());
@@ -195,14 +205,14 @@ public class UserCartControllers implements Initializable {
 
     public void addNavigationBar() {
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadAllCartItems() {
-        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
+    public void loadPageContent() {
+        OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
         cartItemsQuantityDisplay.setText(String.valueOf(orderDetailCartService.getAll().size()));
         double subTotal = 0;
         if(orderDetailCartService.getAll().size() == 0){
@@ -225,8 +235,8 @@ public class UserCartControllers implements Initializable {
                     throw new RuntimeException(e);
                 }
             }
-            if(new UserServices().getCurrentUser().getAccount() instanceof VIPAccount){
-                if (new UserServices().getCurrentUser().getAccount().isFreeToBorrowOne()){
+            if(UserServices.builder().getCurrentUser().getAccount() instanceof VIPAccount){
+                if (UserServices.builder().getCurrentUser().getAccount().isFreeToBorrowOne()){
                     double price = 0;
                     for (Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()){
                         if(details.getValue().getBoughtItem().getRentalFee() * details.getValue().getQuantity() > price){
@@ -253,7 +263,7 @@ public class UserCartControllers implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addNavigationBar();
-        loadAllCartItems();
+        loadPageContent();
         setCheckoutButton();
         addFooterBar();
     }

@@ -33,9 +33,9 @@ public class ChartDataController {
             dataFile.add(new String[]{Product.getGenres()[2], String.valueOf(genresNum[2]), group});
             dataFile.add(new String[]{Product.getGenres()[3], String.valueOf(genresNum[3]), group});
         }
-        for(String[] string : dataFile){
-            System.out.println(Arrays.asList(string));
-        }
+//        for(String[] string : dataFile){
+//            System.out.println(Arrays.asList(string));
+//        }
 
         return dataFile;
     }

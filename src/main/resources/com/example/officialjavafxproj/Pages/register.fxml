@@ -54,7 +54,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="addressTextField" onKeyReleased="#FieldOnReleased" prefHeight="34.0" prefWidth="306.0" promptText="Enter your username..." styleClass="input_field" stylesheets="@../styles.css" />
+                        <TextField fx:id="addressTextField" onKeyReleased="#FieldOnReleased" prefHeight="34.0" prefWidth="306.0" promptText="Enter your address..." styleClass="input_field" stylesheets="@../styles.css" />
                      </children>
                   </HBox>
                   <Label fx:id="addressErrorMessage" prefHeight="30.0" prefWidth="307.0" styleClass="error_message" stylesheets="@../styles.css" />
@@ -69,7 +69,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="phoneNumTextField" onKeyReleased="#FieldOnReleased" prefHeight="34.0" prefWidth="306.0" promptText="Enter your username..." styleClass="input_field" stylesheets="@../styles.css" />
+                        <TextField fx:id="phoneNumTextField" onKeyReleased="#FieldOnReleased" prefHeight="34.0" prefWidth="306.0" promptText="Enter your phone number..." styleClass="input_field" stylesheets="@../styles.css" />
                      </children>
                   </HBox>
                   <Label fx:id="phoneNumErrorMessage" prefHeight="30.0" prefWidth="308.0" styleClass="error_message" stylesheets="@../styles.css" />
