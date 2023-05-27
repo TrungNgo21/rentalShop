@@ -103,7 +103,7 @@ public class AdminViewUserControllers implements Initializable,UIController {
         gridPane.getChildren().clear();
         int column = 0;
         int row = 0;
-        if (AdminService.builder().getSortedCustomer().size() == 0) {
+
             for (Map.Entry<String, User> user : AdminService.builder().getAll().entrySet()) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader();
@@ -125,31 +125,38 @@ public class AdminViewUserControllers implements Initializable,UIController {
                     throw new RuntimeException(e);
                 }
             }
+
+    }
+    public void searchDisplayUser() {
+        gridPane.getChildren().clear();
+        int column = 0;
+        int row = 0;
+        if(AdminService.builder().getSortedCustomer().isEmpty()){
+            Label temp = new Label();
+            temp.setText("No Users matched your requirement");
+            gridPane.getChildren().add(temp);
         }
-        else {
-            for (Map.Entry<String, User> user : AdminService.builder().getSortedCustomer().entrySet()) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    fxmlLoader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
-                    HBox userItem = fxmlLoader.load();
-                    AdminUserControllers adminUserController = fxmlLoader.getController();
-                    if(user.getValue().getUserId().equals("ADMIN")){
-                        continue;
-                    }
-                    adminUserController.loadDisplayUser(user.getValue());
-                    gridPane.setHgap(20);
-                    gridPane.setVgap(10);
-                    if(column == 0) {
-                        gridPane.add(userItem, column++, row);
-                    } else {
-                        gridPane.add(userItem, column--, row++);
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+        for (Map.Entry<String, User> user : AdminService.builder().getSortedCustomer().entrySet()) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
+                HBox userItem = fxmlLoader.load();
+                AdminUserControllers adminUserController = fxmlLoader.getController();
+                if (user.getValue().getUserId().equals("ADMIN")) {
+                    continue;
                 }
+                adminUserController.loadDisplayUser(user.getValue());
+                gridPane.setHgap(20);
+                gridPane.setVgap(10);
+                if (column == 0) {
+                    gridPane.add(userItem, column++, row);
+                } else {
+                    gridPane.add(userItem, column--, row++);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
-
     }
     public void loadPageContent() {
         gridPane.getChildren().clear();
@@ -187,7 +194,7 @@ public class AdminViewUserControllers implements Initializable,UIController {
         choice =  accountType.getValue();
         ArrayList<RadioButton> sortOptions = new ArrayList<>(Arrays.asList(increasingOrder, decreasingOrder, sortByName,sortByStatus));
         AdminService.builder().searchByChoice(choice,sortOptions);
-        addUserToGridView();
+        searchDisplayUser();
         String searchField = searchUser.getText();
         if(!searchField.trim().isEmpty()){
             SearchController.searchByUserIdentify(searchField,AdminService.builder().getSortedCustomer());
