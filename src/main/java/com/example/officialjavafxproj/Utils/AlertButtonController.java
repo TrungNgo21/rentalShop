@@ -23,4 +23,12 @@ public class AlertButtonController {
         buttonTypes.addAll(continueButton, saveButton);
         return buttonTypes;
     }
+    public static ObservableList<ButtonType> getDeleteButtonTypes(){
+        ButtonType cancelButton = new ButtonType("Cancel");
+        ButtonType deleteButton = new ButtonType("Delete");
+
+        ObservableList<ButtonType> buttonTypes = FXCollections.observableArrayList();
+        buttonTypes.addAll(cancelButton,deleteButton);
+        return buttonTypes;
+    }
 }
