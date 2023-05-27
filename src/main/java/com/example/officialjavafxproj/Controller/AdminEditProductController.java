@@ -130,14 +130,15 @@ public class AdminEditProductController implements Initializable,UIController {
         else {
             priceWarningMessage.setText("");
         }
-        if(publishedYear.trim().isEmpty()){
+        if (publishedYear.trim().isEmpty()) {
             publishedYearWarningMessage.setText("You must not leave this field empty");
         } else if (!InputMiddleware.isValidNumber(publishedYear)) {
             publishedYearWarningMessage.setText("The published year must be a number");
+        } else if (publishedYear.length() != 4) {
+            publishedYearWarningMessage.setText("The year is not valid");
         } else if (!InputMiddleware.isPositive(publishedYear)) {
             publishedYearWarningMessage.setText("The published year must be positive");
-        }
-        else {
+        } else {
             publishedYearWarningMessage.setText("");
         }
         if(numOfCopies.trim().isEmpty()){
