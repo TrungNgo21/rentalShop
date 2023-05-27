@@ -243,7 +243,7 @@ public class AdminAddProductController implements Initializable {
 
         Thread imageThread = new Thread(uploadThread);
         boolean isDuplicated = false;
-        for (Map.Entry<String, Product> product : DataAccess.getAllProducts().entrySet()) {
+        for (Map.Entry<String, Product> product : productService.getAll().entrySet()) {
             if (product.getValue().getTitle().equals(productTitle)) {
                 isDuplicated = true;
             }

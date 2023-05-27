@@ -76,7 +76,7 @@ public class AdminViewProfileControllers implements Initializable {
     public void loadUserData() {
         AdminService adminService = new AdminService();
         FileLocation imageDir = new FileLocation();
-        User selectedCustomer = DataAccess.getSelectedCustomer();
+        User selectedCustomer = AdminService.getSelectedUser();
         Image selectedUserProfileImg = null;
         String profileImgUrl = imageDir.getImageDir() + selectedCustomer.getImageLocation();
         try {

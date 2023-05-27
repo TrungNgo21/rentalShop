@@ -4,6 +4,7 @@ import DataAccess.DataAccess;
 import FileLocation.FileLocation;
 import Middleware.InputMiddleware;
 import Model.Product.Product;
+import Service.ProductService;
 import com.example.officialjavafxproj.Threads.UploadImageThread;
 import com.example.officialjavafxproj.Utils.FileController;
 import com.example.officialjavafxproj.Utils.SceneController;
@@ -68,7 +69,7 @@ public class AdminEditProductController implements Initializable {
     @FXML
     private ChoiceBox<String> loanTypeChoiceBox;
 
-    private final Product product = DataAccess.getChosenProduct();
+    private final Product product = new ProductService().getTargetProduct();
 
     ObservableList<String> rentalTypeList = FXCollections.observableArrayList(Product.getRentalTypes());
     ObservableList<String> genreTypeList = FXCollections.observableArrayList(Product.getGenres());

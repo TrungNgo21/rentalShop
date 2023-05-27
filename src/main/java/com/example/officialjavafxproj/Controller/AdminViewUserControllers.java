@@ -201,7 +201,7 @@ public class AdminViewUserControllers implements Initializable {
         sortByName.setSelected(false);
         searchUser.clear();
         setDisableSearch();
-        DataAccess.getSortedUsers().clear();
+        new AdminService().getSortedCustomer().clear();
         addUserToGridView();
     }
     @Override
