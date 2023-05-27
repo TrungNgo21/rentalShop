@@ -366,8 +366,8 @@ public class DataAccess {
                                 + user.getValue().getCart().getCartId() + ";"
                                 + detail.getBoughtItem().getId() + ";"
                                 + detail.getQuantity()+ ";"
-                                + DateMiddleware.dateAfterFormat(detail.getDueDate()) + ";"
-                                + detail.getStatus() + "\n");
+                                + DateMiddleware.dateAfterFormat(LocalDate.now()) + ";"
+                                + "UNDEFINED" + "\n");
                     }
                 }
             }
