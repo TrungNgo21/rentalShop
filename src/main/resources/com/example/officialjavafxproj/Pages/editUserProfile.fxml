@@ -32,9 +32,9 @@
                         <Font size="36.0" />
                      </font>
                   </Label>
-                  <VBox prefHeight="106.0" prefWidth="585.0">
+                  <VBox alignment="TOP_RIGHT" prefHeight="106.0" prefWidth="585.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="89.0" prefWidth="541.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="539.0">
                            <children>
                               <Label prefHeight="23.0" prefWidth="179.0" text="Full Name: ">
                                  <font>
@@ -51,12 +51,12 @@
                               <Insets />
                            </opaqueInsets>
                         </HBox>
-                        <Label fx:id="fullNameWarningMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="540.0" />
+                        <Label fx:id="fullNameWarningMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="405.0" styleClass="error_message" stylesheets="@../styles.css" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="115.0" prefWidth="539.0">
+                  <VBox alignment="TOP_RIGHT" prefHeight="115.0" prefWidth="539.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="561.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="539.0">
                            <children>
                               <Label prefHeight="23.0" prefWidth="123.0" text="Address: ">
                                  <font>
@@ -73,12 +73,12 @@
                               <Insets />
                            </opaqueInsets>
                         </HBox>
-                        <Label fx:id="addressWarningMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="540.0" />
+                        <Label fx:id="addressWarningMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="33.0" prefWidth="400.0" styleClass="error_message" stylesheets="@../styles.css" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="114.0" prefWidth="539.0">
+                  <VBox alignment="TOP_RIGHT" prefHeight="114.0" prefWidth="539.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="644.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="539.0">
                            <children>
                               <Label prefHeight="23.0" prefWidth="164.0" text="Phone number:">
                                  <font>
@@ -95,7 +95,7 @@
                               <Insets />
                            </opaqueInsets>
                         </HBox>
-                        <Label fx:id="phoneNumWarningMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="540.0" />
+                        <Label fx:id="phoneNumWarningMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="33.0" prefWidth="399.0" styleClass="error_message" stylesheets="@../styles.css" />
                      </children>
                   </VBox>
                </children>

@@ -86,18 +86,20 @@ public class EditProfileControllers implements Initializable,UIController {
 
         boolean isValid = (InputMiddleware.isValidIString(20, address) &&
                 InputMiddleware.isValidIString(15, fullName) &&
-                InputMiddleware.isValidPhoneNum(phoneNum));
+                InputMiddleware.isValidPhoneNum(phoneNum) &&
+                InputMiddleware.isValidLowerBound(1, address) &&
+                InputMiddleware.isValidLowerBound(1, fullName));
 
         saveButton.setDisable(!isValid);
 
-        if(!InputMiddleware.isValidIString(15, fullName)){
-            fullNameWarningMessage.setText("Your full name must have 15 characters");
+        if(!InputMiddleware.isValidIString(15, fullName) || !InputMiddleware.isValidLowerBound(1, fullName)){
+            fullNameWarningMessage.setText("Your full name must have <= 15 and >= 1 characters");
         }else {
             fullNameWarningMessage.setText("");
         }
 
-        if(!InputMiddleware.isValidIString(20, address)){
-            addressWarningMessage.setText("Your address must have 20 characters");
+        if(!InputMiddleware.isValidIString(20, address) || !InputMiddleware.isValidLowerBound(1, address)){
+            addressWarningMessage.setText("Your address must have <= 20 and >= 1 characters");
         }else {
             addressWarningMessage.setText("");
         }

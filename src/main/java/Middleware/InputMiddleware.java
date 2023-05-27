@@ -64,6 +64,10 @@ public class InputMiddleware {
 
 
     public static boolean isValidIString(int length, String inputI4){
+        return inputI4.length() <= length;
+    }
+
+    public static boolean isValidLowerBound(int length, String inputI4){
         return inputI4.length() >= length;
     }
 

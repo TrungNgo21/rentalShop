@@ -94,16 +94,18 @@ public class RegisterControllers {
                 !password.equals(rePass) ||
                 !InputMiddleware.isValidIString(20, address) ||
                 !InputMiddleware.isValidIString(15, fullName) ||
-                !InputMiddleware.isValidPhoneNum(phoneNum));
+                !InputMiddleware.isValidPhoneNum(phoneNum) ||
+                !InputMiddleware.isValidLowerBound(1, address) ||
+                !InputMiddleware.isValidLowerBound(1, fullName));
 
-        if(!InputMiddleware.isValidIString(15, fullName)){
-            fullNameErrorMessage.setText("Your full name must have >= 15 characters");
+        if(!InputMiddleware.isValidIString(15, fullName) || !InputMiddleware.isValidLowerBound(1, fullName)){
+            fullNameErrorMessage.setText("Your full name must have <= 15 and >= 1 characters");
         }else {
             fullNameErrorMessage.setText("");
         }
 
-        if(!InputMiddleware.isValidIString(20, address)){
-            addressErrorMessage.setText("Your address must have >= 20 characters");
+        if(!InputMiddleware.isValidIString(20, address) || !InputMiddleware.isValidLowerBound(1, address)){
+            addressErrorMessage.setText("Your address must have <= 20 and >= 1 characters");
         }else {
             addressErrorMessage.setText("");
         }
