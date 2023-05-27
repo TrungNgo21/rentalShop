@@ -4,8 +4,8 @@
 
 | Name        | Student_Id | Task                                                                                         | Individual Contribution (%) |
 |-------------|------------|----------------------------------------------------------------------------------------------| --------------------------- |
-| Trung Ngo   | s3938154   | Design and Develop Backend for the app , Frontend for Customer, make admin dashboard         |----------25%--------|
-| Kien Vo     | s3938016   | Develop features for CRUD Products and Frontend Admin, make admin dashboard, test app and fix bugs |----------25%--------|
+| Trung Ngo   | s3938154   | Design and Develop Backend for the app , Frontend for Customer, make admin dashboard         |----------25%---------|
+| Kien Vo     | s3938016   | Develop features for CRUD Products and Frontend Admin, make admin dashboard, test app and fix bugs |----------25%---------|
 | Minh Dinh   | s3925113   | Develop features for CRUD Users and Frontend Admin, design the slides, test app and fix bugs |----------25%---------|
 | Quan Nguyen | s3926217   | Develop features for CRUD Orders and Frontend Admin, design the slides, test app and fix bugs |----------25%---------|
 

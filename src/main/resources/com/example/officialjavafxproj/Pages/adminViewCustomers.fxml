@@ -69,8 +69,16 @@
                   <Font size="16.0" />
                </font>
             </RadioButton>
+            <RadioButton fx:id="sortByStatus" mnemonicParsing="false" prefHeight="18.0" prefWidth="126.0" text="SortByStatus">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" left="5.0" top="10.0" />
+               </padding>
+            </RadioButton>
             <Separator prefWidth="200.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="227.0" text="Search By UserFullName">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="227.0" text="Search By User Id or Name">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>

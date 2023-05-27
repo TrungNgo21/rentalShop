@@ -87,7 +87,7 @@ public class LoginControllers implements Initializable {
 
     public void loadPanelImage(){
         try {
-            Image image = new Image(new FileInputStream(FileLocation.getImageDir() + "/Public/headerIcon.jpg"), 240, 400, false, false);
+            Image image = new Image(new FileInputStream(FileLocation.getImageDir() + "/Public/headerIcon.jpg"), 640, 400, false, false);
             loginPanel.setImage(image);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

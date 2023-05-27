@@ -20,6 +20,7 @@
          <children>
             <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="296.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#onViewItemButton" prefHeight="26.0" prefWidth="176.0" styleClass="button__info" stylesheets="@../styles.css" text="View Item" />
                   <Label fx:id="warningMessage" prefHeight="25.0" prefWidth="270.0" style="-fx-text-fill: #E76161;">
                      <font>
                         <Font name="Arial Bold" size="14.0" />

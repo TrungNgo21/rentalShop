@@ -35,7 +35,6 @@ public class AlertBuilder {
         alert.setHeaderText(text);
         return this;
     }
-
     public ObservableList<ButtonType> getButtonTypes(){
         return alert.getButtonTypes();
     }
