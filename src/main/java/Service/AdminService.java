@@ -128,7 +128,7 @@ public class AdminService implements Services<User> {
         else if(sortOptions.get(2).isSelected()) {
             AdminService.builder().sortByName();
         }
-        else {
+        else if(sortOptions.get(3).isSelected()) {
             AdminService.builder().sortByStatus();
         }
     }
