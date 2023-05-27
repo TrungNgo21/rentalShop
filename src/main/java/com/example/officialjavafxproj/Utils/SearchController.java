@@ -40,7 +40,7 @@ public class SearchController {
     public static void searchByUserIdentify(String userIdentifier, HashMap<String, User> userHashMap){
         tempUserContainer.clear();
         for(Map.Entry<String,User> user : userHashMap.entrySet()){
-            if(SearchController.searchByString(userIdentifier,user.getValue().getFullName())){
+            if(SearchController.searchByString(userIdentifier,user.getValue().getFullName()) || SearchController.searchByString(userIdentifier,user.getValue().getUserId())){
                 SearchController.addUser(user.getValue());
             }
         }

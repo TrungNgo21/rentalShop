@@ -45,6 +45,8 @@ public class AdminViewUserControllers implements Initializable,UIController {
     private RadioButton decreasingOrder;
     @FXML
     private RadioButton sortByName;
+    @FXML
+    private RadioButton sortByStatus;
 
     private HashMap<String, User> filteredUser;
 
@@ -62,6 +64,7 @@ public class AdminViewUserControllers implements Initializable,UIController {
         increasingOrder.setDisable(true);
         decreasingOrder.setDisable(true);
         sortByName.setDisable(true);
+        sortByStatus.setDisable(true);
         searchUser.setDisable(true);
     }
     public void setDisableButton(MouseEvent mouseEvent) throws IOException{
@@ -69,12 +72,14 @@ public class AdminViewUserControllers implements Initializable,UIController {
             increasingOrder.setDisable(true);
             decreasingOrder.setDisable(true);
             sortByName.setDisable(true);
+            sortByStatus.setDisable(true);
             searchUser.setDisable(true);
         }
         else {
             increasingOrder.setDisable(false);
             decreasingOrder.setDisable(false);
             sortByName.setDisable(false);
+            sortByStatus.setDisable(false);
             searchUser.setDisable(false);
         }
     }
@@ -176,7 +181,7 @@ public class AdminViewUserControllers implements Initializable,UIController {
     public void onSearchUserButton(ActionEvent event) {
         gridPane.getChildren().clear();
         choice =  accountType.getValue();
-        ArrayList<RadioButton> sortOptions = new ArrayList<>(Arrays.asList(increasingOrder, decreasingOrder, sortByName));
+        ArrayList<RadioButton> sortOptions = new ArrayList<>(Arrays.asList(increasingOrder, decreasingOrder, sortByName,sortByStatus));
         AdminService.builder().searchByChoice(choice,sortOptions);
         addUserToGridView();
         String searchField = searchUser.getText();
@@ -191,6 +196,7 @@ public class AdminViewUserControllers implements Initializable,UIController {
         increasingOrder.setToggleGroup(toggleGroup);
         decreasingOrder.setToggleGroup(toggleGroup);
         sortByName.setToggleGroup(toggleGroup);
+        sortByStatus.setToggleGroup(toggleGroup);
     }
 
     public void onDeleteSearchButton(ActionEvent event) {
@@ -199,9 +205,10 @@ public class AdminViewUserControllers implements Initializable,UIController {
         increasingOrder.setSelected(false);
         decreasingOrder.setSelected(false);
         sortByName.setSelected(false);
+        sortByStatus.setSelected(false);
         searchUser.clear();
         setDisableSearch();
-        DataAccess.getSortedUsers().clear();
+        AdminService.builder().getSortedCustomer().clear();
         addUserToGridView();
     }
     @Override

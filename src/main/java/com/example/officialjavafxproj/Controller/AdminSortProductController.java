@@ -119,6 +119,7 @@ public class AdminSortProductController implements Initializable,UIController {
     public void search(ActionEvent actionEvent) {
         String search = searchTextField.getText().trim();
         if (!search.trim().isEmpty()) {
+
             if (ProductService.builder().getSortedProducts().isEmpty()) {
                 SearchController.searchByIdentify(search, ProductService.builder().getAll());
                 loadSearchProducts();

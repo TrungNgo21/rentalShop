@@ -1,11 +1,16 @@
 package Service;
 
 import DataAccess.DataAccess;
+import FileLocation.FileLocation;
 import Model.Product.Product;
 import com.example.officialjavafxproj.Utils.SearchController;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 import javax.xml.crypto.Data;
@@ -52,6 +57,13 @@ public class ProductService implements Services<Product> {
     @Override
     public void delete(Product template) {
         DataAccess.getAllProducts().remove(template.getId());
+        String imageDir = FileLocation.getImageDir() + template.getImageLocation();
+        try {
+            Files.delete(Path.of(imageDir));
+        }
+         catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

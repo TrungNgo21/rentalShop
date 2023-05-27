@@ -79,6 +79,16 @@ public class AdminService implements Services<User> {
         }
         DataAccess.setSortedUsers(temp);
     }
+    public void sortByStatus(){
+        HashMap<String,User> temp = new HashMap<String, User>();
+        for(Map.Entry<String, User> user : DataAccess.getSortedUsers().entrySet()){
+            if(user.getValue().getAccount().isCurrentlyBorrowed()){
+                temp.put(user.getKey(),user.getValue());
+            }
+        }
+        DataAccess.getSortedUsers().clear();
+        DataAccess.setSortedUsers(temp);
+    }
     public void searchByChoice(String accountType, ArrayList<RadioButton> sortOptions){
         DataAccess.getSortedUsers().clear();
         if(accountType.equals("All")){
@@ -115,8 +125,11 @@ public class AdminService implements Services<User> {
         else if(sortOptions.get(1).isSelected()){
             AdminService.builder().sortDecreasingOrderId();
         }
-        else {
+        else if(sortOptions.get(2).isSelected()) {
             AdminService.builder().sortByName();
+        }
+        else {
+            AdminService.builder().sortByStatus();
         }
     }
     @Override
