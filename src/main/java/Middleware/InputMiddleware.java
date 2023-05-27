@@ -7,6 +7,8 @@ public class InputMiddleware {
     private static final String passwordPatternStr = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-[{}]:;',?/*~$^+=<>]).{8,12}$";
     private static final String digitPatternStr = "^\\d+$";
 
+    private static final String negativeDigitPatternStr = "^-[1-9]\\d*|0$";
+
 
     public static final String doubleNegativeStr = "^(-([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*))|0?\\.0+|0$";
 
@@ -14,6 +16,7 @@ public class InputMiddleware {
     private static final Pattern negativeDoublePattern = Pattern.compile(doubleNegativeStr);
 
     private static final Pattern doublePositivePattern = Pattern.compile(doublePositiveStr);
+    private static final Pattern negativeDigitPattern = Pattern.compile(negativeDigitPatternStr);
     private static final String whiteSpacePatternStr = "\\s+";
     private static final Pattern passPattern = Pattern.compile(passwordPatternStr);
     private static final Pattern digitPattern = Pattern.compile(digitPatternStr);
@@ -57,7 +60,8 @@ public class InputMiddleware {
     }
     public static boolean isValidCopy(String num){
         Matcher matcher = digitPattern.matcher(num);
-        return matcher.matches();
+        Matcher matcher1 = negativeDigitPattern.matcher(num);
+        return matcher.matches() || matcher1.matches();
     }
     public static boolean isValidNumber(String num){
         Matcher matcher = negativeDoublePattern.matcher(num);
