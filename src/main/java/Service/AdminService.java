@@ -80,11 +80,10 @@ public class AdminService implements Services<User> {
     }
     public void searchByChoice(String accountType, ArrayList<RadioButton> sortOptions){
         DataAccess.getSortedUsers().clear();
-
         if(accountType.equals("All")){
             for(Map.Entry<String,User> user : DataAccess.getAllUsers().entrySet()){
                 if(!user.getValue().getAccount().getAccountType().equals("AdminAccount")){
-                    System.out.println(user.getValue().getAccount().getAccountType());
+                    System.out.println(user.getValue().getAccount());
                     DataAccess.addToSortedUsers(user.getValue());
                 }
             }
@@ -122,7 +121,7 @@ public class AdminService implements Services<User> {
     public HashMap<String, User> getAll() {
         return DataAccess.getAllUsers();
     }
-    // Filter the type of account users
+
     public HashMap<String, User> filterAccountType(String accountType) { // Display this hashmap to UI
         DataAccess.getSortedUsers().clear();
         for(Map.Entry<String, Account> entry : DataAccess.getAllAccounts().entrySet()) {

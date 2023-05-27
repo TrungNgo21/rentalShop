@@ -64,13 +64,19 @@ public class AdminViewUserControllers implements Initializable {
         sortByName.setDisable(true);
         searchUser.setDisable(true);
     }
-    public void setDisableButton(){
-        accountType.setOnAction((ActionEvent event) -> {
+    public void setDisableButton(MouseEvent mouseEvent) throws IOException{
+        if(accountType.getValue() == null){
+            increasingOrder.setDisable(true);
+            decreasingOrder.setDisable(true);
+            sortByName.setDisable(true);
+            searchUser.setDisable(true);
+        }
+        else {
             increasingOrder.setDisable(false);
             decreasingOrder.setDisable(false);
             sortByName.setDisable(false);
-        });
-        System.out.println(accountType.getValue());
+            searchUser.setDisable(false);
+        }
     }
 
 
@@ -84,7 +90,6 @@ public class AdminViewUserControllers implements Initializable {
     public void addAccountType() {
         accountType.getItems().addAll(userType);
     }
-
     public void addUserToGridView() {
         gridPane.getChildren().clear();
         int column = 0;
@@ -206,7 +211,6 @@ public class AdminViewUserControllers implements Initializable {
         addAccountType();
         addUserToGridView();
         addFooterPane();
-        setDisableButton();
         setToggle();
     }
 }
