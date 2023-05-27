@@ -66,6 +66,8 @@ public class AdminViewUserControllers implements Initializable,UIController {
         sortByName.setDisable(true);
         sortByStatus.setDisable(true);
         searchUser.setDisable(true);
+        search.setDisable(true);
+
     }
     public void setDisableButton(MouseEvent mouseEvent) throws IOException{
         if(accountType.getValue() == null){
@@ -74,6 +76,7 @@ public class AdminViewUserControllers implements Initializable,UIController {
             sortByName.setDisable(true);
             sortByStatus.setDisable(true);
             searchUser.setDisable(true);
+            search.setDisable(true);
         }
         else {
             increasingOrder.setDisable(false);
@@ -81,6 +84,7 @@ public class AdminViewUserControllers implements Initializable,UIController {
             sortByName.setDisable(false);
             sortByStatus.setDisable(false);
             searchUser.setDisable(false);
+            search.setDisable(false);
         }
     }
 
