@@ -21,9 +21,9 @@ public class AdminReviewBoxComponentController implements Initializable {
     public void loadAllReviews() {
         reviewDisplay.setSpacing(10);
         try {
-            for (Map.Entry<String, User> user : new UserServices().getAll().entrySet()) {
+            for (Map.Entry<String, User> user : UserServices.builder().getAll().entrySet()) {
                 for (Feedback feedback : user.getValue().getReviews()) {
-                    if (feedback.getProductId().equals(new ProductService().getTargetProduct().getId())) {
+                    if (feedback.getProductId().equals(ProductService.builder().getTargetProduct().getId())) {
                         FXMLLoader reviewsLoader = new FXMLLoader();
                         reviewsLoader.setLocation(getClass().getResource("../../Component/reviewComponent.fxml"));
                         VBox review = reviewsLoader.load();

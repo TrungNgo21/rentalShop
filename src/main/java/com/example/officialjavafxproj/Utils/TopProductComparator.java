@@ -8,11 +8,11 @@ import java.util.Comparator;
 public class TopProductComparator implements Comparator<Product> {
     @Override
     public int compare(Product o1, Product o2) {
-        if(new FeedbackService().getAverageRatings(o1.getId()) >= new FeedbackService().getAverageRatings(o2.getId())){
+        if(FeedbackService.getAverageRatings(o1.getId()) >= FeedbackService.getAverageRatings(o2.getId())){
             return -1;
         }else{
             return 1;
         }
-//        return (int) (new FeedbackService().getAverageRatings(o2.getId()) - new FeedbackService().getAverageRatings(o1.getId()));
+//        return (int) (FeedbackService.getAverageRatings(o2.getId()) - FeedbackService.getAverageRatings(o1.getId()));
     }
 }

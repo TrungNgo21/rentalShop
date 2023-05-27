@@ -29,7 +29,7 @@ public class PieChartBuilder {
             pieChartData.add( new PieChart.Data(dataElement[0], Double.parseDouble(dataElement[1])));
         }
         pieChart.setData(pieChartData);
-        System.out.println(pieChartData.get(0));
+//        System.out.println(pieChartData.get(0));
         return this;
     }
 

@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class AdminSortProductController implements Initializable {
+public class AdminSortProductController implements Initializable,UIController {
     @FXML
     private GridPane gridPane;
     @FXML
@@ -38,7 +38,7 @@ public class AdminSortProductController implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class AdminSortProductController implements Initializable {
 
     public void addNavigationBar(){
         try {
-            adminNavbar.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
+            adminNavbar.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminNavBarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,27 +55,27 @@ public class AdminSortProductController implements Initializable {
     public void resetToBegin(ActionEvent actionEvent) {
         searchTextField.setDisable(false);
         searchTextField.clear();
-        loadSortedProducts();
+        loadPageContent();
     }
 
     public void addSortedPane() {
         try {
-            sortLayout.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
+            sortLayout.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadSortedProducts() {
+    public void loadPageContent() {
         gridPane.getChildren().clear();
         int column = 0;
         int row = 0;
-        if (new ProductService().getSortedProducts().size() == 0) {
+        if (ProductService.builder().getSortedProducts().size() == 0) {
             Label temp = new Label();
             temp.setText("No Products matched your requirement");
             gridPane.getChildren().add(temp);
         }
-        for (Map.Entry<String, Product> product : new ProductService().getSortedProducts().entrySet()) {
+        for (Map.Entry<String, Product> product : ProductService.builder().getSortedProducts().entrySet()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../Component/adminViewProductComponent.fxml"));
@@ -119,11 +119,11 @@ public class AdminSortProductController implements Initializable {
     public void search(ActionEvent actionEvent) {
         String search = searchTextField.getText().trim();
         if (!search.trim().isEmpty()) {
-            if (DataAccess.getSortedProducts().isEmpty()) {
-                SearchController.searchByIdentify(search, DataAccess.getAllProducts());
+            if (ProductService.builder().getSortedProducts().isEmpty()) {
+                SearchController.searchByIdentify(search, ProductService.builder().getAll());
                 loadSearchProducts();
             } else {
-                SearchController.searchByIdentify(search, DataAccess.getSortedProducts());
+                SearchController.searchByIdentify(search, ProductService.builder().getSortedProducts());
                 loadSearchProducts();
             }
         }
@@ -133,7 +133,7 @@ public class AdminSortProductController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addFooterBar();
         addNavigationBar();
-        loadSortedProducts();
+        loadPageContent();
         addSortedPane();
     }
 }

@@ -9,9 +9,13 @@ import Model.User.User;
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class OrderAdminService extends OrderService{
-    public OrderAdminService(DataAccess db) {
-        super(db);
+public class OrderAdminService implements Services<Order>{
+    private OrderAdminService() {
+
+    }
+
+    public static OrderAdminService builder(){
+        return new OrderAdminService();
     }
 
     @Override

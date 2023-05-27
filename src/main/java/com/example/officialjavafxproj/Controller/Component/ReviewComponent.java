@@ -23,7 +23,7 @@ public class ReviewComponent {
     public void loadReviewElement(Feedback feedback){
         ratingDisplay.setText(String.valueOf(feedback.getRating()));
         reviewDisplay.setText(feedback.getFeedBackContent());
-        usernameDisplay.setText(new UserServices().getOne(feedback.getCustomerId()).getUserName());
+        usernameDisplay.setText(UserServices.builder().getOne(feedback.getCustomerId()).getUserName());
         reviewDateDisplay.setText(feedback.getReviewDate().toString());
     }
 

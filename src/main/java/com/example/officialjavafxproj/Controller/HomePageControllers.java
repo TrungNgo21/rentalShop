@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 
-public class HomePageControllers implements Initializable {
+public class HomePageControllers implements Initializable,UIController {
 
 
     @FXML
@@ -44,7 +44,7 @@ public class HomePageControllers implements Initializable {
 
     public void addFooterBar(){
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class HomePageControllers implements Initializable {
 
     public void addNavigationBar(){
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/navbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,23 +61,23 @@ public class HomePageControllers implements Initializable {
 
     public void addSortedPane(){
         try {
-            sortPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
+            sortPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/sortPane.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void addProductToGridView(){
+    public void loadPageContent(){
         int row = 1;
         int column = 0;
         int maxTopProduct = 0;
-        for(Map.Entry<String, Product> product : new ProductService().getAll().entrySet()){
+        for(Map.Entry<String, Product> product : ProductService.builder().getAll().entrySet()){
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../Component/productComponent.fxml"));
                 AnchorPane productItem = fxmlLoader.load();
-//                AnchorPane productItem = (AnchorPane) new SceneController().getComponentScene(new AnchorPane(), "../Component/productComponent.fxml");
-//                ProductComponentControllers productItemsController = (ProductComponentControllers) new SceneController().getComponentController("../Component/productComponent.fxml");
+//                AnchorPane productItem = (AnchorPane) SceneController.getComponentScene(new AnchorPane(), "../Component/productComponent.fxml");
+//                ProductComponentControllers productItemsController = (ProductComponentControllers) SceneController.getComponentController("../Component/productComponent.fxml");
                 ProductComponentControllers productComponentControllers = fxmlLoader.getController();
                 productComponentControllers.loadProductItemData(product.getValue());
                 if(column == 4){
@@ -93,7 +93,7 @@ public class HomePageControllers implements Initializable {
         }
 
 
-        for(Map.Entry<Product, String> topProduct : new ProductService().getTopProducts().entrySet()){
+        for(Map.Entry<Product, String> topProduct : ProductService.builder().getTopProducts().entrySet()){
             try {
                 FXMLLoader fxmlLoader1 = new FXMLLoader();
                 fxmlLoader1.setLocation(getClass().getResource("../Component/topProductComponent.fxml"));
@@ -123,7 +123,7 @@ public class HomePageControllers implements Initializable {
             topProductsContainer.getChildren().clear();
             productsGridDisplay.getChildren().clear();
             sortPane.getChildren().clear();
-            addProductToGridView();
+            loadPageContent();
             addSortedPane();
         });
 

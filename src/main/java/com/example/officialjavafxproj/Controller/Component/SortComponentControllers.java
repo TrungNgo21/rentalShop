@@ -51,7 +51,7 @@ public class SortComponentControllers implements Initializable {
     private RadioButton priceButton;
 
     public void onSearchButton(ActionEvent event) throws IOException {
-        ProductService productService = new ProductService();
+        ProductService productService = ProductService.builder();
         ArrayList<RadioButton> orderOptions = new ArrayList<>(Arrays.asList(priceButton, titleButton));
         ArrayList<CheckBox> typeCheckboxes = new ArrayList<>(Arrays.asList(gameCheckbox, dvdsCheckbox, movieCheckbox));
         ArrayList<CheckBox> genresCheckboxes = new ArrayList<>(Arrays.asList(actionCheckbox, horrorCheckbox, dramaCheckbox, comedyCheckbox));
@@ -63,12 +63,12 @@ public class SortComponentControllers implements Initializable {
         productService.addSortedOptions(CheckboxController.getAllOptions(loanCheckboxes));
         productService.addSortedOptions(CheckboxController.getAllOptions(availabilityCheckboxes));
         productService.addToSortedProducts(productService.getSortedOptions(), orderOptions);
-        UserServices userServices = new UserServices();
+        UserServices userServices = UserServices.builder();
         if(userServices.getCurrentUser().getUserId().equals("ADMIN")){
-            new SceneController().switchScene(event,"../Pages/adminSortProduct.fxml");
+            SceneController.switchScene(event,"../Pages/adminSortProduct.fxml");
         }
         else {
-            new SceneController().switchScene(event, "../Pages/sortPage.fxml");
+            SceneController.switchScene(event, "../Pages/sortPage.fxml");
         }
 
 
@@ -92,7 +92,7 @@ public class SortComponentControllers implements Initializable {
     }
 
     public void loadLastCheckboxValue(){
-        ArrayList<String[]> checkboxValue = new ProductService().getSortedOptions();
+        ArrayList<String[]> checkboxValue = ProductService.builder().getSortedOptions();
         for (int i = 0; i < checkboxValue.size(); i++) {
             if(i == 0){
                 gameCheckbox.setSelected(!checkboxValue.get(i)[0].equals("NONE"));

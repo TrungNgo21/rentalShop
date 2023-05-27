@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class AdminViewUserControllers implements Initializable {
+public class AdminViewUserControllers implements Initializable,UIController {
     @FXML
     private AnchorPane navbarPane;
     @FXML
@@ -51,9 +51,9 @@ public class AdminViewUserControllers implements Initializable {
     private String choice;
     private final String[] userType = {"VIP Account", "Regular Account", "Guest Account", "All"};
 
-    public void addFooterPane() {
+    public void addFooterBar() {
         try {
-            footerPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
+            footerPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/footer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,7 +82,7 @@ public class AdminViewUserControllers implements Initializable {
 
     public void addNavigationBar(){
         try {
-            navbarPane.getChildren().add(new SceneController().getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
+            navbarPane.getChildren().add(SceneController.getComponentScene(new AnchorPane(), "../Component/adminNavbarComponent.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,8 +94,8 @@ public class AdminViewUserControllers implements Initializable {
         gridPane.getChildren().clear();
         int column = 0;
         int row = 0;
-        if (new AdminService().getSortedCustomer().size() == 0) {
-            for (Map.Entry<String, User> user : new AdminService().getAll().entrySet()) {
+        if (AdminService.builder().getSortedCustomer().size() == 0) {
+            for (Map.Entry<String, User> user : AdminService.builder().getAll().entrySet()) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
@@ -118,7 +118,7 @@ public class AdminViewUserControllers implements Initializable {
             }
         }
         else {
-            for (Map.Entry<String, User> user : new AdminService().getSortedCustomer().entrySet()) {
+            for (Map.Entry<String, User> user : AdminService.builder().getSortedCustomer().entrySet()) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("../Component/adminViewUserComponent.fxml"));
@@ -142,7 +142,7 @@ public class AdminViewUserControllers implements Initializable {
         }
 
     }
-    public void addSearchUserToGridView() {
+    public void loadPageContent() {
         gridPane.getChildren().clear();
         int column = 0;
         int row = 0;
@@ -177,12 +177,12 @@ public class AdminViewUserControllers implements Initializable {
         gridPane.getChildren().clear();
         choice =  accountType.getValue();
         ArrayList<RadioButton> sortOptions = new ArrayList<>(Arrays.asList(increasingOrder, decreasingOrder, sortByName));
-        new AdminService().searchByChoice(choice,sortOptions);
+        AdminService.builder().searchByChoice(choice,sortOptions);
         addUserToGridView();
         String searchField = searchUser.getText();
         if(!searchField.trim().isEmpty()){
-            SearchController.searchByUserIdentify(searchField,new AdminService().getSortedCustomer());
-            addSearchUserToGridView();
+            SearchController.searchByUserIdentify(searchField,AdminService.builder().getSortedCustomer());
+            loadPageContent();
         }
     }
 
@@ -208,9 +208,9 @@ public class AdminViewUserControllers implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setDisableSearch();
         addNavigationBar();
-        addAccountType();
         addUserToGridView();
-        addFooterPane();
+        addAccountType();
+        addFooterBar();
         setToggle();
     }
 }

@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Order {
+
     private String orderId;
     private String userId;
     private ArrayList<OrderDetail> orders = new ArrayList<>();
 
     private LocalDate orderDate;
-
     private double totalPrice;
 
     public Order(String orderId, String userId, LocalDate date, double totalPrice) {

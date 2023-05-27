@@ -11,10 +11,7 @@ import Model.Order.Order;
 import Model.Order.OrderDetail;
 import Model.Product.Product;
 import Model.User.User;
-import Service.AccountService;
-import Service.OrderCustomerService;
-import Service.ProductService;
-import Service.UserServices;
+import Service.*;
 import com.example.officialjavafxproj.Utils.AlertBuilder;
 import com.example.officialjavafxproj.Utils.SceneController;
 import com.example.officialjavafxproj.Utils.ToastBuilder;
@@ -73,7 +70,7 @@ public class OrderItemControllers {
     }
 
     public void loadAllOrderItemData(OrderDetail detail){
-        String imageDir = new FileLocation().getImageDir() + detail.getBoughtItem().getImageLocation();
+        String imageDir = FileLocation.getImageDir() + detail.getBoughtItem().getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 200, 205, false, false);
             productOrderImage.setImage(productImage);
@@ -90,13 +87,14 @@ public class OrderItemControllers {
     }
 
     public void onReturnButton(ActionEvent event) throws IOException {
-        User currentUser = new UserServices().getCurrentUser();
+        User currentUser = UserServices.builder().getCurrentUser();
 
         order.getBoughtItem().setNumOfCopies(order.getQuantity() + order.getBoughtItem().getNumOfCopies());
         order.getBoughtItem().setStatus("AVAILABLE");
-        Order currentOrder = new OrderCustomerService(new DataAccess(), new OrderMiddleware()).getOne(order.getOrderId());
+        Order currentOrder = OrderCustomerService.builder().getOne(order.getOrderId());
         currentUser.getAccount().setNumReturnedItems(currentUser.getAccount().getNumReturnedItems() + 1);
         currentUser.getAccount().setRentalThreshold(currentUser.getAccount().getRentalThreshold() + 1);
+        OrderDetailCartService.builder().getOneAdmin(order.getOrderDetailId()).setStatus(OrderDetail.getStatuses()[0]);
         currentOrder.getOrders().remove(order);
         if(currentUser.getAccount().isAllowedToPromoted()){
             if(currentUser.getAccount() instanceof GuestAccount){
@@ -104,14 +102,14 @@ public class OrderItemControllers {
                 RegularAccount regularAccount = new RegularAccount(currentAccount.getAccountId(), "RegularAccount", currentAccount.getPoints(), currentAccount.getNumReturnedItems(), true, 9999, currentAccount.getIsCurrentlyBorrowed());
                 currentUser.setAccount(regularAccount);
                 currentUser.getAccount().setOwner(currentUser);
-                new AccountService().updateAccounts(currentUser.getAccount());
+                AccountService.updateAccounts(currentUser.getAccount());
             }
             else if(currentUser.getAccount() instanceof RegularAccount){
                 Account currentAccount = currentUser.getAccount();
                 VIPAccount VIPAccount = new VIPAccount(currentAccount.getAccountId(), "VIPAccount", currentAccount.getPoints(), currentAccount.getNumReturnedItems(), true, 9999, currentAccount.getIsCurrentlyBorrowed());
                 currentUser.setAccount(VIPAccount);
                 currentUser.getAccount().setOwner(currentUser);
-                new AccountService().updateAccounts(currentUser.getAccount());
+                AccountService.updateAccounts(currentUser.getAccount());
             }
         }
         if(currentUser.getAccount() instanceof VIPAccount){
@@ -120,10 +118,10 @@ public class OrderItemControllers {
 
 
         if(currentOrder.getOrders().size() == 0){
-            new OrderCustomerService(new DataAccess(), new OrderMiddleware()).delete(currentOrder);
-            new SceneController().switchScene(event, "../Pages/userOrders.fxml");
+            OrderCustomerService.builder().delete(currentOrder);
+            SceneController.switchScene(event, "../Pages/userOrders.fxml");
         }else{
-            new SceneController().switchScene(event, "../Pages/userOrderId.fxml");
+            SceneController.switchScene(event, "../Pages/userOrderId.fxml");
         }
 
         if(itemStatusDisplay.getText().equals("LATE")){

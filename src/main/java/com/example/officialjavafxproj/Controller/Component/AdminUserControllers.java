@@ -33,7 +33,7 @@ public class AdminUserControllers {
 
 
     public void loadDisplayUser(User user) {
-        String imageDir = new FileLocation().getImageDir() + user.getImageLocation();
+        String imageDir = FileLocation.getImageDir() + user.getImageLocation();
         try {
             Image userImage = new Image(new FileInputStream(imageDir), 200, 200, false, false);
             imageView.setImage(userImage);
@@ -50,9 +50,9 @@ public class AdminUserControllers {
     }
 
     public void onViewUserProfileButton(MouseEvent mouseEvent) throws IOException {
-        AdminService adminService = new AdminService();
+        AdminService adminService = AdminService.builder();
         User selectedUser = adminService.getOne(userID);
         AdminService.setSelectedUser(selectedUser);
-        new SceneController().switchScene(mouseEvent, "../Pages/adminViewProfile.fxml");
+        SceneController.switchScene(mouseEvent, "../Pages/adminViewProfile.fxml");
     }
 }

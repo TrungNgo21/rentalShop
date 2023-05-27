@@ -5,14 +5,22 @@ import Middleware.UserMiddleware;
 import Model.Account.GuestAccount;
 import Model.User.User;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class UserServices implements Services<User> {
-    private final DataAccess db = new DataAccess();
-    private final UserMiddleware checker = new UserMiddleware();
+
+    private UserServices(){
+
+    }
+
+    public static UserServices builder(){
+        return new UserServices();
+    }
+
 
     @Override
     public String idCreation() {
@@ -28,7 +36,7 @@ public class UserServices implements Services<User> {
 
     @Override
     public void add(User user) {
-        if(!checker.isDuplicatedUsername(user.getUserName(), DataAccess.getAllUsers())) {
+        if(!UserMiddleware.isDuplicatedUsername(user.getUserName(), DataAccess.getAllUsers())) {
             DataAccess.getAllUsers().put(idCreation(), user);
         }else{
             throw new Error("Duplicate username!");
@@ -56,11 +64,11 @@ public class UserServices implements Services<User> {
     }
 
     public boolean login(String username, String password){
-        String userId = checker.isAuthorized(username, password, DataAccess.getAllUsers());
+        String userId = UserMiddleware.isAuthorized(username, password, DataAccess.getAllUsers());
         if(userId == null){
             return false;
         }else{
-            db.setCurrentUser(DataAccess.getAllUsers().get(userId));
+            DataAccess.setCurrentUser(DataAccess.getAllUsers().get(userId));
             return true;
         }
     }
@@ -71,14 +79,14 @@ public class UserServices implements Services<User> {
 
 
     public void setCurrentUser(User user){
-        db.setCurrentUser(user);
+        DataAccess.setCurrentUser(user);
     }
 
     public void register(User user){
         this.add(user);
-        db.setCurrentUser(user);
+        DataAccess.setCurrentUser(user);
         user.getAccount().setOwner(user);
-        db.addAccountToList(user.getAccount());
+        DataAccess.addAccountToList(user.getAccount());
     }
 
 }

@@ -78,7 +78,6 @@ public class RegisterControllers {
     private Label rePasswordErrorMessage;
 
     public void FieldOnReleased(){
-        InputMiddleware middleware = new InputMiddleware();
         String userName = usernameTextField.getText();
         String fullName = fullnameTextField.getText();
         String phoneNum = phoneNumTextField.getText();
@@ -91,37 +90,37 @@ public class RegisterControllers {
                 phoneNum.isEmpty() || phoneNum.trim().isEmpty() ||
                 address.isEmpty() || address.trim().isEmpty());
 
-        boolean isValid = (!middleware.isValidUsername(userName) ||
+        boolean isValid = (!InputMiddleware.isValidUsername(userName) ||
                 !password.equals(rePass) ||
-                !middleware.isValidIString(20, address) ||
-                !middleware.isValidIString(15, fullName) ||
-                !middleware.isValidPhoneNum(phoneNum));
+                !InputMiddleware.isValidIString(20, address) ||
+                !InputMiddleware.isValidIString(15, fullName) ||
+                !InputMiddleware.isValidPhoneNum(phoneNum));
 
-        if(!middleware.isValidIString(15, fullName)){
+        if(!InputMiddleware.isValidIString(15, fullName)){
             fullNameErrorMessage.setText("Your full name must have >= 15 characters");
         }else {
             fullNameErrorMessage.setText("");
         }
 
-        if(!middleware.isValidIString(20, address)){
+        if(!InputMiddleware.isValidIString(20, address)){
             addressErrorMessage.setText("Your address must have >= 20 characters");
         }else {
             addressErrorMessage.setText("");
         }
 
-        if(!middleware.isValidPhoneNum(phoneNum)){
+        if(!InputMiddleware.isValidPhoneNum(phoneNum)){
             phoneNumErrorMessage.setText("Your phone number must have 10 DIGITS");
         }else {
             phoneNumErrorMessage.setText("");
         }
 
-        if(!middleware.isValidUsername(userName)){
+        if(!InputMiddleware.isValidUsername(userName)){
             userNameErrorMessage.setText("Wrong format! Right format click ! to see");
         }else {
             userNameErrorMessage.setText("");
         }
 
-        if(!middleware.isValidPassword(password) ){
+        if(!InputMiddleware.isValidPassword(password) ){
             passwordErrorMessage.setText("Wrong format! Right format click ! to see");
         }else {
             passwordErrorMessage.setText("");
@@ -136,8 +135,7 @@ public class RegisterControllers {
     }
 
     public void onToLoginButton(ActionEvent event) throws IOException {
-        SceneController sceneSwitcher = new SceneController();
-        sceneSwitcher.switchScene(event, "../Pages/login.fxml");
+        SceneController.switchScene(event, "../Pages/login.fxml");
     }
 
     public void onImageUploadButton(){
@@ -192,14 +190,14 @@ public class RegisterControllers {
 
         String targetFileDir = "";
         String ext = FileController.getFileExtension(new File(imageMessage.getText()));
-        File targetFile = new File( new FileLocation().getImageDir() + "Users/" + new UserServices().idCreation() + "." + ext);
+        File targetFile = new File( FileLocation.getImageDir() + "Users/" + UserServices.builder().idCreation() + "." + ext);
 
         if(imageMessage.getText().equals("No file chosen") || imageMessage.getText().equals("")){
             targetFileDir = "Users/default.jpg";
         }else{
-            targetFileDir = "Users/" + new UserServices().idCreation() + "." + ext;
+            targetFileDir = "Users/" + UserServices.builder().idCreation() + "." + ext;
         }
-        UserServices userServices = new UserServices();
+        UserServices userServices = UserServices.builder();
         //        UploadImageThread uploadThread = new UploadImageThread(targetFile, new File(imageMessage.getText()), 400, 400);
         UploadImageThread uploadThread = UploadImageThread
                 .builder()
@@ -220,14 +218,14 @@ public class RegisterControllers {
         }else{
             try{
                 imageThread.start();
-                userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 1000, new GuestAccount(), new Cart(new UserCartServices().idCreation(), userServices.idCreation()),targetFileDir));
+                userServices.register(new Customer(userServices.idCreation(), userName, password, fullName, address, phoneNum, 1000, new GuestAccount(), new Cart(UserCartServices.builder().idCreation(), userServices.idCreation()),targetFileDir));
                 imageThread.join();
                 ToastBuilder.builder()
                         .withTitle("Register Message")
                         .withMessage("Register Successfully!!!")
                         .withMode(Notifications.SUCCESS)
                         .show();
-                new SceneController().switchScene(event, "../Pages/userProfile.fxml");
+                SceneController.switchScene(event, "../Pages/userProfile.fxml");
             }catch (Error err){
                 ToastBuilder.builder()
                         .withTitle("Register Message")

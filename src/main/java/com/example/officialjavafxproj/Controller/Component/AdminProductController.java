@@ -42,8 +42,8 @@ public class AdminProductController {
     private String productId;
 
     public void loadProductDisplay(Product product){
-        double averageStar = new FeedbackService().getAverageRatings(product.getId());
-        String imageDir = new FileLocation().getImageDir() + product.getImageLocation();
+        double averageStar = FeedbackService.getAverageRatings(product.getId());
+        String imageDir = FileLocation.getImageDir() + product.getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 200, 175, false, false);
             imageView.setImage(productImage);
@@ -60,20 +60,20 @@ public class AdminProductController {
         productStatus.setText(product.getStatus());
         rentalType.setText(product.getRentalType());
         genre.setText(product.getGenre());
-        averageStarDisplay.setText(!Double.isNaN(averageStar) ? String.format("%.1f", new FeedbackService().getAverageRatings(product.getId())) : "0");
+        averageStarDisplay.setText(!Double.isNaN(averageStar) ? String.format("%.1f", FeedbackService.getAverageRatings(product.getId())) : "0");
         productId = product.getId();
 
     }
     public void onClick(MouseEvent mouseEvent) throws IOException {
-        ProductService productService = new ProductService();
+        ProductService productService = ProductService.builder();
         Product currentProduct = productService.getOne(productId);
         productService.setTargetProduct(currentProduct);
-        new SceneController().switchScene(mouseEvent,"../Pages/adminEditProduct.fxml");
+        SceneController.switchScene(mouseEvent,"../Pages/adminEditProduct.fxml");
     }
     public void viewProductDetail(MouseEvent mouseEvent) throws IOException {
-        ProductService productService = new ProductService();
+        ProductService productService = ProductService.builder();
         Product currentProduct = productService.getOne(productId);
         productService.setTargetProduct(currentProduct);
-        new SceneController().switchScene(mouseEvent,"../Pages/adminProductDetail.fxml");
+        SceneController.switchScene(mouseEvent,"../Pages/adminProductDetail.fxml");
     }
 }

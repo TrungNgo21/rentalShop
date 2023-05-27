@@ -52,14 +52,13 @@ public class LoginControllers implements Initializable {
 
 
     public void loginButtonOnAction(ActionEvent event) throws IOException {
-        UserServices service = new UserServices();
-        SceneController sceneController = new SceneController();
+        UserServices service = UserServices.builder();
         if(service.login(usernameTextField.getText(), passwordField.getText())){
-            if(new UserServices().getCurrentUser().getUserId().equals("ADMIN")){
-                sceneController.switchScene(event, "../Pages/homepageAdmin.fxml");
+            if(UserServices.builder().getCurrentUser().getUserId().equals("ADMIN")){
+                SceneController.switchScene(event, "../Pages/homepageAdmin.fxml");
             }
             else {
-                sceneController.switchScene(event, "../Pages/userProfile.fxml");
+                SceneController.switchScene(event, "../Pages/userProfile.fxml");
             }
 
             ToastBuilder.builder()
@@ -77,8 +76,7 @@ public class LoginControllers implements Initializable {
     }
 
     public void registerButtonOnAction(ActionEvent event) throws IOException {
-        SceneController sceneController = new SceneController();
-        sceneController.switchScene(event, "../Pages/register.fxml");
+        SceneController.switchScene(event, "../Pages/register.fxml");
     }
 
     public void onExitButton(ActionEvent event) throws IOException{
@@ -89,7 +87,7 @@ public class LoginControllers implements Initializable {
 
     public void loadPanelImage(){
         try {
-            Image image = new Image(new FileInputStream(new FileLocation().getImageDir() + "/Public/headerIcon.jpg"), 240, 400, false, false);
+            Image image = new Image(new FileInputStream(FileLocation.getImageDir() + "/Public/headerIcon.jpg"), 240, 400, false, false);
             loginPanel.setImage(image);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

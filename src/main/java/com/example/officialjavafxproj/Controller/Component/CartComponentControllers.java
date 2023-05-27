@@ -45,7 +45,7 @@ public class CartComponentControllers {
 
 
     public void loadCartItemData(OrderDetail details){
-        String imageDir = new FileLocation().getImageDir() + details.getBoughtItem().getImageLocation();
+        String imageDir = FileLocation.getImageDir() + details.getBoughtItem().getImageLocation();
         try {
             Image productImage = new Image(new FileInputStream(imageDir), 200, 170, false, false);
             productCartImage.setImage(productImage);
@@ -74,7 +74,7 @@ public class CartComponentControllers {
     }
 
     public void onDownButton(ActionEvent event) throws IOException{
-        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
+        OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
         OrderDetail currentItem = orderDetailCartService.getOne(cartItemId);
         currentItem.setQuantity(currentItem.getQuantity() - 1);
         quantityDisplay.setText(String.valueOf(currentItem.getQuantity()));
@@ -82,7 +82,7 @@ public class CartComponentControllers {
     }
     public void onUpButton(ActionEvent event) throws IOException{
         downButton.setDisable(false);
-        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
+        OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
         OrderDetail currentItem = orderDetailCartService.getOne(cartItemId);
         currentItem.setQuantity(currentItem.getQuantity() + 1);
         quantityDisplay.setText(String.valueOf(currentItem.getQuantity()));
@@ -91,14 +91,14 @@ public class CartComponentControllers {
 
     }
     public void onDeleteButton(ActionEvent event) throws IOException{
-        OrderDetailCartService orderDetailCartService = new OrderDetailCartService();
+        OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
         OrderDetail currentItem = orderDetailCartService.getOne(cartItemId);
         orderDetailCartService.delete(currentItem);
-        new SceneController().switchScene(event, "../Pages/userCart.fxml");
+        SceneController.switchScene(event, "../Pages/userCart.fxml");
     }
 
     public void onUpdateButton(ActionEvent event) throws IOException{
-        new SceneController().switchScene(event, "../Pages/userCart.fxml");
+        SceneController.switchScene(event, "../Pages/userCart.fxml");
     }
 
     public void setDownButton(){
