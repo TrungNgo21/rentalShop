@@ -149,7 +149,7 @@ public class AdminAddProductController implements Initializable,UIController {
         }
         if (numOfCopies.trim().isEmpty()) {
             copiesWarningMessage.setText("You must not leave this field empty");
-        } else if (!InputMiddleware.isValidNumber(numOfCopies)) {
+        } else if (!InputMiddleware.isValidCopy(numOfCopies)) {
             copiesWarningMessage.setText("Num of copies must be a number");
         } else if (!InputMiddleware.isPositive(numOfCopies)) {
             copiesWarningMessage.setText("Num of copies must be positive");

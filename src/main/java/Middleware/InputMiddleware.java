@@ -55,6 +55,10 @@ public class InputMiddleware {
 
         return Double.parseDouble(num) > 0;
     }
+    public static boolean isValidCopy(String num){
+        Matcher matcher = digitPattern.matcher(num);
+        return matcher.matches();
+    }
     public static boolean isValidNumber(String num){
         Matcher matcher = negativeDoublePattern.matcher(num);
         Matcher matcher2 = doublePositivePattern.matcher(num);
