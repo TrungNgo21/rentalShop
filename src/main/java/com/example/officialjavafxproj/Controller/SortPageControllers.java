@@ -66,6 +66,9 @@ public class SortPageControllers implements Initializable,UIController {
             sortProductDisplay.getChildren().add(temp);
         }
         for(Map.Entry<String, Product> product : ProductService.builder().getSortedProducts().entrySet()){
+            if(product.getKey().equals("deleted")){
+                continue;
+            }
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../Component/productComponent.fxml"));

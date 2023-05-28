@@ -76,6 +76,9 @@ public class AdminSortProductController implements Initializable,UIController {
             gridPane.getChildren().add(temp);
         }
         for (Map.Entry<String, Product> product : ProductService.builder().getSortedProducts().entrySet()) {
+            if(product.getKey().equals("deleted")){
+                continue;
+            }
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../Component/adminViewProductComponent.fxml"));
@@ -101,6 +104,9 @@ public class AdminSortProductController implements Initializable,UIController {
             gridPane.getChildren().add(temp);
         }
         for (Map.Entry<String, Product> product : SearchController.getTempContainer().entrySet()) {
+            if(product.getKey().equals("deleted")){
+                continue;
+            }
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../Component/adminViewProductComponent.fxml"));

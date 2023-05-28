@@ -68,6 +68,9 @@ public class AdminViewProductController implements Initializable,UIController {
             ProductService productService = ProductService.builder();
             gridPane.getChildren().clear();
             for(Map.Entry<String, Product> product : productService.getAll().entrySet()){
+                if(product.getKey().equals("deleted")){
+                    continue;
+                }
                 try {
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("../Component/adminViewProductComponent.fxml"));

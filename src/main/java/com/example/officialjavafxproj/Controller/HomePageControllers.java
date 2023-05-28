@@ -72,6 +72,9 @@ public class HomePageControllers implements Initializable,UIController {
         int column = 0;
         int maxTopProduct = 0;
         for(Map.Entry<String, Product> product : ProductService.builder().getAll().entrySet()){
+            if(product.getKey().equals("deleted")){
+                continue;
+            }
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../Component/productComponent.fxml"));
@@ -80,6 +83,7 @@ public class HomePageControllers implements Initializable,UIController {
 //                ProductComponentControllers productItemsController = (ProductComponentControllers) SceneController.getComponentController("../Component/productComponent.fxml");
                 ProductComponentControllers productComponentControllers = fxmlLoader.getController();
                 productComponentControllers.loadProductItemData(product.getValue());
+
                 if(column == 4){
                     column = 0;
                     ++row;
@@ -94,6 +98,9 @@ public class HomePageControllers implements Initializable,UIController {
 
 
         for(Map.Entry<Product, String> topProduct : ProductService.builder().getTopProducts().entrySet()){
+            if(topProduct.getKey().equals("deleted")){
+                continue;
+            }
             try {
                 FXMLLoader fxmlLoader1 = new FXMLLoader();
                 fxmlLoader1.setLocation(getClass().getResource("../Component/topProductComponent.fxml"));

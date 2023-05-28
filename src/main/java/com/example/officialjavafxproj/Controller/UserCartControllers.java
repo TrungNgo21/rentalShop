@@ -213,7 +213,6 @@ public class UserCartControllers implements Initializable,UIController {
 
     public void loadPageContent() {
         OrderDetailCartService orderDetailCartService = OrderDetailCartService.builder();
-        cartItemsQuantityDisplay.setText(String.valueOf(orderDetailCartService.getAll().size()));
         double subTotal = 0;
         if(orderDetailCartService.getAll().size() == 0){
             Label messageLabel = new Label();
@@ -223,18 +222,23 @@ public class UserCartControllers implements Initializable,UIController {
             totalPriceDisplay.setText("0");
         }else{
             for (Map.Entry<String, OrderDetail> details : orderDetailCartService.getAll().entrySet()) {
-                subTotal += (details.getValue().getBoughtItem().getRentalFee() * details.getValue().getQuantity());
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("../Component/CartComponent.fxml"));
                     HBox cartItem = fxmlLoader.load();
                     CartComponentControllers cartComponentControllers = fxmlLoader.getController();
                     cartComponentControllers.loadCartItemData(details.getValue());
+                    if(cartComponentControllers.deleteSelf() == "deleted"){
+                        orderDetailCartService.delete(cartComponentControllers.detailNeedDelete());
+                        continue;
+                    }
+                    subTotal += (details.getValue().getBoughtItem().getRentalFee() * details.getValue().getQuantity());
                     cartItemsDisplay.getChildren().add(cartItem);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
+            cartItemsQuantityDisplay.setText(String.valueOf(orderDetailCartService.getAll().size()));
             if(UserServices.builder().getCurrentUser().getAccount() instanceof VIPAccount){
                 if (UserServices.builder().getCurrentUser().getAccount().isFreeToBorrowOne()){
                     double price = 0;

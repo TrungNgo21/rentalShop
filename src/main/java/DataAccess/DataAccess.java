@@ -192,7 +192,7 @@ public class DataAccess {
     private static void loadAllOrderDetails() {
         ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getOrderDetailFileDir());
         for (String[] orderDetailData : Objects.requireNonNull(dataFile)) {
-            OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2], products.get(orderDetailData[3]), Integer.parseInt(orderDetailData[4]));
+            OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2], (products.get(orderDetailData[3]) == null ? products.get("deleted") : products.get(orderDetailData[3])), Integer.parseInt(orderDetailData[4]));
             details.setDueDate(LocalDate.parse(orderDetailData[5], DateMiddleware.dateParser()));
             details.setStatus(orderDetailData[6]);
             orderDetails.add(details);
@@ -202,7 +202,7 @@ public class DataAccess {
     private static void loadAllAdminOrderDetails(){
         ArrayList<String[]> dataFile = getDataFromFile(FileLocation.getAdminOrdersDetailDir());
         for (String[] orderDetailData : Objects.requireNonNull(dataFile)) {
-            OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2], products.get(orderDetailData[3]), Integer.parseInt(orderDetailData[4]));
+            OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2],(products.get(orderDetailData[3]) == null ? products.get("deleted") : products.get(orderDetailData[3])), Integer.parseInt(orderDetailData[4]));
             details.setDueDate(LocalDate.parse(orderDetailData[5], DateMiddleware.dateParser()));
             details.setStatus(orderDetailData[6]);
             orderAdminDetails.add(details);
@@ -383,7 +383,7 @@ public class DataAccess {
                     writerAdmin.write(orderDetail.getOrderDetailId() + ";"
                             + orderDetail.getOrderId() + ";"
                             + "NaN" + ";"
-                            + orderDetail.getBoughtItem().getId() + ";"
+                            + (orderDetail.getBoughtItem() == null ? "deleted" : orderDetail.getBoughtItem().getId()) + ";"
                             + orderDetail.getQuantity() + ";"
                             + DateMiddleware.dateAfterFormat(orderDetail.getDueDate())+ ";"
                             + orderDetail.getStatus()+ "\n");

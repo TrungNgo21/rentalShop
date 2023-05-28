@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Map;
 
 public class OrderItemControllers {
 
@@ -91,10 +92,21 @@ public class OrderItemControllers {
 
         order.getBoughtItem().setNumOfCopies(order.getQuantity() + order.getBoughtItem().getNumOfCopies());
         order.getBoughtItem().setStatus("AVAILABLE");
+        order.getBoughtItem().setBeingBorrowed(false);
+        for(Map.Entry<String, User> user : UserServices.builder().getAll().entrySet()){
+            for(Order userOrder : user.getValue().getRentalList()){
+                for(OrderDetail orderDetail : userOrder.getOrders()){
+                    if(orderDetail.getBoughtItem().getId().equals(order.getBoughtItem().getId())){
+                        order.getBoughtItem().setBeingBorrowed(true);
+                    }
+                }
+            }
+        }
         Order currentOrder = OrderCustomerService.builder().getOne(order.getOrderId());
         currentUser.getAccount().setNumReturnedItems(currentUser.getAccount().getNumReturnedItems() + 1);
         currentUser.getAccount().setRentalThreshold(currentUser.getAccount().getRentalThreshold() + 1);
         OrderDetailCartService.builder().getOneAdmin(order.getOrderDetailId()).setStatus(OrderDetail.getStatuses()[0]);
+
         currentOrder.getOrders().remove(order);
         if(currentUser.getAccount().isAllowedToPromoted()){
             if(currentUser.getAccount() instanceof GuestAccount){

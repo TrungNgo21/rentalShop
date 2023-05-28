@@ -2,8 +2,13 @@ package com.example.officialjavafxproj.Controller;
 
 import DataAccess.DataAccess;
 import FileLocation.FileLocation;
+import Model.Order.Order;
+import Model.Order.OrderDetail;
 import Model.Product.Product;
+import Model.User.User;
+import Service.OrderDetailCartService;
 import Service.ProductService;
+import Service.UserServices;
 import com.example.officialjavafxproj.Utils.AlertBuilder;
 import com.example.officialjavafxproj.Utils.AlertButtonController;
 import com.example.officialjavafxproj.Utils.SceneController;
@@ -25,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -121,6 +127,7 @@ public class AdminProductDetailController implements Initializable, UIController
                         .withMode(Notifications.ERROR)
                         .show();
             }else{
+                String deletedId = currentProduct.getId();
                 ProductService.builder().delete(currentProduct);
                 SceneController.switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
                 ToastBuilder.builder()

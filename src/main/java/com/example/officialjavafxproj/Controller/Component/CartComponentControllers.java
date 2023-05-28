@@ -76,6 +76,17 @@ public class CartComponentControllers {
         });
     }
 
+    public String deleteSelf(){
+        if(ProductService.builder().getOne(currentOrderDetail.getBoughtItem().getId()) == null){
+            return "deleted";
+        }
+        return null;
+    }
+
+    public OrderDetail detailNeedDelete(){
+        return currentOrderDetail;
+    }
+
     public void onViewItemButton(ActionEvent actionEvent) throws IOException{
         ProductService.builder().setTargetProduct(currentOrderDetail.getBoughtItem());
         SceneController.switchScene(actionEvent, "../Pages/productDetails.fxml");

@@ -24,8 +24,7 @@ public class SearchController {
     public static boolean searchByString(String input, String searchField){
         if(input.equalsIgnoreCase(searchField) || searchField.toLowerCase().contains(input.toLowerCase())){
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
