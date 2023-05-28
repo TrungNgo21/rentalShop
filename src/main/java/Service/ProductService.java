@@ -58,12 +58,12 @@ public class ProductService implements Services<Product> {
     public void delete(Product template) {
         DataAccess.getAllProducts().remove(template.getId());
         String imageDir = FileLocation.getImageDir() + template.getImageLocation();
-        try {
-            Files.delete(Path.of(imageDir));
-        }
-         catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Files.delete(Path.of(imageDir));
+//        }
+//         catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     @Override

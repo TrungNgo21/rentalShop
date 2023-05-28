@@ -110,17 +110,25 @@ public class AdminProductDetailController implements Initializable, UIController
                 .build();
         ObservableList<ButtonType> buttonTypes = deleteAlert.getButtonTypes();
         Optional<ButtonType> choice = deleteAlert.showAndWait();
+        Product currentProduct = ProductService.builder().getTargetProduct();
         if (choice.get() == buttonTypes.get(0)) {
             deleteAlert.close();
         } else {
-            Product currentProduct = ProductService.builder().getTargetProduct();
-            ProductService.builder().delete(currentProduct);
-            SceneController.switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
-            ToastBuilder.builder()
-                    .withTitle("Delete Successfully")
-                    .withMessage("The product has been deleted successfully")
-                    .withMode(Notifications.SUCCESS)
-                    .show();
+            if(currentProduct.getIsBeingBorrowed()){
+                ToastBuilder.builder()
+                        .withTitle("Currently Borrowed")
+                        .withMessage("You cannot delete a being borrowed product")
+                        .withMode(Notifications.ERROR)
+                        .show();
+            }else{
+                ProductService.builder().delete(currentProduct);
+                SceneController.switchScene(actionEvent, "../Pages/adminViewProduct.fxml");
+                ToastBuilder.builder()
+                        .withTitle("Delete Successfully")
+                        .withMessage("The product has been deleted successfully")
+                        .withMode(Notifications.SUCCESS)
+                        .show();
+            }
         }
     }
 

@@ -175,12 +175,15 @@ public class DataAccess {
         for (String[] productData : Objects.requireNonNull(dataFile)) {
             if (productData[2].equals("DVD")) {
                 DVD dvd = new DVD(productData[0], productData[1], productData[2], productData[3], productData[4], Integer.parseInt(productData[5]), Double.parseDouble(productData[6]), productData[7], productData[8], productData[9]);
+                dvd.setBeingBorrowed(Boolean.parseBoolean(productData[10]));
                 products.put(productData[0], dvd);
             } else if (productData[2].equals("RECORD")) {
                 MRecords record = new MRecords(productData[0], productData[1], productData[2], productData[3], productData[4], Integer.parseInt(productData[5]), Double.parseDouble(productData[6]), productData[7], productData[8], productData[9]);
+                record.setBeingBorrowed(Boolean.parseBoolean(productData[10]));
                 products.put(productData[0], record);
             } else {
                 Game game = new Game(productData[0], productData[1], productData[2], productData[3], productData[4], Integer.parseInt(productData[5]), Double.parseDouble(productData[6]), productData[7], productData[8], productData[9]);
+                game.setBeingBorrowed(Boolean.parseBoolean(productData[10]));
                 products.put(productData[0], game);
             }
         }
@@ -313,7 +316,8 @@ public class DataAccess {
                         + product.getValue().getRentalFee() + ";"
                         + product.getValue().getLoanType() + ";"
                         + product.getValue().getStatus() + ";"
-                        + product.getValue().getImageLocation() + "\n");
+                        + product.getValue().getImageLocation() + ";"
+                        + product.getValue().getIsBeingBorrowed() + "\n");
             }
             writer.close();
         } catch (IOException err) {

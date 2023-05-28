@@ -20,6 +20,8 @@ public abstract class Product {
     private String loanType;
     private String status;
 
+    private boolean isBeingBorrowed;
+
     private int stock;
     private String imageLocation;
 
@@ -118,6 +120,14 @@ public abstract class Product {
         this.itemsFeedback.add(feedback);
     }
 
+    public boolean getIsBeingBorrowed() {
+        return isBeingBorrowed;
+    }
+
+    public void setBeingBorrowed(boolean beingBorrowed) {
+        isBeingBorrowed = beingBorrowed;
+    }
+
     public ArrayList<Feedback> getItemsFeedback() {
         return itemsFeedback;
     }
@@ -141,6 +151,8 @@ public abstract class Product {
                 ", imageLocation='" + imageLocation + '\'' +
                 '}';
     }
+
+
 
 
 }
