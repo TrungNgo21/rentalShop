@@ -115,6 +115,11 @@ public class OrderItemControllers {
                 currentUser.setAccount(regularAccount);
                 currentUser.getAccount().setOwner(currentUser);
                 AccountService.updateAccounts(currentUser.getAccount());
+                ToastBuilder.builder()
+                        .withMode(Notifications.INFORMATION)
+                        .withTitle("Account Promotion")
+                        .withMessage("Your Account has been promoted to Regular Account")
+                        .show();
             }
             else if(currentUser.getAccount() instanceof RegularAccount){
                 Account currentAccount = currentUser.getAccount();
@@ -122,6 +127,11 @@ public class OrderItemControllers {
                 currentUser.setAccount(VIPAccount);
                 currentUser.getAccount().setOwner(currentUser);
                 AccountService.updateAccounts(currentUser.getAccount());
+                ToastBuilder.builder()
+                        .withMode(Notifications.INFORMATION)
+                        .withTitle("Account Promotion")
+                        .withMessage("Your Account has been promoted to VIP Account")
+                        .show();
             }
         }
         if(currentUser.getAccount() instanceof VIPAccount){

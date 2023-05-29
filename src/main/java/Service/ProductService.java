@@ -161,7 +161,6 @@ public class ProductService implements Services<Product> {
                         continue;
                     }
                     for (Map.Entry<String, Product> sysProduct : getAll().entrySet()) {
-                        System.out.println(option);
                         if (sysProduct.getValue().getRentalType().equals(option)) {
                             DataAccess.addToSortedProducts(sysProduct.getValue());
                         }

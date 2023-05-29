@@ -194,6 +194,11 @@ public class DataAccess {
         for (String[] orderDetailData : Objects.requireNonNull(dataFile)) {
             OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2], (products.get(orderDetailData[3]) == null ? products.get("deleted") : products.get(orderDetailData[3])), Integer.parseInt(orderDetailData[4]));
             details.setDueDate(LocalDate.parse(orderDetailData[5], DateMiddleware.dateParser()));
+            if(details.getDueDate().compareTo(LocalDate.now()) < 0 && !details.getBoughtItem().getId().equals("deleted")){
+                details.setStatus("LATE");
+            }else{
+                details.setStatus(orderDetailData[6]);
+            }
             details.setStatus(orderDetailData[6]);
             orderDetails.add(details);
         }
@@ -204,7 +209,11 @@ public class DataAccess {
         for (String[] orderDetailData : Objects.requireNonNull(dataFile)) {
             OrderDetail details = new OrderDetail(orderDetailData[0], orderDetailData[1], orderDetailData[2],(products.get(orderDetailData[3]) == null ? products.get("deleted") : products.get(orderDetailData[3])), Integer.parseInt(orderDetailData[4]));
             details.setDueDate(LocalDate.parse(orderDetailData[5], DateMiddleware.dateParser()));
-            details.setStatus(orderDetailData[6]);
+            if(details.getDueDate().compareTo(LocalDate.now()) < 0 && !details.getBoughtItem().getId().equals("deleted")){
+                details.setStatus("LATE");
+            }else{
+                details.setStatus(orderDetailData[6]);
+            }
             orderAdminDetails.add(details);
         }
     }
