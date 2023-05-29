@@ -115,10 +115,11 @@ public class OrderItemControllers {
                 currentUser.setAccount(regularAccount);
                 currentUser.getAccount().setOwner(currentUser);
                 AccountService.updateAccounts(currentUser.getAccount());
-                ToastBuilder.builder()
-                        .withMode(Notifications.INFORMATION)
-                        .withTitle("Account Promotion")
-                        .withMessage("Your Account has been promoted to Regular Account")
+                AlertBuilder.builder()
+                        .withType(Alert.AlertType.INFORMATION)
+                        .withHeaderText("Account Promotion")
+                        .withBodyText("Your Account has been promoted to Regular Account")
+                        .build()
                         .show();
             }
             else if(currentUser.getAccount() instanceof RegularAccount){
@@ -127,10 +128,11 @@ public class OrderItemControllers {
                 currentUser.setAccount(VIPAccount);
                 currentUser.getAccount().setOwner(currentUser);
                 AccountService.updateAccounts(currentUser.getAccount());
-                ToastBuilder.builder()
-                        .withMode(Notifications.INFORMATION)
-                        .withTitle("Account Promotion")
-                        .withMessage("Your Account has been promoted to VIP Account")
+                AlertBuilder.builder()
+                        .withType(Alert.AlertType.INFORMATION)
+                        .withHeaderText("Account Promotion")
+                        .withBodyText("Your Account has been promoted to VIP Account")
+                        .build()
                         .show();
             }
         }
