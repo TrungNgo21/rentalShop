@@ -88,6 +88,8 @@ public class OrderItemControllers {
     }
 
     public void onReturnButton(ActionEvent event) throws IOException {
+        int isPromoted = 0;
+
         User currentUser = UserServices.builder().getCurrentUser();
 
         order.getBoughtItem().setNumOfCopies(order.getQuantity() + order.getBoughtItem().getNumOfCopies());
@@ -115,12 +117,8 @@ public class OrderItemControllers {
                 currentUser.setAccount(regularAccount);
                 currentUser.getAccount().setOwner(currentUser);
                 AccountService.updateAccounts(currentUser.getAccount());
-                AlertBuilder.builder()
-                        .withType(Alert.AlertType.INFORMATION)
-                        .withHeaderText("Account Promotion")
-                        .withBodyText("Your Account has been promoted to Regular Account")
-                        .build()
-                        .show();
+                isPromoted = 1;
+
             }
             else if(currentUser.getAccount() instanceof RegularAccount){
                 Account currentAccount = currentUser.getAccount();
@@ -128,12 +126,7 @@ public class OrderItemControllers {
                 currentUser.setAccount(VIPAccount);
                 currentUser.getAccount().setOwner(currentUser);
                 AccountService.updateAccounts(currentUser.getAccount());
-                AlertBuilder.builder()
-                        .withType(Alert.AlertType.INFORMATION)
-                        .withHeaderText("Account Promotion")
-                        .withBodyText("Your Account has been promoted to VIP Account")
-                        .build()
-                        .show();
+                isPromoted = 2;
             }
         }
         if(currentUser.getAccount() instanceof VIPAccount){
@@ -176,6 +169,22 @@ public class OrderItemControllers {
                 .withMode(Notifications.SUCCESS)
                 .withMessage("You have returned an item")
                 .show();
+
+        if(isPromoted == 1){
+            AlertBuilder.builder()
+                    .withType(Alert.AlertType.INFORMATION)
+                    .withHeaderText("Account Promotion")
+                    .withBodyText("Your Account has been promoted to Regular Account")
+                    .build()
+                    .show();
+        } else if (isPromoted == 2) {
+            AlertBuilder.builder()
+                    .withType(Alert.AlertType.INFORMATION)
+                    .withHeaderText("Account Promotion")
+                    .withBodyText("Your Account has been promoted to VIP Account")
+                    .build()
+                    .show();
+        }
 
 
     }
