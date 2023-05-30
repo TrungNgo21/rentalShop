@@ -197,6 +197,11 @@ public class AdminEditProductController implements Initializable,UIController {
         product.setLoanType(loanTypeChoiceBox.getValue());
         product.setRentalType(rentalTypeChoiceBox.getValue());
         product.setPublishedYear(publishedYearTextField.getText());
+        if(copiesTextField.getText().equals("0")){
+            product.setStatus("BORROWED");
+        }else{
+            product.setStatus("AVAILABLE");
+        }
         if(!imageMessage.getText().equals("")){
             if(!imageMessage.getText().equals("No file chosen")){
                 File renameFile = new File(FileLocation.getImageDir() + product.getImageLocation());
