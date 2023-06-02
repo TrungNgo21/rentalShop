@@ -1,3 +1,4 @@
+
 package Model.Account;
 
 public class VIPAccount extends Account{
@@ -14,9 +15,9 @@ public class VIPAccount extends Account{
     public boolean isFreeToBorrowOne() {
         return getPoints() > 100;
     }
-
     @Override
     public boolean isAllowedToPromoted() {
         return false;
     }
+
 }
