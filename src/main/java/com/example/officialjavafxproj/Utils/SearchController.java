@@ -9,9 +9,7 @@ import java.util.Map;
 
 public class SearchController {
     private static HashMap<String,Product> tempContainer = new HashMap<String,Product>();
-
     private static HashMap<String,User> tempUserContainer = new HashMap<String,User>();
-
     private static void addProduct(Product product){tempContainer.put(product.getId(),product);}
     private static void addUser(User user){tempUserContainer.put(user.getUserId(),user);}
 
